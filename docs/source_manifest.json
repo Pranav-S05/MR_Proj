@@ -1,0 +1,165 @@
+{
+  "purpose": "Read-only reference snapshots; not an installed baseline",
+  "repositories": [
+    {
+      "repository": "DengKaiCQ/VGGT-Long",
+      "commit": "c160869d1d99c96bb227f414afb3bc68c29c9a76",
+      "commit_date": "2026-02-09T08:12:57Z"
+    },
+    {
+      "repository": "facebookresearch/vggt",
+      "commit": "a288dd0f14786c93483e45524328726ab7b1b4ce",
+      "commit_date": "2026-05-19T03:39:35Z"
+    },
+    {
+      "repository": "jashshah999/vggt-factor-refinement",
+      "commit": "82590a4b1ae96236c1bfbc5092307e681c68967a",
+      "commit_date": "2026-09-27T01:22:41Z"
+    }
+  ],
+  "downloads": [
+    {
+      "url": "https://raw.githubusercontent.com/DengKaiCQ/VGGT-Long/c160869d1d99c96bb227f414afb3bc68c29c9a76/README.md",
+      "path": "reference_material\\VGGT-Long\\README.md",
+      "bytes": 15878,
+      "sha256": "91a96a8a53c66cf78a0867e7dd76baad20c4896297803642bcbc169aeddef82e"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/DengKaiCQ/VGGT-Long/c160869d1d99c96bb227f414afb3bc68c29c9a76/LICENSE.txt",
+      "path": "reference_material\\VGGT-Long\\LICENSE.txt",
+      "bytes": 10721,
+      "sha256": "ca633b19556367d86d1ce35ad431d5bd7114d0d56b8b3d8d89e917d7d56d8e9e"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/DengKaiCQ/VGGT-Long/c160869d1d99c96bb227f414afb3bc68c29c9a76/configs/base_config.yaml",
+      "path": "reference_material\\VGGT-Long\\configs\\base_config.yaml",
+      "bytes": 1838,
+      "sha256": "bce34d470d7dd2899af0eedbd29bc908d33bd2e1eae71cbde2bf03618c36c32c"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/DengKaiCQ/VGGT-Long/c160869d1d99c96bb227f414afb3bc68c29c9a76/vggt_long.py",
+      "path": "reference_material\\VGGT-Long\\vggt_long.py",
+      "bytes": 29730,
+      "sha256": "8f0f1fe841584fe1d42d1351420e3f99e6e822ac7eca89cf91389990466bc6bb"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/DengKaiCQ/VGGT-Long/c160869d1d99c96bb227f414afb3bc68c29c9a76/loop_utils/sim3loop.py",
+      "path": "reference_material\\VGGT-Long\\loop_utils\\sim3loop.py",
+      "bytes": 13610,
+      "sha256": "7cb5b6f790e670b65b98463714132938ce86da67814e443885a85cfddf68ccf2"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/DengKaiCQ/VGGT-Long/c160869d1d99c96bb227f414afb3bc68c29c9a76/loop_utils/sim3utils.py",
+      "path": "reference_material\\VGGT-Long\\loop_utils\\sim3utils.py",
+      "bytes": 33252,
+      "sha256": "38b64656b0bac42e52ac3eccce827d3477ad1dc6681747bec8b4fd7e8bddfb6d"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/DengKaiCQ/VGGT-Long/c160869d1d99c96bb227f414afb3bc68c29c9a76/base_models/base_model.py",
+      "path": "reference_material\\VGGT-Long\\base_models\\base_model.py",
+      "bytes": 15952,
+      "sha256": "f9bb32c127046aec60409d2013c5d3a097e252662845d03748a7a77f3022d188"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/facebookresearch/vggt/a288dd0f14786c93483e45524328726ab7b1b4ce/README.md",
+      "path": "reference_material\\vggt\\README.md",
+      "bytes": 14404,
+      "sha256": "56426b9aea25174ccbc4c2c37a3a22107fd8b5ac9dc5a8bf008e7457402ed3bd"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/facebookresearch/vggt/a288dd0f14786c93483e45524328726ab7b1b4ce/vggt/heads/dpt_head.py",
+      "path": "reference_material\\vggt\\vggt\\heads\\dpt_head.py",
+      "bytes": 17327,
+      "sha256": "b83ff030043f2ba808afb0c0ebc2f40f1d2ddc9d0b4b847bdfd53670f2d03e17"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/facebookresearch/vggt/a288dd0f14786c93483e45524328726ab7b1b4ce/vggt/heads/utils.py",
+      "path": "reference_material\\vggt\\vggt\\heads\\utils.py",
+      "bytes": 3941,
+      "sha256": "2dce4c0dca1974a5250cc5d5d95bd3417e3ba9494978437a12d5ab6bbff4d4df"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/facebookresearch/vggt/a288dd0f14786c93483e45524328726ab7b1b4ce/vggt/utils/geometry.py",
+      "path": "reference_material\\vggt\\vggt\\utils\\geometry.py",
+      "bytes": 11849,
+      "sha256": "c6f505182e4e926629c04adbdf633eb80238da3a3c87eb8337b6f130ab01ab93"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/jashshah999/vggt-factor-refinement/82590a4b1ae96236c1bfbc5092307e681c68967a/README.md",
+      "path": "reference_material\\vggt-factor-refinement\\README.md",
+      "bytes": 8278,
+      "sha256": "3491e99edaa0533e47c9e5aac26cc42f2b09dc219101023fa4b81795644afaad"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/jashshah999/vggt-factor-refinement/82590a4b1ae96236c1bfbc5092307e681c68967a/src/uncertainty.py",
+      "path": "reference_material\\vggt-factor-refinement\\src\\uncertainty.py",
+      "bytes": 4378,
+      "sha256": "4ae3b31865daa5c8e7835ceee9ac623e1b306dacdd274e55170e370c12eb9dbc"
+    },
+    {
+      "url": "https://s3.eu-central-1.amazonaws.com/avg-kitti/data_odometry_poses.zip",
+      "bytes": 1309620,
+      "sha256": "a969190799bb3fc4a15f5f0675b1ee6b7067292599b3269bdafc1e5ba883b9e1",
+      "files": [
+        {
+          "path": "data\\kitti\\poses\\00.txt",
+          "bytes": 728871,
+          "sha256": "90791a4113df979b149fa9e1104e960ea59f525a8318a202dbb6aec1a3d88793"
+        },
+        {
+          "path": "data\\kitti\\poses\\01.txt",
+          "bytes": 176939,
+          "sha256": "099889e883d91525934a575db9fbec66f7239f09217f575a4e823d8ab7dd22d8"
+        },
+        {
+          "path": "data\\kitti\\poses\\02.txt",
+          "bytes": 748734,
+          "sha256": "8e6c37071db06dfc31db9c2f354bfeb4bb23d1fa2ab28937cb27dae03dc49812"
+        },
+        {
+          "path": "data\\kitti\\poses\\03.txt",
+          "bytes": 128052,
+          "sha256": "5475332c7e90cd6b0f9f948efff69e747dbba81d006efed4298f3d31b5773b67"
+        },
+        {
+          "path": "data\\kitti\\poses\\04.txt",
+          "bytes": 43589,
+          "sha256": "4e1e0a630543706d76904b45f6ee2dbfa8b03b6e4319d6fc268ef302062806e1"
+        },
+        {
+          "path": "data\\kitti\\poses\\05.txt",
+          "bytes": 442908,
+          "sha256": "56420ca617a1eb446b2955d187ba4af2912af54a8b458de0602ab3636b43f297"
+        },
+        {
+          "path": "data\\kitti\\poses\\06.txt",
+          "bytes": 177105,
+          "sha256": "823a613b515dbfaaac0ed2942cf866154cc16edf7fbf2edbea57c70828b27a59"
+        },
+        {
+          "path": "data\\kitti\\poses\\07.txt",
+          "bytes": 176684,
+          "sha256": "7eb020916003a09a6b9c2744748eaadef54b96f6df22ee703a05a1d19bfe913a"
+        },
+        {
+          "path": "data\\kitti\\poses\\08.txt",
+          "bytes": 652483,
+          "sha256": "cd7177170c7d7ba98cdbfe9417f97bd9586da5c70cbd5ccefa5db6bf88a5fe88"
+        },
+        {
+          "path": "data\\kitti\\poses\\09.txt",
+          "bytes": 255831,
+          "sha256": "e29c10964d558536e225e052f386723a515ad574b6ce14b91a86c94e5ad94014"
+        },
+        {
+          "path": "data\\kitti\\poses\\10.txt",
+          "bytes": 194102,
+          "sha256": "b29cfbc423220a7bc163ef53d0e0a362f8206f006eb2db690d8b48795327380e"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "checked_date_local": "2026-10-16",
+  "timezone": "Asia/Calcutta"
+}

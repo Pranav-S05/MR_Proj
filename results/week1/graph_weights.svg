@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="425" viewBox="0 0 860 425" role="img">
+<title>Why loop closures make edge weights matter</title>
+<rect width="860" height="425" fill="#ffffff"/>
+<g font-family="Arial,sans-serif" fill="#172033">
+<text x="38" y="30" font-size="19">Why loop closures make edge weights matter</text>
+<text x="38" y="52" font-size="12">Synthetic teaching experiment — no model or dataset performance claim</text>
+<path d="M85.00,90 V340 M85,340.00 H615" fill="none" stroke="#e2e6ee"/>
+<text x="85.00" y="360" text-anchor="middle" font-size="11">0</text>
+<text x="75" y="344.00" text-anchor="end" font-size="11">-0.24</text>
+<path d="M191.00,90 V340 M85,290.00 H615" fill="none" stroke="#e2e6ee"/>
+<text x="191.00" y="360" text-anchor="middle" font-size="11">0.4</text>
+<text x="75" y="294.00" text-anchor="end" font-size="11">0.46</text>
+<path d="M297.00,90 V340 M85,240.00 H615" fill="none" stroke="#e2e6ee"/>
+<text x="297.00" y="360" text-anchor="middle" font-size="11">0.8</text>
+<text x="75" y="244.00" text-anchor="end" font-size="11">1.2</text>
+<path d="M403.00,90 V340 M85,190.00 H615" fill="none" stroke="#e2e6ee"/>
+<text x="403.00" y="360" text-anchor="middle" font-size="11">1.2</text>
+<text x="75" y="194.00" text-anchor="end" font-size="11">1.8</text>
+<path d="M509.00,90 V340 M85,140.00 H615" fill="none" stroke="#e2e6ee"/>
+<text x="509.00" y="360" text-anchor="middle" font-size="11">1.6</text>
+<text x="75" y="144.00" text-anchor="end" font-size="11">2.5</text>
+<path d="M615.00,90 V340 M85,90.00 H615" fill="none" stroke="#e2e6ee"/>
+<text x="615.00" y="360" text-anchor="middle" font-size="11">2</text>
+<text x="75" y="94.00" text-anchor="end" font-size="11">3.2</text>
+<polyline points="85.00,322.76 350.00,250.92 615.00,179.08" fill="none" stroke="#263238" stroke-width="2"/>
+<circle cx="85.00" cy="322.76" r="3" fill="#263238"/>
+<circle cx="350.00" cy="250.92" r="3" fill="#263238"/>
+<circle cx="615.00" cy="179.08" r="3" fill="#263238"/>
+<text x="640" y="110" fill="#263238" font-size="12">truth</text>
+<polyline points="85.00,322.76 350.00,250.92 615.00,107.24" fill="none" stroke="#d55e00" stroke-width="2"/>
+<circle cx="85.00" cy="322.76" r="3" fill="#d55e00"/>
+<circle cx="350.00" cy="250.92" r="3" fill="#d55e00"/>
+<circle cx="615.00" cy="107.24" r="3" fill="#d55e00"/>
+<text x="640" y="138" fill="#d55e00" font-size="12">chain_uniform</text>
+<polyline points="85.00,322.76 350.00,274.87 615.00,155.13" fill="none" stroke="#0072b2" stroke-width="2"/>
+<circle cx="85.00" cy="322.76" r="3" fill="#0072b2"/>
+<circle cx="350.00" cy="274.87" r="3" fill="#0072b2"/>
+<circle cx="615.00" cy="155.13" r="3" fill="#0072b2"/>
+<text x="640" y="166" fill="#0072b2" font-size="12">loop_uniform</text>
+<polyline points="85.00,322.76 350.00,251.62 615.00,178.38" fill="none" stroke="#009e73" stroke-width="2"/>
+<circle cx="85.00" cy="322.76" r="3" fill="#009e73"/>
+<circle cx="350.00" cy="251.62" r="3" fill="#009e73"/>
+<circle cx="615.00" cy="178.38" r="3" fill="#009e73"/>
+<text x="640" y="194" fill="#009e73" font-size="12">loop_downweight_bad_seam</text>
+<text x="350" y="398" text-anchor="middle" font-size="14">Node index</text>
+<text x="20" y="220" transform="rotate(-90 20 220)" text-anchor="middle" font-size="14">Estimated 1D position</text>
+</g></svg>

@@ -1,0 +1,65 @@
+{
+  "protocol_version": "0.1-draft",
+  "planning_date_local": "2026-10-16",
+  "timezone": "Asia/Calcutta",
+  "status": "Proposed before model inference; freeze only after fitting/development feasibility checks",
+  "reference_backend": {
+    "repository": "https://github.com/DengKaiCQ/VGGT-Long",
+    "commit": "c160869d1d99c96bb227f414afb3bc68c29c9a76",
+    "installed_or_reproduced": false
+  },
+  "model": {
+    "family": "VGGT",
+    "checkpoint_sha256": null,
+    "checkpoint_status": "Not downloaded",
+    "backbone_retraining": false,
+    "cpu_lab_environment_is_not_the_gpu_baseline_environment": true
+  },
+  "candidate_window_frames": 16,
+  "candidate_overlap_frames": 8,
+  "resolution": null,
+  "window_setting_status": "Conditional on fitting-sequence memory pilot, not a verified GPU fit",
+  "kitti_split": {
+    "calibration_fit": ["05", "07"],
+    "development_selection": ["06"],
+    "primary_held_out": ["00", "02"],
+    "additional_held_out": ["01", "03", "04", "08", "09", "10"]
+  },
+  "residual_convention": {
+    "node": "S_i maps chunk_i coordinates into world coordinates",
+    "edge": "Z_ij maps chunk_j coordinates into chunk_i coordinates",
+    "formula": "Log(inv(Z_ij) @ inv(S_i) @ S_j)",
+    "coordinate_order": ["rot_x_rad", "rot_y_rad", "rot_z_rad", "upsilon_x", "upsilon_y", "upsilon_z", "log_scale"],
+    "anchor": "First node fixed",
+    "upstream_convention_adapter_verified": false
+  },
+  "reference_edge_label_status": "Pending pose-aware chunk gauge-fit implementation and real predictions",
+  "initial_comparisons": [
+    "upstream_identity_information",
+    "constant_block_information",
+    "raw_confidence_heuristic",
+    "geometry_only_reliability",
+    "calibrated_block_second_moments"
+  ],
+  "robustness": {
+    "initial_kernel": "quadratic",
+    "next_kernel": "edge_norm_Huber_with_development_only_threshold_selection",
+    "chain_only": "Negative control: positive weights must not change an unconstrained chain",
+    "false_loops": "Separate synthetic artificial edges from naturally proposed incorrect matches"
+  },
+  "primary_metrics": [
+    "held_out_connection_second_moment_reliability",
+    "blockwise_bias_and_coverage",
+    "whole_sequence_sim3_aligned_position_ATE",
+    "completion_and_failure_status"
+  ],
+  "later_metrics": [
+    "Gaussian_NLL_under_declared_model",
+    "NEES_with_distribution_and_dependence_caveats",
+    "official_KITTI_relative_segment_errors",
+    "GPU_memory_and_full_pipeline_runtime"
+  ],
+  "test_gt_allowed_in_deployable_features": false,
+  "oracle": "Optional hindsight diagnostic, not a guaranteed upper bound or deployable method",
+  "extensions_deferred": ["Waymo", "TUM_transfer", "multiple_window_sizes_and_offsets", "DCS_stress_suite", "CUT3R", "StreamVGGT", "VGGT_Omega", "SL4"]
+}

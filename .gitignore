@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+data/
+cache/
+reference_material/
+external/
+weights/
+checkpoints/
+.env
+.env.*
+!.env.example
+*.pt
+*.pth
+*.ckpt
+*.safetensors

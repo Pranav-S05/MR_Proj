@@ -1,0 +1,187 @@
+{
+  "status": "SYNTHETIC LEARNING LAB + OPTIONAL REAL GT-ONLY PREFLIGHT; NO VGGT RESULTS",
+  "seed": 20261016,
+  "environment": {
+    "python": "3.11.9",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "geometry": {
+    "true_scale": 2.4,
+    "recovered_scale": 2.4000000000000004,
+    "point_rmse_before_alignment": 2.7220368286167194,
+    "point_rmse_after_alignment": 1.9742344706956074e-15
+  },
+  "graph": {
+    "truth": {
+      "positions": [
+        0.0,
+        1.0,
+        2.0
+      ],
+      "anchored_position_rmse": 0.0
+    },
+    "chain_uniform": {
+      "positions": [
+        0.0,
+        1.0000000000000002,
+        3.000000000000001
+      ],
+      "anchored_position_rmse": 0.5773502691896263
+    },
+    "chain_changed_weights": {
+      "positions": [
+        0.0,
+        1.0000000000000002,
+        3.0
+      ],
+      "anchored_position_rmse": 0.5773502691896257
+    },
+    "loop_uniform": {
+      "positions": [
+        0.0,
+        0.6666666666666664,
+        2.3333333333333344
+      ],
+      "anchored_position_rmse": 0.2721655269759092
+    },
+    "loop_downweight_bad_seam": {
+      "positions": [
+        0.0,
+        0.9901960784313732,
+        2.0098039215686274
+      ],
+      "anchored_position_rmse": 0.008004868440467602
+    },
+    "note": "Weights were specified by hand using the synthetic design's known faulty seam. No deployable predictor or VGGT result is demonstrated."
+  },
+  "calibration": {
+    "fit_samples": 6000,
+    "held_out_samples": 4000,
+    "generating_sigma": "0.07 + 0.45 / sqrt(confidence), scalar zero-mean Gaussian",
+    "raw_assumed_variance": "1 / confidence**2",
+    "raw": {
+      "mean_normalized_squared_error_target_1": 8.104116637897429,
+      "gaussian_nll": 2.9804482276512423,
+      "coverage_approximately_95_percent": 0.6925
+    },
+    "calibrated": {
+      "mean_normalized_squared_error_target_1": 1.0554240963490784,
+      "gaussian_nll": 0.018507697797933622,
+      "coverage_approximately_95_percent": 0.94125
+    },
+    "known_generating_variance": {
+      "mean_normalized_squared_error_target_1": 1.0073519675446652,
+      "gaussian_nll": 0.012597829951669368,
+      "coverage_approximately_95_percent": 0.94625
+    }
+  },
+  "correlated_measurement_demo": [
+    {
+      "points_per_estimate": 1,
+      "trials": 3000,
+      "calibrated_individual_point_variance": 0.05000000000000001,
+      "naive_independent_mean_variance": 0.05000000000000001,
+      "true_mean_variance": 0.05000000000000001,
+      "empirical_mean_squared_error": 0.05045030994961602,
+      "expected_overconfidence_variance_factor": 1.0
+    },
+    {
+      "points_per_estimate": 10,
+      "trials": 3000,
+      "calibrated_individual_point_variance": 0.05000000000000001,
+      "naive_independent_mean_variance": 0.005000000000000001,
+      "true_mean_variance": 0.04100000000000001,
+      "empirical_mean_squared_error": 0.03966103996721264,
+      "expected_overconfidence_variance_factor": 8.2
+    },
+    {
+      "points_per_estimate": 100,
+      "trials": 3000,
+      "calibrated_individual_point_variance": 0.05000000000000001,
+      "naive_independent_mean_variance": 0.0005000000000000001,
+      "true_mean_variance": 0.04010000000000001,
+      "empirical_mean_squared_error": 0.040276330311512995,
+      "expected_overconfidence_variance_factor": 80.2
+    }
+  ],
+  "kitti_pose_preflight": [
+    {
+      "sequence": "00",
+      "frames": 4541,
+      "path_length_m": 3724.186990597451,
+      "manufactured_gauge_change_ate_m": 1.0573624093035566e-12,
+      "warning": "GT-only evaluator sanity check; not SLAM inference or a baseline result"
+    },
+    {
+      "sequence": "01",
+      "frames": 1101,
+      "path_length_m": 2453.2030391857943,
+      "manufactured_gauge_change_ate_m": 1.2349802098617924e-12,
+      "warning": "GT-only evaluator sanity check; not SLAM inference or a baseline result"
+    },
+    {
+      "sequence": "02",
+      "frames": 4661,
+      "path_length_m": 5067.232765432861,
+      "manufactured_gauge_change_ate_m": 4.60681814982689e-13,
+      "warning": "GT-only evaluator sanity check; not SLAM inference or a baseline result"
+    },
+    {
+      "sequence": "03",
+      "frames": 801,
+      "path_length_m": 560.8884095001094,
+      "manufactured_gauge_change_ate_m": 8.07469191444681e-13,
+      "warning": "GT-only evaluator sanity check; not SLAM inference or a baseline result"
+    },
+    {
+      "sequence": "04",
+      "frames": 271,
+      "path_length_m": 393.6451343954618,
+      "manufactured_gauge_change_ate_m": 7.553887293696533e-13,
+      "warning": "GT-only evaluator sanity check; not SLAM inference or a baseline result"
+    },
+    {
+      "sequence": "05",
+      "frames": 2761,
+      "path_length_m": 2205.5757638579357,
+      "manufactured_gauge_change_ate_m": 2.2059412426616373e-13,
+      "warning": "GT-only evaluator sanity check; not SLAM inference or a baseline result"
+    },
+    {
+      "sequence": "06",
+      "frames": 1101,
+      "path_length_m": 1232.8764715409743,
+      "manufactured_gauge_change_ate_m": 1.1276848330481397e-13,
+      "warning": "GT-only evaluator sanity check; not SLAM inference or a baseline result"
+    },
+    {
+      "sequence": "07",
+      "frames": 1101,
+      "path_length_m": 694.6967407086909,
+      "manufactured_gauge_change_ate_m": 1.5233205987845206e-13,
+      "warning": "GT-only evaluator sanity check; not SLAM inference or a baseline result"
+    },
+    {
+      "sequence": "08",
+      "frames": 4071,
+      "path_length_m": 3222.795129352712,
+      "manufactured_gauge_change_ate_m": 3.2017025554218223e-13,
+      "warning": "GT-only evaluator sanity check; not SLAM inference or a baseline result"
+    },
+    {
+      "sequence": "09",
+      "frames": 1591,
+      "path_length_m": 1705.0514567133232,
+      "manufactured_gauge_change_ate_m": 6.096909236714255e-13,
+      "warning": "GT-only evaluator sanity check; not SLAM inference or a baseline result"
+    },
+    {
+      "sequence": "10",
+      "frames": 1201,
+      "path_length_m": 919.5184515163598,
+      "manufactured_gauge_change_ate_m": 1.6971980154979991e-13,
+      "warning": "GT-only evaluator sanity check; not SLAM inference or a baseline result"
+    }
+  ]
+}
