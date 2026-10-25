@@ -1,3 +1,5 @@
+> **Superseded (2026-10-24):** the README now holds the current setup and GPU run instructions. This page is kept for history.
+
 # Team setup and first server task
 
 This guide is for the existing project folder and a teammate starting on another machine. Research concerns already live in `proposal_review.md`; this guide does not duplicate that review. Read `README.md` for the code map and `status.md` for completed versus pending work.
@@ -59,11 +61,10 @@ cd MR_Proj
 python3.11 -m venv .venv
 .venv/bin/python -m pip install -r requirements-cpu.txt
 .venv/bin/python -m unittest discover -s tests -v
-.venv/bin/python scripts/fetch_reference_material.py --poses-only
 .venv/bin/python -m mr_cpu.lab
 ```
 
-`--poses-only` obtains the small public reference-pose archive without resolving newer research-source revisions. The initial test suite should pass 24 checks. The lab output remains synthetic plus reference-only evaluation checks. It does not run VGGT.
+Download the KITTI files as described in the README (Data section). The test suite should pass all checks. The lab output remains synthetic plus reference-only evaluation checks. It does not run VGGT.
 
 The local `.venv`, `data/` and `reference_material/` are intentionally absent from the clone. Recreate the environment and fetch data as above. The reference poses do not need to be copied from the laptop.
 

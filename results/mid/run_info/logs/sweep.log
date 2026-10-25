@@ -1,0 +1,14 @@
+Sat Oct 24 08:54:45 PM IST 2026
+/scratch2/vpr-team/kavish/mr/mr_gpu/run_vggt.py:59: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  state = torch.load(weights, map_location="cpu")
+/scratch2/vpr-team/kavish/mr/external/VGGT-Long/base_models/vggt/models/vggt.py:63: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=False):
+{'window': 8, 'peak_gpu_mem_gb': 7.723, 'sec': 0.44, 'frames_per_sec': 18.17}
+{'window': 16, 'peak_gpu_mem_gb': 8.355, 'sec': 0.824, 'frames_per_sec': 19.42}
+{'window': 24, 'peak_gpu_mem_gb': 8.999, 'sec': 1.272, 'frames_per_sec': 18.87}
+{'window': 32, 'peak_gpu_mem_gb': 9.647, 'sec': 1.762, 'frames_per_sec': 18.16}
+{'window': 48, 'peak_gpu_mem_gb': 10.896, 'sec': 2.868, 'frames_per_sec': 16.74}
+{'window': 64, 'peak_gpu_mem_gb': 12.171, 'sec': 4.179, 'frames_per_sec': 15.31}
+wrote /scratch2/vpr-team/kavish/mr/results/memory_sweep.csv
+EXIT=0
+Sat Oct 24 08:55:32 PM IST 2026

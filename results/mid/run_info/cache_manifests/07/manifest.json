@@ -1,0 +1,921 @@
+{
+ "engine": "vggt",
+ "sequence": "07",
+ "n_frames": 1101,
+ "window": 32,
+ "overlap": 16,
+ "stride": 2,
+ "orig_hw": [
+  370,
+  1226
+ ],
+ "model_hw": [
+  154,
+  518
+ ],
+ "windows": [
+  [
+   0,
+   32
+  ],
+  [
+   16,
+   48
+  ],
+  [
+   32,
+   64
+  ],
+  [
+   48,
+   80
+  ],
+  [
+   64,
+   96
+  ],
+  [
+   80,
+   112
+  ],
+  [
+   96,
+   128
+  ],
+  [
+   112,
+   144
+  ],
+  [
+   128,
+   160
+  ],
+  [
+   144,
+   176
+  ],
+  [
+   160,
+   192
+  ],
+  [
+   176,
+   208
+  ],
+  [
+   192,
+   224
+  ],
+  [
+   208,
+   240
+  ],
+  [
+   224,
+   256
+  ],
+  [
+   240,
+   272
+  ],
+  [
+   256,
+   288
+  ],
+  [
+   272,
+   304
+  ],
+  [
+   288,
+   320
+  ],
+  [
+   304,
+   336
+  ],
+  [
+   320,
+   352
+  ],
+  [
+   336,
+   368
+  ],
+  [
+   352,
+   384
+  ],
+  [
+   368,
+   400
+  ],
+  [
+   384,
+   416
+  ],
+  [
+   400,
+   432
+  ],
+  [
+   416,
+   448
+  ],
+  [
+   432,
+   464
+  ],
+  [
+   448,
+   480
+  ],
+  [
+   464,
+   496
+  ],
+  [
+   480,
+   512
+  ],
+  [
+   496,
+   528
+  ],
+  [
+   512,
+   544
+  ],
+  [
+   528,
+   560
+  ],
+  [
+   544,
+   576
+  ],
+  [
+   560,
+   592
+  ],
+  [
+   576,
+   608
+  ],
+  [
+   592,
+   624
+  ],
+  [
+   608,
+   640
+  ],
+  [
+   624,
+   656
+  ],
+  [
+   640,
+   672
+  ],
+  [
+   656,
+   688
+  ],
+  [
+   672,
+   704
+  ],
+  [
+   688,
+   720
+  ],
+  [
+   704,
+   736
+  ],
+  [
+   720,
+   752
+  ],
+  [
+   736,
+   768
+  ],
+  [
+   752,
+   784
+  ],
+  [
+   768,
+   800
+  ],
+  [
+   784,
+   816
+  ],
+  [
+   800,
+   832
+  ],
+  [
+   816,
+   848
+  ],
+  [
+   832,
+   864
+  ],
+  [
+   848,
+   880
+  ],
+  [
+   864,
+   896
+  ],
+  [
+   880,
+   912
+  ],
+  [
+   896,
+   928
+  ],
+  [
+   912,
+   944
+  ],
+  [
+   928,
+   960
+  ],
+  [
+   944,
+   976
+  ],
+  [
+   960,
+   992
+  ],
+  [
+   976,
+   1008
+  ],
+  [
+   992,
+   1024
+  ],
+  [
+   1008,
+   1040
+  ],
+  [
+   1024,
+   1056
+  ],
+  [
+   1040,
+   1072
+  ],
+  [
+   1056,
+   1088
+  ],
+  [
+   1072,
+   1101
+  ]
+ ],
+ "vggt_long_commit": "c160869d1d99c96bb227f414afb3bc68c29c9a76",
+ "checkpoint": "/scratch2/vpr-team/kavish/mr/external/VGGT-Long/weights/model.pt",
+ "checkpoint_sha256": "d15bf50a8615c8225ed48b51ea5cac673d82442ec0309036df555a053253afe0",
+ "dtype": "torch.bfloat16",
+ "gpu": "NVIDIA RTX A4000",
+ "torch": "2.5.1+cu124",
+ "checks": {
+  "0": {
+   "depth_vs_points_rel": 0.017627385321890385,
+   "first_cam_identity_dev": 0.00017921610090174136,
+   "gt_pos_rms_rel": 0.07854350648793466,
+   "gt_rot_rms_deg": 0.8142540459556031,
+   "gt_pos_rms_rel_if_inverted": 1.0588184801754805,
+   "gt_spread_m": 1.8824254255127617
+  },
+  "1": {
+   "depth_vs_points_rel": 0.041029749132441944,
+   "first_cam_identity_dev": 0.00032767081791121105,
+   "gt_pos_rms_rel": 0.05813079004988152,
+   "gt_rot_rms_deg": 1.3399087318702156,
+   "gt_pos_rms_rel_if_inverted": 1.0538652655467364,
+   "gt_spread_m": 3.144573255217323
+  },
+  "2": {
+   "depth_vs_points_rel": 0.016112558099479302,
+   "first_cam_identity_dev": 0.00014535056584025744,
+   "gt_pos_rms_rel": 0.018377267003767458,
+   "gt_rot_rms_deg": 1.035559731721293,
+   "gt_pos_rms_rel_if_inverted": 1.0425175307990835,
+   "gt_spread_m": 5.3271902308746935
+  },
+  "3": {
+   "depth_vs_points_rel": 0.009681776698196136,
+   "first_cam_identity_dev": 8.761172171856291e-05,
+   "gt_pos_rms_rel": 0.027459802262061486,
+   "gt_rot_rms_deg": 0.1256295486983478,
+   "gt_pos_rms_rel_if_inverted": 1.0382919064257599,
+   "gt_spread_m": 7.206431522899772
+  },
+  "4": {
+   "depth_vs_points_rel": 0.01350865293235266,
+   "first_cam_identity_dev": 5.7308969976613455e-05,
+   "gt_pos_rms_rel": 0.02128908546484355,
+   "gt_rot_rms_deg": 0.2328404601425629,
+   "gt_pos_rms_rel_if_inverted": 1.0387033853720096,
+   "gt_spread_m": 7.730536225318591
+  },
+  "5": {
+   "depth_vs_points_rel": 0.01422029254912698,
+   "first_cam_identity_dev": 8.529853941024304e-05,
+   "gt_pos_rms_rel": 0.024543291138864075,
+   "gt_rot_rms_deg": 0.1273565167826561,
+   "gt_pos_rms_rel_if_inverted": 1.0374855575401536,
+   "gt_spread_m": 7.461179214161272
+  },
+  "6": {
+   "depth_vs_points_rel": 0.014700165429187026,
+   "first_cam_identity_dev": 0.00010885283033416901,
+   "gt_pos_rms_rel": 0.023626241296070584,
+   "gt_rot_rms_deg": 0.3079723541759871,
+   "gt_pos_rms_rel_if_inverted": 1.036595045754598,
+   "gt_spread_m": 6.3845408797370435
+  },
+  "7": {
+   "depth_vs_points_rel": 0.021958366380733292,
+   "first_cam_identity_dev": 0.00035267859833491415,
+   "gt_pos_rms_rel": 0.0748717435581831,
+   "gt_rot_rms_deg": 1.2919033859809164,
+   "gt_pos_rms_rel_if_inverted": 1.040019644509074,
+   "gt_spread_m": 4.397442935642508
+  },
+  "8": {
+   "depth_vs_points_rel": 0.026453246313533966,
+   "first_cam_identity_dev": 0.0005289377193518625,
+   "gt_pos_rms_rel": 0.06223202152369624,
+   "gt_rot_rms_deg": 1.849495423362031,
+   "gt_pos_rms_rel_if_inverted": 1.045768774475589,
+   "gt_spread_m": 4.9281870215523575
+  },
+  "9": {
+   "depth_vs_points_rel": 0.01705543053645272,
+   "first_cam_identity_dev": 0.0001842656566522736,
+   "gt_pos_rms_rel": 0.0378797643142515,
+   "gt_rot_rms_deg": 0.8122199990086236,
+   "gt_pos_rms_rel_if_inverted": 1.0387871202240104,
+   "gt_spread_m": 6.7139812677506825
+  },
+  "10": {
+   "depth_vs_points_rel": 0.013867866287060784,
+   "first_cam_identity_dev": 9.217736547167152e-05,
+   "gt_pos_rms_rel": 0.0260323910217727,
+   "gt_rot_rms_deg": 0.2245679879974321,
+   "gt_pos_rms_rel_if_inverted": 1.0384739160018908,
+   "gt_spread_m": 7.094836977024282
+  },
+  "11": {
+   "depth_vs_points_rel": 0.010098035468551772,
+   "first_cam_identity_dev": 8.825797497001243e-05,
+   "gt_pos_rms_rel": 0.02043624863108767,
+   "gt_rot_rms_deg": 0.15142497085378634,
+   "gt_pos_rms_rel_if_inverted": 1.0368543241819397,
+   "gt_spread_m": 7.624772154156351
+  },
+  "12": {
+   "depth_vs_points_rel": 0.011816652730918253,
+   "first_cam_identity_dev": 5.010122195133766e-05,
+   "gt_pos_rms_rel": 0.023626795496392093,
+   "gt_rot_rms_deg": 0.2256507156511067,
+   "gt_pos_rms_rel_if_inverted": 1.0366599385905193,
+   "gt_spread_m": 7.868871946525857
+  },
+  "13": {
+   "depth_vs_points_rel": 0.012463225083755703,
+   "first_cam_identity_dev": 4.922791098129072e-05,
+   "gt_pos_rms_rel": 0.02810314457962983,
+   "gt_rot_rms_deg": 0.48121700088270486,
+   "gt_pos_rms_rel_if_inverted": 1.0383223837215865,
+   "gt_spread_m": 7.377435260187081
+  },
+  "14": {
+   "depth_vs_points_rel": 0.009921269380953068,
+   "first_cam_identity_dev": 7.132367826503202e-05,
+   "gt_pos_rms_rel": 0.02118318176202916,
+   "gt_rot_rms_deg": 0.6844813903103993,
+   "gt_pos_rms_rel_if_inverted": 1.0382594533232905,
+   "gt_spread_m": 6.967586428397924
+  },
+  "15": {
+   "depth_vs_points_rel": 0.012600590969275046,
+   "first_cam_identity_dev": 0.00010762411632341653,
+   "gt_pos_rms_rel": 0.024233863127210382,
+   "gt_rot_rms_deg": 0.6056637484884667,
+   "gt_pos_rms_rel_if_inverted": 1.0381540362239892,
+   "gt_spread_m": 6.98844502917464
+  },
+  "16": {
+   "depth_vs_points_rel": 0.011026205921293922,
+   "first_cam_identity_dev": 0.00016477271964915566,
+   "gt_pos_rms_rel": 0.03813505508666599,
+   "gt_rot_rms_deg": 0.3164726731566099,
+   "gt_pos_rms_rel_if_inverted": 1.0409520152703269,
+   "gt_spread_m": 6.924274861852264
+  },
+  "17": {
+   "depth_vs_points_rel": 0.010887227379336726,
+   "first_cam_identity_dev": 0.00010196078203690826,
+   "gt_pos_rms_rel": 0.027714136940879437,
+   "gt_rot_rms_deg": 0.2845831836377278,
+   "gt_pos_rms_rel_if_inverted": 1.0457173716293588,
+   "gt_spread_m": 5.461764388873236
+  },
+  "18": {
+   "depth_vs_points_rel": 0.01162931610374439,
+   "first_cam_identity_dev": 0.00021754535259152768,
+   "gt_pos_rms_rel": 0.055032261169939006,
+   "gt_rot_rms_deg": 0.5754801979673831,
+   "gt_pos_rms_rel_if_inverted": 1.0554338516469048,
+   "gt_spread_m": 2.922544135003256
+  },
+  "19": {
+   "depth_vs_points_rel": 0.014712177589660745,
+   "first_cam_identity_dev": 0.0003816335285008947,
+   "gt_pos_rms_rel": 0.06324966072730631,
+   "gt_rot_rms_deg": 0.3192747663740729,
+   "gt_pos_rms_rel_if_inverted": 1.0565237169387636,
+   "gt_spread_m": 2.252000995820921
+  },
+  "20": {
+   "depth_vs_points_rel": 0.024931528557801817,
+   "first_cam_identity_dev": 0.0003080961373597732,
+   "gt_pos_rms_rel": 0.047042728806806156,
+   "gt_rot_rms_deg": 1.7037767469084981,
+   "gt_pos_rms_rel_if_inverted": 1.0458892059400817,
+   "gt_spread_m": 3.9152369465496277
+  },
+  "21": {
+   "depth_vs_points_rel": 0.016616628913434777,
+   "first_cam_identity_dev": 0.00017227562465982408,
+   "gt_pos_rms_rel": 0.016179209626556064,
+   "gt_rot_rms_deg": 0.8886253577723744,
+   "gt_pos_rms_rel_if_inverted": 1.0384778461932698,
+   "gt_spread_m": 6.479401122343379
+  },
+  "22": {
+   "depth_vs_points_rel": 0.011116391523248387,
+   "first_cam_identity_dev": 0.0001335580584888663,
+   "gt_pos_rms_rel": 0.0194389837278104,
+   "gt_rot_rms_deg": 0.18377012612653024,
+   "gt_pos_rms_rel_if_inverted": 1.0373143551679502,
+   "gt_spread_m": 8.466165534359192
+  },
+  "23": {
+   "depth_vs_points_rel": 0.01067248825870859,
+   "first_cam_identity_dev": 0.000141798267311014,
+   "gt_pos_rms_rel": 0.032939883611534944,
+   "gt_rot_rms_deg": 0.18922842452076177,
+   "gt_pos_rms_rel_if_inverted": 1.0355716219589917,
+   "gt_spread_m": 9.141583324452997
+  },
+  "24": {
+   "depth_vs_points_rel": 0.015651220812095867,
+   "first_cam_identity_dev": 0.00012407500210463002,
+   "gt_pos_rms_rel": 0.035065601552785264,
+   "gt_rot_rms_deg": 0.18435618035055823,
+   "gt_pos_rms_rel_if_inverted": 1.0337025984911015,
+   "gt_spread_m": 9.0587849044486
+  },
+  "25": {
+   "depth_vs_points_rel": 0.013512684177828919,
+   "first_cam_identity_dev": 9.232581619558975e-05,
+   "gt_pos_rms_rel": 0.030223882770916352,
+   "gt_rot_rms_deg": 0.10356277895781199,
+   "gt_pos_rms_rel_if_inverted": 1.0321164729510766,
+   "gt_spread_m": 8.685665541923361
+  },
+  "26": {
+   "depth_vs_points_rel": 0.01644827994164093,
+   "first_cam_identity_dev": 0.00012065497176341986,
+   "gt_pos_rms_rel": 0.030000573385709172,
+   "gt_rot_rms_deg": 0.1429593808585541,
+   "gt_pos_rms_rel_if_inverted": 1.0331054149207124,
+   "gt_spread_m": 7.616751823153035
+  },
+  "27": {
+   "depth_vs_points_rel": 0.011479282841164243,
+   "first_cam_identity_dev": 0.00012240858893823893,
+   "gt_pos_rms_rel": 0.026648726689918648,
+   "gt_rot_rms_deg": 0.7014065199361431,
+   "gt_pos_rms_rel_if_inverted": 1.0373346957400664,
+   "gt_spread_m": 5.814236414989057
+  },
+  "28": {
+   "depth_vs_points_rel": 0.014188539008410416,
+   "first_cam_identity_dev": 0.00012340157225599488,
+   "gt_pos_rms_rel": 0.09620444426416942,
+   "gt_rot_rms_deg": 2.1368305357537145,
+   "gt_pos_rms_rel_if_inverted": 1.047815826831428,
+   "gt_spread_m": 4.398583222897092
+  },
+  "29": {
+   "depth_vs_points_rel": 0.01971034132165069,
+   "first_cam_identity_dev": 6.853959452806452e-05,
+   "gt_pos_rms_rel": 0.03677198631748688,
+   "gt_rot_rms_deg": 2.1323382464801046,
+   "gt_pos_rms_rel_if_inverted": 1.0465736752176322,
+   "gt_spread_m": 4.446156823159999
+  },
+  "30": {
+   "depth_vs_points_rel": 0.012300808372784066,
+   "first_cam_identity_dev": 3.561735250560805e-05,
+   "gt_pos_rms_rel": 0.020595194234154797,
+   "gt_rot_rms_deg": 0.2806776411011735,
+   "gt_pos_rms_rel_if_inverted": 1.0396218648934143,
+   "gt_spread_m": 5.95536187760578
+  },
+  "31": {
+   "depth_vs_points_rel": 0.011303330313887486,
+   "first_cam_identity_dev": 8.603064905612658e-05,
+   "gt_pos_rms_rel": 0.027897622709041947,
+   "gt_rot_rms_deg": 0.15265705807767196,
+   "gt_pos_rms_rel_if_inverted": 1.0350281600422024,
+   "gt_spread_m": 7.920344540754854
+  },
+  "32": {
+   "depth_vs_points_rel": 0.012200583007843983,
+   "first_cam_identity_dev": 0.00013270887098107518,
+   "gt_pos_rms_rel": 0.0242260215484163,
+   "gt_rot_rms_deg": 0.34559777990431917,
+   "gt_pos_rms_rel_if_inverted": 1.0323475661378607,
+   "gt_spread_m": 8.440197113656536
+  },
+  "33": {
+   "depth_vs_points_rel": 0.01241827956185197,
+   "first_cam_identity_dev": 8.153723239651286e-05,
+   "gt_pos_rms_rel": 0.03488122288680397,
+   "gt_rot_rms_deg": 1.3522368387396306,
+   "gt_pos_rms_rel_if_inverted": 1.0329568269877125,
+   "gt_spread_m": 8.00596024193629
+  },
+  "34": {
+   "depth_vs_points_rel": 0.013019547556178894,
+   "first_cam_identity_dev": 0.0001191599241289315,
+   "gt_pos_rms_rel": 0.03391885027914523,
+   "gt_rot_rms_deg": 0.7797500993321821,
+   "gt_pos_rms_rel_if_inverted": 1.0338229528360185,
+   "gt_spread_m": 8.713401268111022
+  },
+  "35": {
+   "depth_vs_points_rel": 0.00982273468593504,
+   "first_cam_identity_dev": 9.016556822951069e-05,
+   "gt_pos_rms_rel": 0.02947774903195619,
+   "gt_rot_rms_deg": 0.11858351647126361,
+   "gt_pos_rms_rel_if_inverted": 1.0345406916167834,
+   "gt_spread_m": 9.59062071679003
+  },
+  "36": {
+   "depth_vs_points_rel": 0.011898332723885107,
+   "first_cam_identity_dev": 7.003258569559188e-05,
+   "gt_pos_rms_rel": 0.024875823909934227,
+   "gt_rot_rms_deg": 0.1647342509156513,
+   "gt_pos_rms_rel_if_inverted": 1.0325630113851327,
+   "gt_spread_m": 9.38396780324008
+  },
+  "37": {
+   "depth_vs_points_rel": 0.013817198210438437,
+   "first_cam_identity_dev": 9.817929146465844e-05,
+   "gt_pos_rms_rel": 0.018225850048539945,
+   "gt_rot_rms_deg": 0.13003728149230684,
+   "gt_pos_rms_rel_if_inverted": 1.0322092836752064,
+   "gt_spread_m": 8.795217262551132
+  },
+  "38": {
+   "depth_vs_points_rel": 0.013215770928778963,
+   "first_cam_identity_dev": 0.0001449102161972178,
+   "gt_pos_rms_rel": 0.020836098666522872,
+   "gt_rot_rms_deg": 0.3590406308346779,
+   "gt_pos_rms_rel_if_inverted": 1.036928993159615,
+   "gt_spread_m": 6.868356556160534
+  },
+  "39": {
+   "depth_vs_points_rel": 0.015236782562219177,
+   "first_cam_identity_dev": 0.00015708764445066743,
+   "gt_pos_rms_rel": 0.0345777961145849,
+   "gt_rot_rms_deg": 0.18349247851576056,
+   "gt_pos_rms_rel_if_inverted": 1.0453523177690176,
+   "gt_spread_m": 3.2973827448115696
+  },
+  "40": {
+   "depth_vs_points_rel": 0.010218202202846556,
+   "first_cam_identity_dev": 0.0003196768405616683,
+   "gt_pos_rms_rel": 0.09767239196911265,
+   "gt_rot_rms_deg": 0.22591040747186691,
+   "gt_pos_rms_rel_if_inverted": 1.060656292528686,
+   "gt_spread_m": 0.9570119104418804
+  },
+  "41": {
+   "depth_vs_points_rel": 0.008574664639488751,
+   "first_cam_identity_dev": 0.00019285060942827073,
+   "gt_pos_rms_rel": 0.5995854724273532,
+   "gt_rot_rms_deg": 0.06921069740111215,
+   "gt_pos_rms_rel_if_inverted": 1.0430586336825571,
+   "gt_spread_m": 0.09143792360979724
+  },
+  "42": {
+   "depth_vs_points_rel": 0.007088977292477193,
+   "first_cam_identity_dev": 0.0002281635739638174,
+   "gt_pos_rms_rel": 1.0014454417880645,
+   "gt_rot_rms_deg": 0.056946892685127246,
+   "gt_pos_rms_rel_if_inverted": 0.9912112505199049,
+   "gt_spread_m": 0.04163650867130549
+  },
+  "43": {
+   "depth_vs_points_rel": 0.006529624854136682,
+   "first_cam_identity_dev": 0.00026231206606799304,
+   "gt_pos_rms_rel": 0.9438584434713585,
+   "gt_rot_rms_deg": 0.04541354554743333,
+   "gt_pos_rms_rel_if_inverted": 1.0028795153525862,
+   "gt_spread_m": 0.04512198661806602
+  },
+  "44": {
+   "depth_vs_points_rel": 0.009016600673176247,
+   "first_cam_identity_dev": 0.0002435058475608676,
+   "gt_pos_rms_rel": 0.41109954845283525,
+   "gt_rot_rms_deg": 0.06162122936009168,
+   "gt_pos_rms_rel_if_inverted": 1.0597868163076862,
+   "gt_spread_m": 0.3001029226873616
+  },
+  "45": {
+   "depth_vs_points_rel": 0.012197049866660073,
+   "first_cam_identity_dev": 0.00026450689597431575,
+   "gt_pos_rms_rel": 0.1352361644051863,
+   "gt_rot_rms_deg": 0.2403082117953731,
+   "gt_pos_rms_rel_if_inverted": 1.0606037519940255,
+   "gt_spread_m": 1.481746582443221
+  },
+  "46": {
+   "depth_vs_points_rel": 0.01664049053746034,
+   "first_cam_identity_dev": 0.0001854747980923645,
+   "gt_pos_rms_rel": 0.07156217080706052,
+   "gt_rot_rms_deg": 1.2910555666519556,
+   "gt_pos_rms_rel_if_inverted": 1.0524122023438707,
+   "gt_spread_m": 4.144532841620107
+  },
+  "47": {
+   "depth_vs_points_rel": 0.014548620701065539,
+   "first_cam_identity_dev": 0.0002055956099420966,
+   "gt_pos_rms_rel": 0.028296492253604155,
+   "gt_rot_rms_deg": 1.0745840284270387,
+   "gt_pos_rms_rel_if_inverted": 1.0361183340433924,
+   "gt_spread_m": 7.655677444877587
+  },
+  "48": {
+   "depth_vs_points_rel": 0.00933332100648464,
+   "first_cam_identity_dev": 0.00012026528939676582,
+   "gt_pos_rms_rel": 0.02470860187716003,
+   "gt_rot_rms_deg": 0.2484239587214754,
+   "gt_pos_rms_rel_if_inverted": 1.0309151269161232,
+   "gt_spread_m": 10.3660479377858
+  },
+  "49": {
+   "depth_vs_points_rel": 0.00993817078146479,
+   "first_cam_identity_dev": 6.403009143577935e-05,
+   "gt_pos_rms_rel": 0.02779230416424311,
+   "gt_rot_rms_deg": 0.1389395841343622,
+   "gt_pos_rms_rel_if_inverted": 1.0283941464458592,
+   "gt_spread_m": 10.868219465530233
+  },
+  "50": {
+   "depth_vs_points_rel": 0.010646841506686372,
+   "first_cam_identity_dev": 0.00017536700859150446,
+   "gt_pos_rms_rel": 0.024644868462336406,
+   "gt_rot_rms_deg": 0.21567074777982004,
+   "gt_pos_rms_rel_if_inverted": 1.0297869826802715,
+   "gt_spread_m": 10.42704576447219
+  },
+  "51": {
+   "depth_vs_points_rel": 0.010298209723423872,
+   "first_cam_identity_dev": 7.882275209421342e-05,
+   "gt_pos_rms_rel": 0.021012877084075655,
+   "gt_rot_rms_deg": 0.1414773193863865,
+   "gt_pos_rms_rel_if_inverted": 1.0302903958458,
+   "gt_spread_m": 10.059105975651326
+  },
+  "52": {
+   "depth_vs_points_rel": 0.010222443384188604,
+   "first_cam_identity_dev": 0.00014303138465316512,
+   "gt_pos_rms_rel": 0.01951174094420488,
+   "gt_rot_rms_deg": 0.13147259504167214,
+   "gt_pos_rms_rel_if_inverted": 1.0311835143809798,
+   "gt_spread_m": 9.778841604514279
+  },
+  "53": {
+   "depth_vs_points_rel": 0.009665663370694981,
+   "first_cam_identity_dev": 0.0001878632365124625,
+   "gt_pos_rms_rel": 0.0196356599032702,
+   "gt_rot_rms_deg": 0.0894268801108364,
+   "gt_pos_rms_rel_if_inverted": 1.0308786797335794,
+   "gt_spread_m": 9.342318494542416
+  },
+  "54": {
+   "depth_vs_points_rel": 0.008838354983602567,
+   "first_cam_identity_dev": 0.00012381242707271576,
+   "gt_pos_rms_rel": 0.021371915554808697,
+   "gt_rot_rms_deg": 0.30250173633063426,
+   "gt_pos_rms_rel_if_inverted": 1.0324582980991126,
+   "gt_spread_m": 7.539572668969829
+  },
+  "55": {
+   "depth_vs_points_rel": 0.011529445671658155,
+   "first_cam_identity_dev": 0.00019397021236811925,
+   "gt_pos_rms_rel": 0.03168792124264064,
+   "gt_rot_rms_deg": 0.22409692752297272,
+   "gt_pos_rms_rel_if_inverted": 1.0370512576394944,
+   "gt_spread_m": 5.054993822396933
+  },
+  "56": {
+   "depth_vs_points_rel": 0.013429875447890573,
+   "first_cam_identity_dev": 0.0002024435712067816,
+   "gt_pos_rms_rel": 0.022005777344360156,
+   "gt_rot_rms_deg": 0.8301126968606182,
+   "gt_pos_rms_rel_if_inverted": 1.0425862099810228,
+   "gt_spread_m": 4.383481334026035
+  },
+  "57": {
+   "depth_vs_points_rel": 0.014262857884834928,
+   "first_cam_identity_dev": 0.0001320749255115026,
+   "gt_pos_rms_rel": 0.016855047745029654,
+   "gt_rot_rms_deg": 0.9760653884985407,
+   "gt_pos_rms_rel_if_inverted": 1.0404307485725037,
+   "gt_spread_m": 5.666780938405859
+  },
+  "58": {
+   "depth_vs_points_rel": 0.008059981504242612,
+   "first_cam_identity_dev": 6.45667825521231e-05,
+   "gt_pos_rms_rel": 0.0280697178947205,
+   "gt_rot_rms_deg": 0.22885424479402178,
+   "gt_pos_rms_rel_if_inverted": 1.0379164795520093,
+   "gt_spread_m": 6.938054331776067
+  },
+  "59": {
+   "depth_vs_points_rel": 0.009512088477851382,
+   "first_cam_identity_dev": 7.417899109978118e-05,
+   "gt_pos_rms_rel": 0.03274666062337976,
+   "gt_rot_rms_deg": 0.1778253545267719,
+   "gt_pos_rms_rel_if_inverted": 1.0390994027658946,
+   "gt_spread_m": 6.617228887221587
+  },
+  "60": {
+   "depth_vs_points_rel": 0.008438516994865926,
+   "first_cam_identity_dev": 6.803379440598166e-05,
+   "gt_pos_rms_rel": 0.04215273157063241,
+   "gt_rot_rms_deg": 0.1380221391522266,
+   "gt_pos_rms_rel_if_inverted": 1.0413426272191528,
+   "gt_spread_m": 5.754970695018172
+  },
+  "61": {
+   "depth_vs_points_rel": 0.008312010221462324,
+   "first_cam_identity_dev": 7.761793648988916e-05,
+   "gt_pos_rms_rel": 0.03859367447665564,
+   "gt_rot_rms_deg": 0.09829984419393854,
+   "gt_pos_rms_rel_if_inverted": 1.0439235225003074,
+   "gt_spread_m": 4.8813669613858925
+  },
+  "62": {
+   "depth_vs_points_rel": 0.009588737848916529,
+   "first_cam_identity_dev": 9.783231082347297e-05,
+   "gt_pos_rms_rel": 0.029356956042548538,
+   "gt_rot_rms_deg": 0.11572489787857954,
+   "gt_pos_rms_rel_if_inverted": 1.0460641539295068,
+   "gt_spread_m": 3.1502596269994885
+  },
+  "63": {
+   "depth_vs_points_rel": 0.007673405463752712,
+   "first_cam_identity_dev": 7.879764608312947e-05,
+   "gt_pos_rms_rel": 0.0335020003269668,
+   "gt_rot_rms_deg": 0.10543699116555942,
+   "gt_pos_rms_rel_if_inverted": 1.0526109370752617,
+   "gt_spread_m": 2.2507266005388726
+  },
+  "64": {
+   "depth_vs_points_rel": 0.006765289871924048,
+   "first_cam_identity_dev": 7.378435179077951e-05,
+   "gt_pos_rms_rel": 0.028783187865406408,
+   "gt_rot_rms_deg": 0.12725813351602916,
+   "gt_pos_rms_rel_if_inverted": 1.0547927986185484,
+   "gt_spread_m": 2.245855005399767
+  },
+  "65": {
+   "depth_vs_points_rel": 0.0072407481500036475,
+   "first_cam_identity_dev": 5.410539752722311e-05,
+   "gt_pos_rms_rel": 0.05139347063506337,
+   "gt_rot_rms_deg": 0.23967726387431065,
+   "gt_pos_rms_rel_if_inverted": 1.053612612772345,
+   "gt_spread_m": 3.100929514405239
+  },
+  "66": {
+   "depth_vs_points_rel": 0.008382087244009403,
+   "first_cam_identity_dev": 0.00010444772720235536,
+   "gt_pos_rms_rel": 0.05853667415711148,
+   "gt_rot_rms_deg": 0.6129709390283854,
+   "gt_pos_rms_rel_if_inverted": 1.051067051583306,
+   "gt_spread_m": 3.3234206898360728
+  },
+  "67": {
+   "depth_vs_points_rel": 0.009816154481872738,
+   "first_cam_identity_dev": 7.774373563210915e-05,
+   "gt_pos_rms_rel": 0.03238613528710816,
+   "gt_rot_rms_deg": 0.19698682803025516,
+   "gt_pos_rms_rel_if_inverted": 1.055641222524479,
+   "gt_spread_m": 1.6230801361545029
+  }
+ },
+ "timing": {
+  "sec_per_window": 1.9060727463049048,
+  "peak_gpu_mem_gb": 9.644470691680908,
+  "frames_per_sec": 16.765300492801526,
+  "unique_frames_per_sec": 5.6476172880240645,
+  "note": "frames_per_sec counts overlap frames twice (forward time only)"
+ },
+ "loop_windows": [
+  {
+   "chunk_a": 42,
+   "range_a": [
+    675,
+    695
+   ],
+   "chunk_b": 41,
+   "range_b": [
+    656,
+    676
+   ],
+   "pair": [
+    685,
+    663
+   ],
+   "similarity": 0.965475
+  },
+  {
+   "chunk_a": 66,
+   "range_a": [
+    1056,
+    1076
+   ],
+   "chunk_b": 0,
+   "range_b": [
+    0,
+    20
+   ],
+   "pair": [
+    1061,
+    4
+   ],
+   "similarity": 0.90326
+  },
+  {
+   "chunk_a": 45,
+   "range_a": [
+    720,
+    740
+   ],
+   "chunk_b": 44,
+   "range_b": [
+    706,
+    726
+   ],
+   "pair": [
+    728,
+    716
+   ],
+   "similarity": 0.892551
+  }
+ ],
+ "loop_pairs": [
+  [
+   685,
+   663,
+   0.965475
+  ],
+  [
+   1061,
+   4,
+   0.90326
+  ],
+  [
+   728,
+   716,
+   0.892551
+  ]
+ ],
+ "descriptor": "salad",
+ "loop_threshold": 0.85
+}

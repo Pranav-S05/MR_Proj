@@ -1,49 +1,112 @@
-# Calibrated confidence for long-sequence reconstruction
+# Calibrated confidence for kilometre-scale feed-forward SLAM
 
-We are studying whether the reliability of connections between VGGT reconstruction windows can be estimated well enough to improve a long camera trajectory. This is the project described in the original [proposal](mobile_robotics_2026.pdf) and [mentor context](Project_Context.md).
+VGGT reconstructs a few dozen frames in one forward pass. VGGT-Long scales it to whole KITTI drives by running it on
+overlapping windows, joining neighbouring windows with Sim(3) "seams", closing loops, and optimising a pose graph in
+which every edge gets the same weight. We measure whether VGGT's per-pixel confidence predicts the real error of those
+seams and loops, turn it into calibrated per-edge uncertainties (7x7 information matrices), and compare the resulting
+trajectories against equal weights, raw confidence, geometry-only weights, a power-law baseline and VGGT-Long itself.
+Proposal: [mobile_robotics_2026.pdf](mobile_robotics_2026.pdf). Plain-language explanation: [docs/explained_simply.md](docs/explained_simply.md).
 
-Current state, October 16, 2026: **CPU foundations implemented and checked. No VGGT inference, reproduced baseline, or real confidence-calibration result yet.** The original proposal is preserved.
+## Status (25 Oct 2026)
 
-Start with [the plain-language explanation](docs/start_here.md). Then use [the first practical lesson](docs/week1_workbook.md). The [proposal review](docs/proposal_review.md) explains the corrections and the important overlap with recent work. The [revised plan and experiment protocol](docs/plan_and_protocol.md) separates the essential study from optional extensions. [Current status](docs/status.md) records what is actually finished.
+| Mid-submission item | State |
+|---|---|
+| Data, conventions, LiDAR projection check | Done on real KITTI 07 ([overlay](results/checks/lidar_overlay_kitti07.png)); camera-2 ground truth and per-sequence image sizes handled |
+| VGGT window inference + cache, memory per window size | Done on an RTX A4000 for 07, 05, 00, 02 (window 32, overlap 16); smoke test 4/4 PASS; [memory sweep](results/memory_sweep.csv) |
+| VGGT-Long reproduction | Alignment and loop optimiser reproduce VGGT-Long's code numerically (see below); scheme (a) is VGGT-Long's weighting. Pending: upstream `vggt_long.py` run scored with our metrics |
+| Seams, true errors, pixel and seam confidence audit, calibration on 05/07 | Done on real data, LiDAR audit over every KITTI scan of the four sequences ([results/mid/summary.md](results/mid/summary.md)) |
+| Weighting schemes (a)-(g), kernels, loops on/off on 00/02, tables and figures | Done ([results/mid/](results/mid/)) |
 
-The isolated CPU environment is already installed in `.venv`. From PowerShell in this folder:
+Held-out ATE with loops (VGGT-Long weighting): KITTI 00 9.20 m, 02 105.10 m (no loops: 140.42 m, 181.58 m). On 02 the
+loop windows place the two passes of a revisit 0.1-1.1 m apart while they are 1-4 m apart in reality, so loop edges
+carry an error close to the true lane offset that confidence does not flag. All numbers and figures:
+[results/mid/summary.md](results/mid/summary.md); run logs and per-sequence settings in `results/mid/run_info/`.
 
-```powershell
-.\.venv\Scripts\python.exe -m mr_cpu.lab
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
-.\.venv\Scripts\python.exe -m mr_cpu.trajectory --reference data/kitti/poses/05.txt
+Verified:
+* our ATE equals `evo_ape --align --correct_scale` on all 56 trajectories of the real run (max difference 1e-9 m);
+* window alignment is identical to VGGT-Long's IRLS code (differences ~1e-15);
+* our pose graph in "upstream" mode reaches the same optimum as VGGT-Long's own pypose `Sim3LoopOptimizer`
+  (same ATE to the millimetre on three sequences);
+* the whole pipeline runs end to end on a **synthetic** frontend built from real KITTI trajectories
+  (regenerate with the commands in section 3). Those numbers test the code, not VGGT.
+
+## Code map
+
+| Path | What it does |
+|---|---|
+| `mr_gpu/run_vggt.py` | GPU: VGGT on overlapping windows + VGGT-Long loop windows, SALAD / VGGT-encoder descriptors, memory sweep, convention self-checks. Writes `cache/kitti/<seq>/` |
+| `mr_cpu/pipeline.py` | CPU: everything after inference: `edges, labels, audit, fit, tune, solve, report` |
+| `mr_cpu/alignment.py` | VGGT-Long's window alignment (IRLS weighted Sim(3)) + per-edge features |
+| `mr_cpu/edges.py`, `labels.py` | seam/loop edge table; ground-truth window gauges and 7-DoF edge errors |
+| `mr_cpu/depth_audit.py`, `kitti.py` | LiDAR vs depth head and point head; KITTI calibration, camera-2 GT, LiDAR projection |
+| `mr_cpu/calibration.py`, `weighting.py` | isotonic maps, reliability, power law; schemes (a)-(g) |
+| `mr_cpu/backend.py`, `lie.py` | sparse Levenberg-Marquardt Sim(3) pose graph with Huber/DCS; batched Sim(3) maths |
+| `mr_cpu/evaluation.py` | trajectory assembly, Sim(3) ATE, ATE vs length, KITTI t_rel/r_rel, evo check; CLI to score VGGT-Long's `camera_poses.txt` |
+| `mr_cpu/report.py` | `summary.md`, `tables/*.csv`, `figures/*.png` |
+| `mr_cpu/synthetic.py` | fake frontend (same cache format) for CPU testing |
+| `mr_cpu/geometry.py`, `trajectory.py`, `graph.py`, `lab.py` | earlier CPU foundations and teaching lab |
+| `configs/kitti_mid.json`, `configs/synthetic.json` | experiment configs (fit 05/07, test 00/02) |
+| `scripts/run_gpu_mid.sh` | the full GPU sequence for the mid submission |
+| `tests/` | 42 checks: `python -m unittest discover -s tests` |
+
+Weighting schemes: (a) VGGT-Long identity, (b) uniform per-DoF constants, (c) raw confidence (mean conf^2),
+(d) geometry-only isotonic (alignment residual), (e) calibrated isotonic (mean confidence, ours), (f) oracle with true
+errors (diagnostic, not a method), (g) Deng et al. power law per pixel. Each with no kernel, Huber and DCS (on loop
+edges; thresholds tuned on 05/07), loops off and on. Conventions are documented at the top of `mr_cpu/geometry.py`,
+`mr_cpu/backend.py` and `mr_cpu/kitti.py`.
+
+## 1. Data (both machines need `data/kitti`)
+
+```bash
+mkdir -p data && cd data
+B=https://s3.eu-central-1.amazonaws.com/avg-kitti
+wget $B/data_odometry_calib.zip $B/data_odometry_poses.zip
+wget $B/data_odometry_color.zip        # 65 GB, all sequences
+wget $B/data_odometry_velodyne.zip     # 80 GB, only needed for the depth audit
+unzip -q data_odometry_calib.zip && unzip -q data_odometry_poses.zip
+unzip -q data_odometry_color.zip    'dataset/sequences/0[0257]/image_2/*'
+unzip -q data_odometry_velodyne.zip 'dataset/sequences/0[0257]/velodyne/*'
+mv dataset kitti && cd ..
 ```
+Result: `data/kitti/poses/SS.txt` and `data/kitti/sequences/SS/{image_2,velodyne,calib.txt,times.txt}`.
+The CPU machine needs calib, poses and velodyne (not the images); the GPU machine needs calib, poses and images.
 
-The lab generates [a summary](results/week1/summary.json), [a graph illustration](results/week1/graph_weights.svg), and [a calibration plot](results/week1/calibration.svg). **The graph and calibration demonstrations use synthetic data. KITTI is used only for ground-truth pose inspection and evaluator checks.**
+## 2. GPU machine (VGGT inference)
 
-To recreate the CPU environment on another machine:
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements-cpu.txt
+```bash
+git clone https://github.com/DengKaiCQ/VGGT-Long.git external/VGGT-Long
+git -C external/VGGT-Long checkout c160869d1d99c96bb227f414afb3bc68c29c9a76
+pixi install                           # environment from pixi.toml / pixi.lock (Linux, CUDA 12 driver)
+mkdir -p external/VGGT-Long/weights && cd external/VGGT-Long/weights
+wget https://huggingface.co/facebook/VGGT-1B/resolve/main/model.pt                          # 5 GB
+wget https://github.com/serizba/salad/releases/download/v1.0.0/dino_salad.ckpt
+wget https://dl.fbaipublicfiles.com/dinov2/dinov2_vitb14/dinov2_vitb14_pretrain.pth
+cd ../../..
+pixi run gpu-mid                       # memory sweep, smoke test (PASS/FAIL), then 07 05 00 02
 ```
+The CPU pipeline also runs inside this environment (`pixi run pipeline`, `pixi run test`); that is how
+`results/mid/` was produced (RTX A4000, 24 Oct 2026, about 2 s per 32-frame window).
+Set `WINDOW=... OVERLAP=...` before the script after looking at `results/memory_sweep.csv` (default 32/16; VGGT-Long
+uses 75/30 on a 24 GB GPU). The smoke test must print PASS for every check before the long runs are trusted. Disk:
+roughly 10 MB per window at the default pixel stride 2 (a few GB per sequence).
 
-`python scripts/fetch_reference_material.py` downloads small public source snapshots and the KITTI pose-only archive. It does not download images, LiDAR, or model weights. The downloaded source is for inspection and is never executed. Its commit IDs, URLs and file hashes are recorded in `reference_material/manifest.json`; a compact copy is kept in [the source record](docs/source_manifest.json).
+## 3. CPU machine (everything else)
 
-`mr_cpu/graph.py` includes a small anchored 3D Sim(3) reference solver. It is suitable for tiny synthetic checks; it has no claim of parity with VGGT-Long, real-sequence scalability, or robust-loop handling. Real baseline integration is a later step.
+```bash
+python -m venv .venv && .venv/Scripts/python -m pip install -r requirements-cpu.txt   # Linux: .venv/bin/python
+# copy cache/kitti/ from the GPU machine into this folder, then
+.venv/Scripts/python -m mr_cpu.pipeline --config configs/kitti_mid.json
+```
+Outputs in `results/mid/`: `summary.md` (tables), `tables/*.csv`, `figures/*.png`, `metrics.csv`,
+`ate_vs_length.csv`, `fitted.json`, `kernels.json`. Single steps: `--steps fit tune solve report`.
+To check the code without a GPU: generate synthetic caches with
+`python -m mr_cpu.synthetic --seq 07 --out cache/synthetic/07` (likewise 05, 00, 02) and run
+`python -m mr_cpu.pipeline --config configs/synthetic.json`.
 
-## Where the code lives
+Score an upstream VGGT-Long run with the same metrics (reproduction check):
+`python -m mr_cpu.evaluation --estimate external/VGGT-Long/exps/<run>/camera_poses.txt --seq 07 --evo`.
 
-The project root is this `MR_Proj` folder. Our own implementation is in `mr_cpu/`; downloaded research source in `reference_material/` is separate and is not imported by our code.
-
-| Path | Purpose |
-| --- | --- |
-| `mr_cpu/geometry.py` | Camera/point transforms, Sim(3) exp/log and residual conventions, weighted alignment, synthetic projection helper. |
-| `mr_cpu/graph.py` | Exact 1D teaching solver and a small anchored 3D Sim(3) reference solver. |
-| `mr_cpu/calibration.py` | One-feature monotone variance fitting and scalar uncertainty scores. |
-| `mr_cpu/trajectory.py` | KITTI/4-by-4 C2W pose loading and global position-ATE preflight. |
-| `mr_cpu/lab.py` | Reproducible synthetic demonstrations and reference-pose checks; generates the example outputs. |
-| `tests/test_cpu.py` | The initial 24 correctness checks. |
-| `scripts/fetch_reference_material.py` | Downloads small reference source snapshots and KITTI reference poses. |
-| `configs/experiment_plan.json` | Draft experiment choices, data split and conventions; not a completed experiment runner. |
-| `results/week1/` | Small example outputs; synthetic results and reference-only checks are explicitly labelled. |
-| `docs/` | Background, proposal review, learning workbook, sources, status and experiment plan. |
-
-For scientific concerns, start with [the proposal review](docs/proposal_review.md), especially “Overall assessment,” “Existing work changes the novelty boundary,” and “The highest-value possible upgrade.” For completed versus pending work, use [the status record](docs/status.md).
-
-For sharing the existing folder, teammate setup, and the remaining server tasks, use [the team handoff](docs/team_handoff.md).
+## Background documents
+[docs/explained_simply.md](docs/explained_simply.md) (start here), [docs/proposal_review.md](docs/proposal_review.md)
+(corrections and related work, incl. GeoCond), [docs/plan_and_protocol.md](docs/plan_and_protocol.md),
+[docs/status.md](docs/status.md), [docs/start_here.md](docs/start_here.md), [CLAUDE.md](CLAUDE.md) (working notes).

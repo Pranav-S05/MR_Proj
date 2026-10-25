@@ -1,0 +1,84 @@
+Sat Oct 24 09:46:41 PM IST 2026
+== edges
+    seam 0/170: scale 1.166, conf 2.13, inliers 0.94
+    seam 50/170: scale 1.231, conf 1.83, inliers 0.89
+    seam 100/170: scale 1.049, conf 2.17, inliers 0.96
+    seam 150/170: scale 1.537, conf 1.24, inliers 0.86
+    seam 170/170: scale 0.845, conf 2.23, inliers 0.98
+  [05] 171 seams, 12 loops (37s)
+    seam 0/66: scale 1.182, conf 1.01, inliers 0.79
+    seam 50/66: scale 0.940, conf 5.43, inliers 0.95
+    seam 66/66: scale 0.909, conf 3.08, inliers 0.94
+  [07] 67 seams, 3 loops (14s)
+    seam 0/281: scale 1.017, conf 3.97, inliers 0.94
+    seam 50/281: scale 0.946, conf 2.62, inliers 0.95
+    seam 100/281: scale 0.991, conf 3.37, inliers 0.95
+    seam 150/281: scale 0.747, conf 1.53, inliers 0.99
+    seam 200/281: scale 0.893, conf 3.46, inliers 0.98
+    seam 250/281: scale 0.893, conf 2.97, inliers 0.96
+    seam 281/281: scale 0.942, conf 4.90, inliers 0.98
+  [00] 282 seams, 20 loops (62s)
+    seam 0/289: scale 1.010, conf 4.75, inliers 0.83
+    seam 50/289: scale 0.991, conf 1.89, inliers 0.99
+    seam 100/289: scale 0.987, conf 2.23, inliers 0.96
+    seam 150/289: scale 0.994, conf 2.22, inliers 0.97
+    seam 200/289: scale 0.909, conf 1.71, inliers 0.99
+    seam 250/289: scale 0.972, conf 2.32, inliers 0.98
+    seam 289/289: scale 0.718, conf 3.71, inliers 0.98
+  [02] 290 seams, 8 loops (57s)
+== labels
+  [05] labels: 176/183 edges usable; 4 degenerate windows (car nearly stopped)
+  [07] labels: 62/70 edges usable; 5 degenerate windows (car nearly stopped)
+  [00] labels: 298/302 edges usable; 2 degenerate windows (car nearly stopped)
+  [02] labels: 298/298 edges usable; 0 degenerate windows (car nearly stopped)
+== audit
+  [05] depth audit: 440800 LiDAR pixels
+  [07] depth audit: 320000 LiDAR pixels
+  [00] depth audit: 724800 LiDAR pixels
+  [02] depth audit: 484800 LiDAR pixels
+== fit
+  fitted on 227 seams / 11 loops from ['05', '07']; pixel power law p = 0.759
+== tune
+  vggt_long: huber k=2, dcs phi=10
+  uniform: huber k=0.5, dcs phi=100
+  raw_conf: huber k=3, dcs phi=100
+  geometry: huber k=0.5, dcs phi=300
+  calibrated: huber k=0.5, dcs phi=300
+  oracle: huber k=1, dcs phi=30
+  power_law: huber k=0.5, dcs phi=100
+== solve
+  [05] vggt_long  ATE [m]: chain 48.62 | loops 10.03 | huber 10.03 | dcs 10.03
+  [05] uniform    ATE [m]: chain 48.62 | loops 11.51 | huber 11.51 | dcs 11.51
+  [05] raw_conf   ATE [m]: chain 48.62 | loops 10.06 | huber 10.06 | dcs 10.06
+  [05] geometry   ATE [m]: chain 48.62 | loops 11.12 | huber 11.12 | dcs 11.12
+  [05] calibrated ATE [m]: chain 48.62 | loops 9.56 | huber 9.56 | dcs 9.56
+  [05] oracle     ATE [m]: chain 48.62 | loops 8.94 | huber 8.94 | dcs 8.94
+  [05] power_law  ATE [m]: chain 48.62 | loops 10.38 | huber 10.37 | dcs 10.38
+  [07] vggt_long  ATE [m]: chain 22.29 | loops 4.04 | huber 4.04 | dcs 4.04
+  [07] uniform    ATE [m]: chain 22.29 | loops 3.59 | huber 3.59 | dcs 3.59
+  [07] raw_conf   ATE [m]: chain 22.29 | loops 4.53 | huber 4.53 | dcs 4.53
+  [07] geometry   ATE [m]: chain 22.29 | loops 4.49 | huber 4.49 | dcs 4.49
+  [07] calibrated ATE [m]: chain 22.29 | loops 4.33 | huber 4.33 | dcs 4.33
+  [07] oracle     ATE [m]: chain 22.29 | loops 4.59 | huber 4.59 | dcs 4.59
+  [07] power_law  ATE [m]: chain 22.29 | loops 4.39 | huber 4.39 | dcs 4.39
+  [00] vggt_long  ATE [m]: chain 140.42 | loops 9.20 | huber 9.20 | dcs 9.20
+  [00] uniform    ATE [m]: chain 140.42 | loops 10.15 | huber 10.15 | dcs 10.15
+  [00] raw_conf   ATE [m]: chain 140.42 | loops 10.29 | huber 10.29 | dcs 10.29
+  [00] geometry   ATE [m]: chain 140.42 | loops 9.31 | huber 9.31 | dcs 9.31
+  [00] calibrated ATE [m]: chain 140.42 | loops 9.11 | huber 9.11 | dcs 9.11
+  [00] oracle     ATE [m]: chain 140.42 | loops 11.93 | huber 11.93 | dcs 11.93
+  [00] power_law  ATE [m]: chain 140.42 | loops 9.89 | huber 9.85 | dcs 9.89
+  [02] vggt_long  ATE [m]: chain 181.58 | loops 105.10 | huber 105.10 | dcs 105.10
+  [02] uniform    ATE [m]: chain 181.58 | loops 113.41 | huber 113.41 | dcs 175.78
+  [02] raw_conf   ATE [m]: chain 181.58 | loops 119.68 | huber 119.68 | dcs 175.82
+  [02] geometry   ATE [m]: chain 181.58 | loops 112.92 | huber 112.92 | dcs 112.92
+  [02] calibrated ATE [m]: chain 181.58 | loops 117.16 | huber 117.16 | dcs 117.16
+  [02] oracle     ATE [m]: chain 181.58 | loops 116.13 | huber 116.13 | dcs 116.13
+  [02] power_law  ATE [m]: chain 181.58 | loops 119.88 | huber 119.88 | dcs 119.88
+== report
+/scratch2/vpr-team/kavish/mr/mr_cpu/report.py:175: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rank_rows.append([feat] + [_fmt(spearmanr(tab_t["f_" + feat][m], tg_t[b][m])[0]) for b in BLOCKS])
+  wrote results/mid/summary.md and 8 figures
+EXIT=0
+Sat Oct 24 09:51:08 PM IST 2026
+PIPELINE_DONE

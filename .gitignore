@@ -14,3 +14,6 @@ checkpoints/
 *.pth
 *.ckpt
 *.safetensors
+# large per-sequence arrays written by the pipeline (summaries, tables and figures stay tracked)
+results/*/[0-9][0-9]/
+results/*/trajectories/

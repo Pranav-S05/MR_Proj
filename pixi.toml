@@ -1,0 +1,43 @@
+# GPU environment (Linux, CUDA 12.x driver), used on Phoenix. `pixi install`, then `pixi run <cmd>`.
+# The Windows CPU machine keeps using .venv + requirements-cpu.txt.
+[workspace]
+name = "mr-calib-slam"
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[dependencies]
+python = "3.10.*"
+numpy = "2.2.*"
+scipy = "1.15.*"
+matplotlib = ">=3.8"
+pillow = ">=10"
+tqdm = "*"
+einops = "*"
+safetensors = "*"
+huggingface_hub = "*"
+scikit-learn = "*"  # for pytorch-metric-learning
+# only for running upstream VGGT-Long itself (reproduction check)
+opencv = "*"
+numba = "*"
+trimesh = "*"
+pyyaml = "*"
+faiss-cpu = "*"
+
+# The PyTorch index also mirrors the nvidia-*/triton wheels torch needs (files.pythonhosted.org is very slow from
+# Phoenix); packages it lacks fall back to PyPI (uv tries extra indexes before index-url).
+# evo (only for the parity check) lives in the CPU venv.
+[pypi-options]
+index-url = "https://pypi.org/simple"
+extra-index-urls = ["https://download.pytorch.org/whl/cu124"]
+
+[pypi-dependencies]
+torch = "==2.5.1"
+torchvision = "==0.20.1"
+pytorch-lightning = "*"  # this and the next are imported by VGGT-Long's SALAD loop model
+pytorch-metric-learning = "*"
+pypose = "*"  # upstream VGGT-Long's loop optimizer
+
+[tasks]
+test = "python -m unittest discover -s tests"
+gpu-mid = "bash scripts/run_gpu_mid.sh"
+pipeline = "python -m mr_cpu.pipeline --config configs/kitti_mid.json"

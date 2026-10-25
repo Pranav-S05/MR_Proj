@@ -1,0 +1,56 @@
+00 4541
+02 4661
+05 2761
+07 1101
+Sat Oct 24 11:59:54 PM IST 2026
+== audit
+  [05] depth audit: 4397600 LiDAR pixels
+  [07] depth audit: 1738400 LiDAR pixels
+  [00] depth audit: 7242400 LiDAR pixels
+  [02] depth audit: 7440800 LiDAR pixels
+== fit
+  fitted on 227 seams / 11 loops from ['05', '07']; pixel power law p = 0.746
+== tune
+  vggt_long: huber k=2, dcs phi=10
+  uniform: huber k=0.5, dcs phi=100
+  raw_conf: huber k=3, dcs phi=100
+  geometry: huber k=0.5, dcs phi=300
+  calibrated: huber k=0.5, dcs phi=300
+  oracle: huber k=1, dcs phi=30
+  power_law: huber k=0.5, dcs phi=100
+== solve
+  [05] vggt_long  ATE [m]: chain 48.62 | loops 10.03 | huber 10.03 | dcs 10.03
+  [05] uniform    ATE [m]: chain 48.62 | loops 11.51 | huber 11.51 | dcs 11.51
+  [05] raw_conf   ATE [m]: chain 48.62 | loops 10.06 | huber 10.06 | dcs 10.06
+  [05] geometry   ATE [m]: chain 48.62 | loops 11.12 | huber 11.12 | dcs 11.12
+  [05] calibrated ATE [m]: chain 48.62 | loops 9.56 | huber 9.56 | dcs 9.56
+  [05] oracle     ATE [m]: chain 48.62 | loops 8.94 | huber 8.94 | dcs 8.94
+  [05] power_law  ATE [m]: chain 48.62 | loops 10.40 | huber 10.39 | dcs 10.40
+  [07] vggt_long  ATE [m]: chain 22.29 | loops 4.04 | huber 4.04 | dcs 4.04
+  [07] uniform    ATE [m]: chain 22.29 | loops 3.59 | huber 3.59 | dcs 3.59
+  [07] raw_conf   ATE [m]: chain 22.29 | loops 4.53 | huber 4.53 | dcs 4.53
+  [07] geometry   ATE [m]: chain 22.29 | loops 4.49 | huber 4.49 | dcs 4.49
+  [07] calibrated ATE [m]: chain 22.29 | loops 4.33 | huber 4.33 | dcs 4.33
+  [07] oracle     ATE [m]: chain 22.29 | loops 4.59 | huber 4.59 | dcs 4.59
+  [07] power_law  ATE [m]: chain 22.29 | loops 4.38 | huber 4.38 | dcs 4.38
+  [00] vggt_long  ATE [m]: chain 140.42 | loops 9.20 | huber 9.20 | dcs 9.20
+  [00] uniform    ATE [m]: chain 140.42 | loops 10.15 | huber 10.15 | dcs 10.15
+  [00] raw_conf   ATE [m]: chain 140.42 | loops 10.29 | huber 10.29 | dcs 10.29
+  [00] geometry   ATE [m]: chain 140.42 | loops 9.31 | huber 9.31 | dcs 9.31
+  [00] calibrated ATE [m]: chain 140.42 | loops 9.11 | huber 9.11 | dcs 9.11
+  [00] oracle     ATE [m]: chain 140.42 | loops 11.93 | huber 11.93 | dcs 11.93
+  [00] power_law  ATE [m]: chain 140.42 | loops 9.87 | huber 9.83 | dcs 9.87
+  [02] vggt_long  ATE [m]: chain 181.58 | loops 105.10 | huber 105.10 | dcs 105.10
+  [02] uniform    ATE [m]: chain 181.58 | loops 113.41 | huber 113.41 | dcs 175.78
+  [02] raw_conf   ATE [m]: chain 181.58 | loops 119.68 | huber 119.68 | dcs 175.82
+  [02] geometry   ATE [m]: chain 181.58 | loops 112.92 | huber 112.92 | dcs 112.92
+  [02] calibrated ATE [m]: chain 181.58 | loops 117.16 | huber 117.16 | dcs 117.16
+  [02] oracle     ATE [m]: chain 181.58 | loops 116.13 | huber 116.13 | dcs 116.13
+  [02] power_law  ATE [m]: chain 181.58 | loops 119.81 | huber 119.80 | dcs 119.80
+== report
+/scratch2/vpr-team/kavish/mr/mr_cpu/report.py:175: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rank_rows.append([feat] + [_fmt(spearmanr(tab_t["f_" + feat][m], tg_t[b][m])[0]) for b in BLOCKS])
+  wrote results/mid/summary.md and 8 figures
+EXIT=0
+Sun Oct 25 12:04:49 AM IST 2026
+PIPELINE_DONE

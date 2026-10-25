@@ -1,0 +1,7 @@
+{
+  "kitti_root": "data/kitti",
+  "cache_root": "cache/kitti",
+  "run_dir": "results/mid",
+  "fit_sequences": ["05", "07"],
+  "test_sequences": ["00", "02"]
+}
