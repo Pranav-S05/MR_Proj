@@ -7,23 +7,26 @@ seams and loops, turn it into calibrated per-edge uncertainties (7x7 information
 trajectories against equal weights, raw confidence, geometry-only weights, a power-law baseline and VGGT-Long itself.
 Proposal: [mobile_robotics_2026.pdf](mobile_robotics_2026.pdf). Plain-language explanation: [docs/explained_simply.md](docs/explained_simply.md).
 
-## Status (25 Oct 2026)
+## Status (26 Oct 2026)
 
 | Mid-submission item | State |
 |---|---|
-| Data, conventions, LiDAR projection check | Done on real KITTI 07 ([overlay](results/checks/lidar_overlay_kitti07.png)); camera-2 ground truth and per-sequence image sizes handled |
-| VGGT window inference + cache, memory per window size | Done on an RTX A4000 for 07, 05, 00, 02 (window 32, overlap 16); smoke test 4/4 PASS; [memory sweep](results/memory_sweep.csv) |
-| VGGT-Long reproduction | Alignment and loop optimiser reproduce VGGT-Long's code numerically (see below); scheme (a) is VGGT-Long's weighting. Pending: upstream `vggt_long.py` run scored with our metrics |
-| Seams, true errors, pixel and seam confidence audit, calibration on 05/07 | Done on real data, LiDAR audit over every KITTI scan of the four sequences ([results/mid/summary.md](results/mid/summary.md)) |
-| Weighting schemes (a)-(g), kernels, loops on/off on 00/02, tables and figures | Done ([results/mid/](results/mid/)) |
+| Data, conventions, LiDAR projection check | Done ([overlay](results/checks/lidar_overlay_kitti07.png)); camera-2 ground truth and per-sequence image sizes handled |
+| VGGT window inference + cache, memory per window size | Done on an RTX A4000 for 07, 05, 00, 02 (window 32, overlap 16, full model resolution); smoke test 4/4 PASS; [memory sweep](results/memory_sweep.csv) |
+| VGGT-Long reproduction | Upstream `vggt_long.py` run at the paper's chunk 30 and 60, at our 32/16 and at its released 75/30 on all four sequences, scored with our metrics |
+| Seams, true errors, pixel and seam confidence audit, calibration on 05/07 | Done; alignment on every point, LiDAR audit on every LiDAR pixel of every scan (478M samples) |
+| Weighting schemes (a)-(g), kernels, loops on/off on 00/02, tables and figures | Done, plus qualitative figures ([results/mid/summary.md](results/mid/summary.md)) |
 
-Held-out ATE with loops (VGGT-Long weighting): KITTI 00 9.20 m, 02 105.10 m (no loops: 140.42 m, 181.58 m). On 02 the
-loop windows place the two passes of a revisit 0.1-1.1 m apart while they are 1-4 m apart in reality, so loop edges
-carry an error close to the true lane offset that confidence does not flag. All numbers and figures:
-[results/mid/summary.md](results/mid/summary.md); run logs and per-sequence settings in `results/mid/run_info/`.
+Reproduction (ATE, m; 00 / 02 / 05 / 07): VGGT-Long paper at chunk 30: 9.06 / 99.95 / 10.20 / 4.00; upstream code at
+30/15 on our setup: 9.07 / 99.65 / 10.24 / 3.98; upstream at 32/16: 9.13 / 104.61 / 10.04 / 4.09; our
+re-implementation (scheme a) at 32/16: 9.18 / 105.07 / 10.02 / 4.06. On 02 the loop windows place the two passes of a
+revisit 0.1-1.1 m apart while they are 1-4 m apart in reality, so loop edges carry an error close to the true lane
+offset that confidence does not flag. Details: [docs/status.md](docs/status.md); run logs and per-sequence settings in
+`results/mid/run_info/`.
 
 Verified:
-* our ATE equals `evo_ape --align --correct_scale` on all 56 trajectories of the real run (max difference 1e-9 m);
+* our ATE equals `evo_ape --align --correct_scale` on all 56 trajectories of our run and all 16 upstream runs
+  (max difference 1e-9 m);
 * window alignment is identical to VGGT-Long's IRLS code (differences ~1e-15);
 * our pose graph in "upstream" mode reaches the same optimum as VGGT-Long's own pypose `Sim3LoopOptimizer`
   (same ATE to the millimetre on three sequences);
@@ -88,7 +91,11 @@ The CPU pipeline also runs inside this environment (`pixi run pipeline`, `pixi r
 `results/mid/` was produced (RTX A4000, 24 Oct 2026, about 2 s per 32-frame window).
 Set `WINDOW=... OVERLAP=...` before the script after looking at `results/memory_sweep.csv` (default 32/16; VGGT-Long
 uses 75/30 on a 24 GB GPU). The smoke test must print PASS for every check before the long runs are trusted. Disk:
-roughly 10 MB per window at the default pixel stride 2 (a few GB per sequence).
+about 45 MB per window at full model resolution (`--stride 1`, the default; 3-14 GB per sequence). The script then
+runs upstream VGGT-Long itself (`scripts/run_upstream.sh`) at the paper's chunk sizes 30 and 60, at our window and at
+its released 75/30 config. With little disk, the CPU steps that need a sequence's cache (`edges labels audit qual`) can
+run per sequence (`--fit SS --test SS --steps edges labels audit qual`), after which that cache's `windows/` and
+`loops/` can be deleted; everything later only reads `manifest.json`.
 
 ## 3. CPU machine (everything else)
 
@@ -97,14 +104,16 @@ python -m venv .venv && .venv/Scripts/python -m pip install -r requirements-cpu.
 # copy cache/kitti/ from the GPU machine into this folder, then
 .venv/Scripts/python -m mr_cpu.pipeline --config configs/kitti_mid.json
 ```
-Outputs in `results/mid/`: `summary.md` (tables), `tables/*.csv`, `figures/*.png`, `metrics.csv`,
-`ate_vs_length.csv`, `fitted.json`, `kernels.json`. Single steps: `--steps fit tune solve report`.
+Outputs in `results/mid/`: `summary.md` (tables), `tables/*.csv`, `figures/*.png` (qualitative ones in
+`figures/qualitative/`), `metrics.csv`, `ate_vs_length.csv`, `upstream.csv`, `fitted.json`, `kernels.json`.
+Steps: `edges labels audit qual fit tune solve upstream report` (single steps with `--steps`). Alignment uses every
+point above the confidence threshold and the LiDAR audit every LiDAR pixel (no subsampling).
 To check the code without a GPU: generate synthetic caches with
 `python -m mr_cpu.synthetic --seq 07 --out cache/synthetic/07` (likewise 05, 00, 02) and run
 `python -m mr_cpu.pipeline --config configs/synthetic.json`.
 
-Score an upstream VGGT-Long run with the same metrics (reproduction check):
-`python -m mr_cpu.evaluation --estimate external/VGGT-Long/exps/<run>/camera_poses.txt --seq 07 --evo`.
+Score any external trajectory with the same metrics:
+`python -m mr_cpu.evaluation --estimate <camera_poses.txt> --seq 07 --evo`.
 
 ## Background documents
 [docs/explained_simply.md](docs/explained_simply.md) (start here), [docs/proposal_review.md](docs/proposal_review.md)

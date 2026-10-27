@@ -14,7 +14,7 @@
   "delta": 0.1,
   "max_iters": 5,
   "rel_threshold": 0.1,
-  "max_points": 300000
+  "max_points": null
  },
  "schemes": [
   "vggt_long",
@@ -58,5 +58,5 @@
   4000,
   5000
  ],
- "audit_max_per_frame": 800
+ "audit_max_per_frame": null
 }

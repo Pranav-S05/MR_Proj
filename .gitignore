@@ -17,3 +17,5 @@ checkpoints/
 # large per-sequence arrays written by the pipeline (summaries, tables and figures stay tracked)
 results/*/[0-9][0-9]/
 results/*/trajectories/
+# upstream VGGT-Long point-cloud samples (only used to draw figures)
+results/*/upstream/*/pointcloud_sample.npz

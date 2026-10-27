@@ -7,10 +7,14 @@ Steps (each reads earlier outputs from the run directory):
   edges   cache -> <run>/<seq>/edges.npz      deployable measurements + features (no GT)
   labels  edges + GT -> <run>/<seq>/labels.npz reference gauges and 7-DoF edge errors
   audit   cache + LiDAR -> <run>/<seq>/depth_audit.npz (skipped if a sequence has no LiDAR)
+  qual    cache + images + LiDAR -> qualitative arrays (<run>/<seq>/qual/) and figures (mr_cpu/qualitative.py)
   fit     fitting sequences -> <run>/fitted.json (edge calibration maps, power law, pixel maps)
   tune    fitting sequences -> <run>/kernels.json (robust-kernel threshold per scheme)
-  solve   all sequences -> <run>/metrics.csv, <run>/trajectories/*.npz
+  solve   all sequences -> <run>/metrics.csv, <run>/trajectories/*.npz (positions + solved window poses)
+  upstream  <run>/upstream/<seq>_w<W>_o<O>/camera_poses.txt (VGGT-Long's own code) -> <run>/upstream.csv
   report  -> <run>/summary.md, <run>/tables/*.csv, <run>/figures/*.png
+The per-sequence steps only need the cache of their sequence, so a disk-limited run can do
+edges..qual for one sequence, delete its cache windows (keep manifest.json) and move on.
 Ground truth of the held-out (test) sequences is used only by `labels` (for scoring), `solve`
 (ATE) and the oracle scheme (f), which is a hindsight diagnostic, not a method.
 """
@@ -32,13 +36,14 @@ from .weighting import SCHEMES, Fitted
 DEFAULTS = {
     "kitti_root": "data/kitti", "cache_root": "cache/kitti", "run_dir": "results/mid",
     "fit_sequences": ["05", "07"], "test_sequences": ["00", "02"],
-    "alignment": {"delta": 0.1, "max_iters": 5, "rel_threshold": 0.1, "max_points": 300000},
+    "alignment": {"delta": 0.1, "max_iters": 5, "rel_threshold": 0.1, "max_points": None},  # all points, as VGGT-Long
     "schemes": list(SCHEMES.values()), "conf_feature": "conf_mean", "geo_feature": "residual_rel",
     "kernel_grid": {"huber": [0.5, 1, 2, 3, 5, 10, 20], "dcs": [1, 3, 10, 30, 100, 300, 1000]},
     "kernel_on": "loops", "prefix_lengths": [250, 500, 1000, 1500, 2000, 3000, 4000, 5000],
-    "audit_max_per_frame": 800,
+    "audit_max_per_frame": None,  # every LiDAR pixel
 }
-STEPS = ("edges", "labels", "audit", "fit", "tune", "solve", "report")
+STEPS = ("edges", "labels", "audit", "qual", "fit", "tune", "solve", "upstream", "report")
+PER_SEQUENCE = ("edges", "labels", "audit", "qual")
 
 
 def load_config(path=None, **overrides):
@@ -110,16 +115,21 @@ def step_audit(cfg, seq):
     if not len(data["lidar"]):
         print(f"  [{seq}] no LiDAR pixels matched any window frame; skipping")
         return
-    np.savez(_run(cfg) / seq / "depth_audit.npz", **data)
+    np.savez_compressed(_run(cfg) / seq / "depth_audit.npz", **data)
     print(f"  [{seq}] depth audit: {len(data['lidar'])} LiDAR pixels")
+
+
+def step_qual(cfg, seq):
+    from .qualitative import extract
+    extract(cfg, seq)
 
 
 def _audit(cfg, seq):
     p = _run(cfg) / seq / "depth_audit.npz"
     if not p.exists():
         return None
-    with np.load(p) as d:
-        return {k: d[k] for k in d.files}
+    with np.load(p) as d:  # confidences are stored as float16 (their cache precision); compute in float32
+        return {k: d[k].astype(np.float32) if d[k].dtype == np.float16 else d[k] for k in d.files}
 
 
 def step_fit(cfg):
@@ -189,7 +199,7 @@ def solve_one(table, frames, poses, gt, fitted, scheme, kern="none", kparam=None
     m.update(iterations=rep["iterations"], solve_s=time.time() - t0,
              loops_used=int((sub["kind"] == 1).sum()),
              loops_downweighted=int(np.sum(rep["edge_weight"][sub["kind"] == 1] < .5)) if loops else 0)
-    return est, m
+    return est, m, nodes
 
 
 def step_tune(cfg):
@@ -230,8 +240,8 @@ def step_solve(cfg):
                 for loops in (False, True):
                     if not loops and kern != "none":
                         continue  # kernels only act on loop edges
-                    est, m = solve_one(table, frames, poses, gt, fitted, scheme, kern, kparam, loops,
-                                       lab["errors"], cfg["kernel_on"], cfg["prefix_lengths"])
+                    est, m, nodes = solve_one(table, frames, poses, gt, fitted, scheme, kern, kparam, loops,
+                                              lab["errors"], cfg["kernel_on"], cfg["prefix_lengths"])
                     rows.append({"sequence": seq, "split": split, "scheme": scheme, "kernel": kern,
                                  "kernel_param": kparam, "loops": loops,
                                  **{k: v for k, v in m.items() if k != "ate_vs_length"}})
@@ -240,6 +250,7 @@ def step_solve(cfg):
                                        "prefix_frames": n, "ate_rmse_m": a})
                     if kern == "none":
                         keep[f"{scheme}_{'loops' if loops else 'chain'}"] = est[:, :3, 3]
+                        keep[f"{scheme}_{'loops' if loops else 'chain'}_nodes"] = nodes  # window -> world Sim(3)
             mine = {(r["kernel"], r["loops"]): r["ate_rmse_m"] for r in rows if r["sequence"] == seq and r["scheme"] == scheme}
             print(f"  [{seq}] {scheme:10s} ATE [m]: chain {mine[('none', False)]:.2f} | loops {mine[('none', True)]:.2f}"
                   + "".join(f" | {k} {mine[(k, True)]:.2f}" for k in ("huber", "dcs") if (k, True) in mine), flush=True)
@@ -248,12 +259,33 @@ def step_solve(cfg):
     _write_csv(_run(cfg) / "ate_vs_length.csv", curves)
 
 
+def step_upstream(cfg):
+    """Score upstream VGGT-Long runs (its own code) copied to <run>/upstream/<seq>_w<W>_o<O>/camera_poses.txt."""
+    from .trajectory import read_poses
+    rows = []
+    for d in sorted((_run(cfg) / "upstream").glob("*_w*_o*")):
+        if not (d / "camera_poses.txt").exists():
+            continue
+        seq, w, o = d.name.split("_")
+        est = read_poses(d / "camera_poses.txt")
+        gt = kitti.gt_cam2_poses(cfg["kitti_root"], seq)
+        if len(est) != len(gt):
+            raise ValueError(f"{d}: {len(est)} poses for {len(gt)} frames")
+        m = evaluation.evaluate(est, gt, cfg["prefix_lengths"])
+        np.save(d / "positions.npy", est[:, :3, 3])
+        rows.append({"sequence": seq, "window": int(w[1:]), "overlap": int(o[1:]), "run": d.name,
+                     **{k: v for k, v in m.items() if k != "ate_vs_length"},
+                     **{f"ate_first_{n}": a for n, a in m["ate_vs_length"]}})
+        print(f"  upstream {d.name}: ATE {m['ate_rmse_m']:.2f} m, t_rel {m['t_rel_percent']:.2f} %")
+    _write_csv(_run(cfg) / "upstream.csv", rows)
+
+
 def _write_csv(path, rows):
     if not rows:
         return
-    keys = list(rows[0].keys())
+    keys = list(dict.fromkeys(k for r in rows for k in r))  # rows may differ (e.g. per-sequence prefix lengths)
     with open(path, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=keys)
+        w = csv.DictWriter(f, fieldnames=keys, restval="")
         w.writeheader()
         w.writerows(rows)
 
@@ -280,7 +312,7 @@ def main():
         if step not in a.steps:
             continue
         print(f"== {step}", flush=True)
-        if step in ("edges", "labels", "audit"):
+        if step in PER_SEQUENCE:
             for seq in _seqs(cfg):
                 globals()[f"step_{step}"](cfg, seq)
         else:

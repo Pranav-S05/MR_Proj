@@ -346,7 +346,8 @@ def main():
         if name == "run":
             p.add_argument("--window", type=int, default=32)
             p.add_argument("--overlap", type=int, default=16)
-            p.add_argument("--stride", type=int, default=2, help="pixel subsampling of cached maps")
+            p.add_argument("--stride", type=int, default=1,
+                           help="pixel subsampling of cached maps (1 = full model resolution, as VGGT-Long uses)")
             p.add_argument("--max-frames", type=int, help="only the first N frames (smoke tests)")
             p.add_argument("--out", help="cache directory (default cache/kitti/<seq>)")
             p.add_argument("--descriptor", choices=["salad", "vggt_cls"], default="salad")

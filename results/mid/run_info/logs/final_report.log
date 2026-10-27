@@ -1,0 +1,20 @@
+== upstream
+  upstream 00_w30_o15: ATE 9.07 m, t_rel 4.96 %
+  upstream 00_w32_o16: ATE 9.13 m, t_rel 4.81 %
+  upstream 00_w60_o30: ATE 8.63 m, t_rel 4.72 %
+  upstream 00_w75_o30: ATE 10.83 m, t_rel 5.42 %
+  upstream 02_w30_o15: ATE 99.65 m, t_rel 26.38 %
+  upstream 02_w32_o16: ATE 104.61 m, t_rel 26.82 %
+  upstream 02_w60_o30: ATE 52.78 m, t_rel 13.71 %
+  upstream 02_w75_o30: ATE 55.90 m, t_rel 15.04 %
+  upstream 05_w30_o15: ATE 10.24 m, t_rel 5.24 %
+  upstream 05_w32_o16: ATE 10.04 m, t_rel 5.11 %
+  upstream 05_w60_o30: ATE 9.85 m, t_rel 4.99 %
+  upstream 05_w75_o30: ATE 10.15 m, t_rel 5.08 %
+  upstream 07_w30_o15: ATE 3.98 m, t_rel 4.02 %
+  upstream 07_w32_o16: ATE 4.09 m, t_rel 3.95 %
+  upstream 07_w60_o30: ATE 2.66 m, t_rel 3.27 %
+  upstream 07_w75_o30: ATE 2.84 m, t_rel 3.71 %
+== report
+  qualitative: 24 rendered after solve, 36 in total
+  wrote results/mid/summary.md and 9 figures

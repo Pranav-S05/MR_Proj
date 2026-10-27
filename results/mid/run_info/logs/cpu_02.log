@@ -1,0 +1,15 @@
+== edges
+    seam 0/289: scale 1.010, conf 4.79, inliers 0.83
+    seam 50/289: scale 0.991, conf 1.91, inliers 0.99
+    seam 100/289: scale 0.986, conf 2.25, inliers 0.96
+    seam 150/289: scale 0.994, conf 2.24, inliers 0.97
+    seam 200/289: scale 0.909, conf 1.73, inliers 0.99
+    seam 250/289: scale 0.971, conf 2.34, inliers 0.98
+    seam 289/289: scale 0.718, conf 3.74, inliers 0.98
+  [02] 290 seams, 8 loops (770s)
+== labels
+  [02] labels: 298/298 edges usable; 0 degenerate windows (car nearly stopped)
+== audit
+  [02] depth audit: 174396534 LiDAR pixels
+== qual
+  [02] qualitative material extracted

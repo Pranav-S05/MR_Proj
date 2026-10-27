@@ -1,0 +1,25 @@
+[2026-10-25 16:43:57] upstream 00_w30_o15 start (mem available 108 GB)
+/dev/shm/kavish_vl/00_w30_o15/exps/_scratch2_vpr-team_kavish_mr_data_kitti_sequences_00_image_2/2026-10-25-16-44-01/pcd/combined_pcd.ply: 4303054 points, kept 1500000 -> /scratch2/vpr-team/kavish/mr/results/mid/upstream/00_w30_o15/pointcloud_sample.npz
+[2026-10-25 17:05:29] upstream 00_w30_o15 done (1288 s, peak temp 26996 MB)
+[2026-10-25 17:05:29] upstream 00_w60_o30 start (mem available 109 GB)
+/dev/shm/kavish_vl/00_w60_o30/exps/_scratch2_vpr-team_kavish_mr_data_kitti_sequences_00_image_2/2026-10-25-17-05-33/pcd/combined_pcd.ply: 4088613 points, kept 1500000 -> /scratch2/vpr-team/kavish/mr/results/mid/upstream/00_w60_o30/pointcloud_sample.npz
+[2026-10-25 17:31:12] upstream 00_w60_o30 done (1542 s, peak temp 26844 MB)
+[2026-10-25 17:31:12] upstream 00_w32_o16 start (mem available 109 GB)
+/dev/shm/kavish_vl/00_w32_o16/exps/_scratch2_vpr-team_kavish_mr_data_kitti_sequences_00_image_2/2026-10-25-17-31-16/pcd/combined_pcd.ply: 4349985 points, kept 1500000 -> /scratch2/vpr-team/kavish/mr/results/mid/upstream/00_w32_o16/pointcloud_sample.npz
+[2026-10-25 17:51:43] upstream 00_w32_o16 done (1230 s, peak temp 26987 MB)
+[2026-10-25 17:51:43] upstream 00_w75_o30 start (mem available 109 GB)
+/dev/shm/kavish_vl/00_w75_o30/exps/_scratch2_vpr-team_kavish_mr_data_kitti_sequences_00_image_2/2026-10-25-17-51-47/pcd/combined_pcd.ply: 3409268 points, kept 1500000 -> /scratch2/vpr-team/kavish/mr/results/mid/upstream/00_w75_o30/pointcloud_sample.npz
+[2026-10-25 18:09:59] upstream 00_w75_o30 done (1095 s, peak temp 22736 MB)
+[2026-10-25 18:09:59] VGGT (ours) 00 start
+[2026-10-25 18:26:11] VGGT (ours) 00 done: 14G
+[2026-10-25 18:26:11] CPU edges labels audit qual 00 start
+[2026-10-25 18:51:42] CPU 00 done
+    seam 281/281: scale 0.942, conf 4.95, inliers 0.98
+  [00] 282 seams, 20 loops (1179s)
+== labels
+  [00] labels: 298/302 edges usable; 2 degenerate windows (car nearly stopped)
+== audit
+  [00] depth audit: 163491329 LiDAR pixels
+== qual
+  [00] qualitative material extracted
+STAGE_DONE_00

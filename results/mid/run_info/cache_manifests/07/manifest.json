@@ -4,7 +4,7 @@
  "n_frames": 1101,
  "window": 32,
  "overlap": 16,
- "stride": 2,
+ "stride": 1,
  "orig_hw": [
   370,
   1226
@@ -840,10 +840,10 @@
   }
  },
  "timing": {
-  "sec_per_window": 1.9060727463049048,
+  "sec_per_window": 1.8323488971766304,
   "peak_gpu_mem_gb": 9.644470691680908,
-  "frames_per_sec": 16.765300492801526,
-  "unique_frames_per_sec": 5.6476172880240645,
+  "frames_per_sec": 17.439845873337937,
+  "unique_frames_per_sec": 5.085521051243075,
   "note": "frames_per_sec counts overlap frames twice (forward time only)"
  },
  "loop_windows": [

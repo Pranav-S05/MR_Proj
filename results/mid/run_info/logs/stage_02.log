@@ -1,0 +1,25 @@
+[2026-10-25 18:51:46] upstream 02_w30_o15 start (mem available 108 GB)
+/dev/shm/kavish_vl/02_w30_o15/exps/_scratch2_vpr-team_kavish_mr_data_kitti_sequences_02_image_2/2026-10-25-18-51-50/pcd/combined_pcd.ply: 4508482 points, kept 1500000 -> /scratch2/vpr-team/kavish/mr/results/mid/upstream/02_w30_o15/pointcloud_sample.npz
+[2026-10-25 19:13:01] upstream 02_w30_o15 done (1274 s, peak temp 26338 MB)
+[2026-10-25 19:13:01] upstream 02_w60_o30 start (mem available 106 GB)
+/dev/shm/kavish_vl/02_w60_o30/exps/_scratch2_vpr-team_kavish_mr_data_kitti_sequences_02_image_2/2026-10-25-19-13-05/pcd/combined_pcd.ply: 4373063 points, kept 1500000 -> /scratch2/vpr-team/kavish/mr/results/mid/upstream/02_w60_o30/pointcloud_sample.npz
+[2026-10-25 19:34:15] upstream 02_w60_o30 done (1273 s, peak temp 26297 MB)
+[2026-10-25 19:34:15] upstream 02_w32_o16 start (mem available 106 GB)
+/dev/shm/kavish_vl/02_w32_o16/exps/_scratch2_vpr-team_kavish_mr_data_kitti_sequences_02_image_2/2026-10-25-19-34-19/pcd/combined_pcd.ply: 4497527 points, kept 1500000 -> /scratch2/vpr-team/kavish/mr/results/mid/upstream/02_w32_o16/pointcloud_sample.npz
+[2026-10-25 19:54:14] upstream 02_w32_o16 done (1198 s, peak temp 26352 MB)
+[2026-10-25 19:54:14] upstream 02_w75_o30 start (mem available 106 GB)
+/dev/shm/kavish_vl/02_w75_o30/exps/_scratch2_vpr-team_kavish_mr_data_kitti_sequences_02_image_2/2026-10-25-19-54-18/pcd/combined_pcd.ply: 3736433 points, kept 1500000 -> /scratch2/vpr-team/kavish/mr/results/mid/upstream/02_w75_o30/pointcloud_sample.npz
+[2026-10-25 20:13:01] upstream 02_w75_o30 done (1126 s, peak temp 22024 MB)
+[2026-10-25 20:13:01] VGGT (ours) 02 start
+[2026-10-25 20:28:31] VGGT (ours) 02 done: 13G
+[2026-10-25 20:28:31] CPU edges labels audit qual 02 start
+[2026-10-25 20:50:58] CPU 02 done
+    seam 289/289: scale 0.718, conf 3.74, inliers 0.98
+  [02] 290 seams, 8 loops (770s)
+== labels
+  [02] labels: 298/298 edges usable; 0 degenerate windows (car nearly stopped)
+== audit
+  [02] depth audit: 174396534 LiDAR pixels
+== qual
+  [02] qualitative material extracted
+STAGE_DONE_02

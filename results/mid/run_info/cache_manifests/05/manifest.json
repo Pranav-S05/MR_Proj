@@ -4,7 +4,7 @@
  "n_frames": 2761,
  "window": 32,
  "overlap": 16,
- "stride": 2,
+ "stride": 1,
  "orig_hw": [
   370,
   1226
@@ -710,6 +710,142 @@
  "gpu": "NVIDIA RTX A4000",
  "torch": "2.5.1+cu124",
  "checks": {
+  "0": {
+   "depth_vs_points_rel": 0.009952282482222746,
+   "first_cam_identity_dev": 8.004196482945617e-05,
+   "gt_pos_rms_rel": 0.02724875035318171,
+   "gt_rot_rms_deg": 0.26334742891536045,
+   "gt_pos_rms_rel_if_inverted": 1.0441861770471952,
+   "gt_spread_m": 6.482248933931057
+  },
+  "1": {
+   "depth_vs_points_rel": 0.013370811324459508,
+   "first_cam_identity_dev": 0.00021254799354780346,
+   "gt_pos_rms_rel": 0.035515820509819496,
+   "gt_rot_rms_deg": 0.4467880143972463,
+   "gt_pos_rms_rel_if_inverted": 1.0384222364263624,
+   "gt_spread_m": 8.592658450396016
+  },
+  "2": {
+   "depth_vs_points_rel": 0.014190726039107877,
+   "first_cam_identity_dev": 0.00012064883469577918,
+   "gt_pos_rms_rel": 0.027493978871839495,
+   "gt_rot_rms_deg": 0.40458066548349203,
+   "gt_pos_rms_rel_if_inverted": 1.0350077622456386,
+   "gt_spread_m": 9.747172061999755
+  },
+  "3": {
+   "depth_vs_points_rel": 0.01161952478277202,
+   "first_cam_identity_dev": 6.685282651703495e-05,
+   "gt_pos_rms_rel": 0.031474325059020945,
+   "gt_rot_rms_deg": 0.25725292017806045,
+   "gt_pos_rms_rel_if_inverted": 1.033167559690996,
+   "gt_spread_m": 9.951786275270527
+  },
+  "4": {
+   "depth_vs_points_rel": 0.01373227492777584,
+   "first_cam_identity_dev": 6.868883453019918e-05,
+   "gt_pos_rms_rel": 0.02716965850435813,
+   "gt_rot_rms_deg": 0.1548974339556115,
+   "gt_pos_rms_rel_if_inverted": 1.0303739050904515,
+   "gt_spread_m": 9.8771677525158
+  },
+  "5": {
+   "depth_vs_points_rel": 0.01205310138185116,
+   "first_cam_identity_dev": 4.9802812974947346e-05,
+   "gt_pos_rms_rel": 0.02088120742039111,
+   "gt_rot_rms_deg": 0.11845628921257423,
+   "gt_pos_rms_rel_if_inverted": 1.0331900831778607,
+   "gt_spread_m": 8.354211050986905
+  },
+  "6": {
+   "depth_vs_points_rel": 0.01218855376855633,
+   "first_cam_identity_dev": 6.589760971146691e-05,
+   "gt_pos_rms_rel": 0.012505284819690496,
+   "gt_rot_rms_deg": 0.5149974147047132,
+   "gt_pos_rms_rel_if_inverted": 1.0419451428623665,
+   "gt_spread_m": 5.11210512054399
+  },
+  "7": {
+   "depth_vs_points_rel": 0.01833471549444468,
+   "first_cam_identity_dev": 0.00021716825706158676,
+   "gt_pos_rms_rel": 0.04739167434716004,
+   "gt_rot_rms_deg": 0.7679493697402964,
+   "gt_pos_rms_rel_if_inverted": 1.0513175875682954,
+   "gt_spread_m": 3.3454198104216
+  },
+  "8": {
+   "depth_vs_points_rel": 0.01881090444613009,
+   "first_cam_identity_dev": 0.00026370438695723597,
+   "gt_pos_rms_rel": 0.03932386574149241,
+   "gt_rot_rms_deg": 0.593236835052794,
+   "gt_pos_rms_rel_if_inverted": 1.0555032765523102,
+   "gt_spread_m": 3.902176822055319
+  },
+  "9": {
+   "depth_vs_points_rel": 0.014023822667627053,
+   "first_cam_identity_dev": 0.00018598555032386656,
+   "gt_pos_rms_rel": 0.029288416536623195,
+   "gt_rot_rms_deg": 0.4898551470100856,
+   "gt_pos_rms_rel_if_inverted": 1.043081246059921,
+   "gt_spread_m": 6.104346135372696
+  },
+  "10": {
+   "depth_vs_points_rel": 0.012266580176954119,
+   "first_cam_identity_dev": 0.00013499625515914925,
+   "gt_pos_rms_rel": 0.022450330949721372,
+   "gt_rot_rms_deg": 0.09234414744380527,
+   "gt_pos_rms_rel_if_inverted": 1.0368323864603788,
+   "gt_spread_m": 7.503102852541219
+  },
+  "11": {
+   "depth_vs_points_rel": 0.012451343414348252,
+   "first_cam_identity_dev": 8.006857943830691e-05,
+   "gt_pos_rms_rel": 0.023798150876945045,
+   "gt_rot_rms_deg": 0.21666425529740113,
+   "gt_pos_rms_rel_if_inverted": 1.040594057600939,
+   "gt_spread_m": 7.310157224744891
+  },
+  "12": {
+   "depth_vs_points_rel": 0.014307632009262623,
+   "first_cam_identity_dev": 7.82645107279414e-05,
+   "gt_pos_rms_rel": 0.0156967960414543,
+   "gt_rot_rms_deg": 0.23444087780346617,
+   "gt_pos_rms_rel_if_inverted": 1.0450896954624955,
+   "gt_spread_m": 6.516761042507397
+  },
+  "13": {
+   "depth_vs_points_rel": 0.01387792297488649,
+   "first_cam_identity_dev": 0.00010397392430658757,
+   "gt_pos_rms_rel": 0.0326146869531515,
+   "gt_rot_rms_deg": 0.29620236354627,
+   "gt_pos_rms_rel_if_inverted": 1.045664390772459,
+   "gt_spread_m": 6.56562838604232
+  },
+  "14": {
+   "depth_vs_points_rel": 0.01298182966759974,
+   "first_cam_identity_dev": 7.709934480299566e-05,
+   "gt_pos_rms_rel": 0.038147211792284495,
+   "gt_rot_rms_deg": 0.14405160918819568,
+   "gt_pos_rms_rel_if_inverted": 1.0419715730499957,
+   "gt_spread_m": 7.092752177867633
+  },
+  "15": {
+   "depth_vs_points_rel": 0.014396185762961086,
+   "first_cam_identity_dev": 0.00010137375048051048,
+   "gt_pos_rms_rel": 0.028927178899439503,
+   "gt_rot_rms_deg": 0.17703335465468364,
+   "gt_pos_rms_rel_if_inverted": 1.0375410868578792,
+   "gt_spread_m": 7.6962127993091345
+  },
+  "16": {
+   "depth_vs_points_rel": 0.014121975905729892,
+   "first_cam_identity_dev": 0.00012027864441257269,
+   "gt_pos_rms_rel": 0.01216537575452786,
+   "gt_rot_rms_deg": 0.23322155533914973,
+   "gt_pos_rms_rel_if_inverted": 1.036392096201019,
+   "gt_spread_m": 7.857911168389919
+  },
   "17": {
    "depth_vs_points_rel": 0.01199529125902565,
    "first_cam_identity_dev": 7.450177870069625e-05,
@@ -1952,10 +2088,10 @@
   }
  },
  "timing": {
-  "sec_per_window": 1.9579654585930608,
+  "sec_per_window": 1.8419683464737826,
   "peak_gpu_mem_gb": 9.644470691680908,
-  "frames_per_sec": 18.11294268414524,
-  "unique_frames_per_sec": 6.041504940764078,
+  "frames_per_sec": 17.35062515420717,
+  "unique_frames_per_sec": 5.02528211081133,
   "note": "frames_per_sec counts overlap frames twice (forward time only)"
  },
  "loop_windows": [

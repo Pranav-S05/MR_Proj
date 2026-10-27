@@ -1,0 +1,9 @@
+[2026-10-25 15:08:12] upstream 07_w30_o15 start (mem available 109 GB)
+/dev/shm/kavish_vl/07_w30_o15/exps/_scratch2_vpr-team_kavish_mr_data_kitti_sequences_07_image_2/2026-10-25-15-08-15/pcd/combined_pcd.ply: 1096869 points, kept 1096869 -> /scratch2/vpr-team/kavish/mr/results/mid/upstream/07_w30_o15/pointcloud_sample.npz
+[2026-10-25 15:13:12] upstream 07_w30_o15 done (300 s, peak temp 6303 MB)
+[2026-10-25 15:13:12] upstream 07_w60_o30 start (mem available 107 GB)
+/dev/shm/kavish_vl/07_w60_o30/exps/_scratch2_vpr-team_kavish_mr_data_kitti_sequences_07_image_2/2026-10-25-15-13-17/pcd/combined_pcd.ply: 1169810 points, kept 1169810 -> /scratch2/vpr-team/kavish/mr/results/mid/upstream/07_w60_o30/pointcloud_sample.npz
+[2026-10-25 15:18:24] upstream 07_w60_o30 done (310 s, peak temp 6111 MB)
+[2026-10-25 15:18:24] upstream 07_w32_o16 already done
+[2026-10-25 15:18:24] upstream 07_w75_o30 already done
+STAGE_DONE_07

@@ -232,5 +232,40 @@ class KittiAndEndToEndTests(unittest.TestCase):
             shutil.rmtree(tmp, ignore_errors=True)
 
 
+class AuditAndUpstreamFormatTests(unittest.TestCase):
+    def test_audit_keeps_every_lidar_pixel_unless_capped(self):
+        from mr_cpu import depth_audit, synthetic
+        tmp = Path(tempfile.mkdtemp())
+        try:
+            synthetic.make_cache(KITTI, "07", tmp / "07", window=16, overlap=8, stride=8, n_frames=48, log=None)
+            fn = depth_audit.cache_lidar_fn(tmp / "07")
+            full = depth_audit.collect(tmp / "07", fn, None, log=None)
+            capped = depth_audit.collect(tmp / "07", fn, 5, log=None)
+            n_frames = len(np.unique(np.c_[full["window"], full["frame"]], axis=0))
+            self.assertEqual(len(capped["lidar"]), 5 * n_frames)
+            self.assertGreater(len(full["lidar"]), len(capped["lidar"]))
+            self.assertEqual(full["d_conf"].dtype, np.float16)
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+
+    def test_reads_vggt_long_ply(self):
+        from mr_cpu.qualitative import read_ply
+        xyz = np.random.default_rng(0).normal(size=(50, 3)).astype(np.float32)
+        rgb = np.random.default_rng(1).integers(0, 256, (50, 3)).astype(np.uint8)
+        tmp = Path(tempfile.mkdtemp())
+        try:
+            header = ["ply", "format binary_little_endian 1.0", "element vertex 50", "property float x",
+                      "property float y", "property float z", "property uchar red", "property uchar green",
+                      "property uchar blue", "end_header"]  # VGGT-Long's write_ply_header
+            rec = np.empty(50, np.dtype([("xyz", "<f4", 3), ("rgb", "u1", 3)]))
+            rec["xyz"], rec["rgb"] = xyz, rgb
+            (tmp / "p.ply").write_bytes("\n".join(header).encode() + b"\n" + rec.tobytes())
+            x, c = read_ply(tmp / "p.ply")
+            assert_allclose(x, xyz)
+            np.testing.assert_array_equal(c, rgb)
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+
+
 if __name__ == "__main__":
     unittest.main()

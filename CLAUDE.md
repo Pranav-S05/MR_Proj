@@ -4,38 +4,29 @@ Mobile Robotics course project (IIIT Hyderabad, Monsoon 2026). Team: Kavish Vora
 Proposal: `mobile_robotics_2026.pdf`. Mentor brief: `Project_Context.md`. Plain-language overview:
 `docs/explained_simply.md`. Current state: `docs/status.md`. How to run: `README.md`.
 
-## State (2026-10-25)
-Mid-submission run done on real data (Phoenix A4000, see below and `docs/status.md`); results in `results/mid/`.
-Remaining: the Pending list below. After Oct 26: Waymo/TUM loaders, false-loop stress test, streaming models,
-VGGT-Omega bonus.
+## State (2026-10-26): full mid-submission run DONE
+Everything ran on Phoenix (logs + driver scripts in `results/mid/run_info/`): upstream VGGT-Long at 30/15, 60/30,
+32/16, 75/30 on 07/05/00/02; our VGGT at full model resolution; alignment on all points; audit on all LiDAR pixels
+(478M); qual; fit/tune/solve/upstream/report. Results copied to `results/mid/` (core 107 MB; archive
+`../phoenix_backup/full_run/results_core.tgz`; first-pass stride-2 results in `../phoenix_backup/phoenix_results.tgz`).
+evo matches all 56 + 16 trajectories (1e-9 m). 44 tests pass. docs/status.md + README updated.
+Phoenix cleaned 2026-10-27: only `/scratch2/vpr-team/kavish/mr_audit_arrays/` (6.1 GB raw audit arrays, the only
+copy, README inside) and `kavish/pixi/` remain (plus the unrelated `repro/`). 02 chunk-60 check done: repeat run and
+loop threshold 0.7 both give 52.78 m with the same 8 loops (deterministic; threshold irrelevant on 02); paper 34.16 m
+not reproducible with the released code. Results in `results/mid/upstream_checks/`.
+MID SUBMISSION COMPLETE. Next (after Oct 26, per proposal): Waymo (needs team account/licence), TUM, false-loop stress
+test, ORB-SLAM3, streaming models, VGGT-Omega.
 
-## Phoenix run (2026-10-24, in progress)
-- Ran on Phoenix (see `../Phoenix.md`; pixi env from `pixi.toml`), workspace `/scratch2/vpr-team/kavish/mr/`, GPU 1.
-  Memory sweep (A4000, bf16): W8 7.7 GB, W16 8.4, W24 9.0, W32 9.6, W48 10.9, W64 12.2; ~18 frames/s. Smoke: 4/4 PASS.
-  GPU part done for 07/05/00/02 at W32/O16 (3/12/20/8 SALAD loops, all true revisits <= 4 m apart).
-- User asked for ALL LiDAR scans (no subsampling): range-fetching all 13064 scans from KITTI S3 (~26 GB, slow);
-  `kavish-mr-final` tmux reruns `--steps audit fit tune solve report` when done. Then copy `results/mid/` here and
-  delete the Phoenix project folder (keep `kavish/pixi/`).
-- First full pass (LiDAR every 10th frame) ATE loops-on, VGGT-Long weighting: 05 10.0, 07 4.0, 00 9.2, 02 105 m.
-- **Finding:** VGGT collapses two visits of the same place into ~the same position: in 02 the passes are 1-4 m apart
-  (different lanes) but the loop window puts them 0.1-1.1 m apart, while each visit alone is fine (0.1-0.4 m rms).
-  So loop-edge translation error ~= true revisit offset; confidence/inliers do not flag it; loop calibration fitted on
-  05 (revisits 0.1-0.8 m apart) under-predicts 00/02 loop errors ~20x. Not a bug in our edge code (checked).
+Results: paper chunk 30 (00/02/05/07) 9.06/99.95/10.20/4.00; upstream 30/15 9.07/99.65/10.24/3.98; upstream 32/16
+9.13/104.61/10.04/4.09; ours (a) 32/16 9.18/105.07/10.02/4.06; ours (e) 9.09/117.07/9.57/4.37; chain
+140.49/181.52/48.70/22.36. Pixel depth head calib err 0.40 raw / 0.25 power / 0.18 isotonic, slope -0.70.
 
-## Pending (2026-10-25; user said wait, do nothing until they say continue)
-- Phoenix /scratch2 hit 100% (12 GB free, filled by someone else). Blocked until ~60 GB free:
-  upstream `vggt_long.py` reproduction runs (deps already in pixi.toml), full-resolution caches (`--stride 1`, ~35 GB),
-  audit without the 800 px/frame cap. Then rerun the CPU pipeline.
-- **Qualitative results** (user request, do together with the upstream task): e.g. trajectory overlays (est vs GT,
-  chain vs loops, per scheme), point-cloud renders, depth / confidence maps next to LiDAR, loop-window image pairs incl.
-  the 02 lane-offset failure, seam-error vs confidence examples.
-- Results of the 2026-10-24 Phoenix run are now in `results/mid/` (logs + per-sequence manifests in
-  `results/mid/run_info/`), `results/memory_sweep.csv`, `pixi.lock`. Archive copy: `../phoenix_backup/phoenix_results.tgz`.
-  evo check done (56 trajectories, max diff 1e-9 m); README + docs/status.md updated with real numbers.
-  Caches (9.7 GB) stay on Phoenix (copy runs at 0.1-0.5 MB/s; regenerable). Phoenix project folder NOT deleted yet:
-  it is needed for the pending runs. Delete at the very end (keep kavish/pixi).
-- Local cleanup done 2026-10-25: removed cache/ (synthetic), results/synthetic_check, results/week1, the 07 image/LiDAR
-  subset and external/vggt. data/kitti keeps poses + calib (tests need them).
+## Findings
+- VGGT collapses two visits of the same place: in 02 the passes are 1-4 m apart (different lanes) but the loop
+  window puts them 0.1-1.1 m apart, while each visit alone is fine (0.1-0.4 m rms). Loop-edge translation error ~=
+  true revisit offset; confidence/inliers do not flag it; loop calibration from 05 under-predicts 00/02 loops ~20x.
+- 02's ~100 m ATE at small windows is also in the paper (chunk 30: 99.95 m); larger chunks help (60: 34 m).
+- Worst seams: low-texture vegetation / turning, low confidence; best seams: high confidence (figures/qualitative).
 
 ## User instructions (must follow)
 - GPU work runs on Phoenix (lab server) following `../Phoenix.md`; use pixi there. Do not subsample data to save time.

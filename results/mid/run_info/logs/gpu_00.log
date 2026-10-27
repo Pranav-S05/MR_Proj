@@ -1,0 +1,314 @@
+window 1/283 frames 0-31: 1.96s, peak 9.64 GB, depth/point 0.009, GT pos rms 1.6% rot 0.53 deg
+window 2/283 frames 16-47: 1.73s, peak 9.64 GB, depth/point 0.012, GT pos rms 1.6% rot 0.19 deg
+window 3/283 frames 32-63: 1.74s, peak 9.64 GB, depth/point 0.012, GT pos rms 2.3% rot 0.16 deg
+window 4/283 frames 48-79: 1.75s, peak 9.64 GB, depth/point 0.010, GT pos rms 1.9% rot 0.17 deg
+window 5/283 frames 64-95: 1.75s, peak 9.64 GB, depth/point 0.007, GT pos rms 2.6% rot 0.15 deg
+window 6/283 frames 80-111: 1.76s, peak 9.64 GB, depth/point 0.011, GT pos rms 4.1% rot 0.23 deg
+window 7/283 frames 96-127: 1.76s, peak 9.64 GB, depth/point 0.017, GT pos rms 7.6% rot 0.44 deg
+window 8/283 frames 112-143: 1.77s, peak 9.64 GB, depth/point 0.015, GT pos rms 4.8% rot 0.95 deg
+window 9/283 frames 128-159: 1.77s, peak 9.64 GB, depth/point 0.009, GT pos rms 4.1% rot 0.40 deg
+window 10/283 frames 144-175: 1.78s, peak 9.64 GB, depth/point 0.011, GT pos rms 3.6% rot 0.30 deg
+window 11/283 frames 160-191: 1.79s, peak 9.64 GB, depth/point 0.011, GT pos rms 3.9% rot 0.63 deg
+window 12/283 frames 176-207: 1.81s, peak 9.64 GB, depth/point 0.012, GT pos rms 3.4% rot 0.79 deg
+window 13/283 frames 192-223: 1.79s, peak 9.64 GB, depth/point 0.019, GT pos rms 1.9% rot 1.54 deg
+window 14/283 frames 208-239: 1.80s, peak 9.64 GB, depth/point 0.021, GT pos rms 1.9% rot 1.15 deg
+window 15/283 frames 224-255: 1.80s, peak 9.64 GB, depth/point 0.014, GT pos rms 3.5% rot 0.18 deg
+window 16/283 frames 240-271: 1.82s, peak 9.64 GB, depth/point 0.013, GT pos rms 3.3% rot 0.18 deg
+window 17/283 frames 256-287: 1.81s, peak 9.64 GB, depth/point 0.020, GT pos rms 3.3% rot 0.25 deg
+window 18/283 frames 272-303: 1.81s, peak 9.64 GB, depth/point 0.015, GT pos rms 2.8% rot 0.41 deg
+window 19/283 frames 288-319: 1.81s, peak 9.64 GB, depth/point 0.014, GT pos rms 2.6% rot 0.60 deg
+window 20/283 frames 304-335: 1.81s, peak 9.64 GB, depth/point 0.012, GT pos rms 2.7% rot 0.51 deg
+window 21/283 frames 320-351: 1.82s, peak 9.64 GB, depth/point 0.015, GT pos rms 2.1% rot 0.62 deg
+window 22/283 frames 336-367: 1.82s, peak 9.64 GB, depth/point 0.016, GT pos rms 3.6% rot 0.74 deg
+window 23/283 frames 352-383: 1.82s, peak 9.64 GB, depth/point 0.017, GT pos rms 2.9% rot 0.59 deg
+window 24/283 frames 368-399: 1.82s, peak 9.64 GB, depth/point 0.016, GT pos rms 2.9% rot 0.28 deg
+window 25/283 frames 384-415: 1.83s, peak 9.64 GB, depth/point 0.015, GT pos rms 3.7% rot 0.50 deg
+window 26/283 frames 400-431: 1.83s, peak 9.64 GB, depth/point 0.018, GT pos rms 6.2% rot 1.19 deg
+window 27/283 frames 416-447: 1.83s, peak 9.64 GB, depth/point 0.017, GT pos rms 5.6% rot 1.48 deg
+window 28/283 frames 432-463: 1.83s, peak 9.64 GB, depth/point 0.017, GT pos rms 3.3% rot 0.75 deg
+window 29/283 frames 448-479: 1.84s, peak 9.64 GB, depth/point 0.014, GT pos rms 3.3% rot 0.22 deg
+window 30/283 frames 464-495: 1.83s, peak 9.64 GB, depth/point 0.015, GT pos rms 3.9% rot 0.17 deg
+window 31/283 frames 480-511: 1.84s, peak 9.64 GB, depth/point 0.010, GT pos rms 2.1% rot 0.17 deg
+window 32/283 frames 496-527: 1.84s, peak 9.64 GB, depth/point 0.009, GT pos rms 1.7% rot 0.17 deg
+window 33/283 frames 512-543: 1.84s, peak 9.64 GB, depth/point 0.008, GT pos rms 3.2% rot 0.11 deg
+window 34/283 frames 528-559: 1.83s, peak 9.64 GB, depth/point 0.006, GT pos rms 7.1% rot 0.05 deg
+window 35/283 frames 544-575: 1.84s, peak 9.64 GB, depth/point 0.009, GT pos rms 4.0% rot 0.21 deg
+window 36/283 frames 560-591: 1.84s, peak 9.64 GB, depth/point 0.015, GT pos rms 7.6% rot 0.28 deg
+window 37/283 frames 576-607: 1.85s, peak 9.64 GB, depth/point 0.015, GT pos rms 4.7% rot 1.09 deg
+window 38/283 frames 592-623: 1.87s, peak 9.64 GB, depth/point 0.012, GT pos rms 3.3% rot 0.62 deg
+window 39/283 frames 608-639: 1.84s, peak 9.64 GB, depth/point 0.009, GT pos rms 3.1% rot 0.19 deg
+window 40/283 frames 624-655: 1.84s, peak 9.64 GB, depth/point 0.011, GT pos rms 3.9% rot 0.18 deg
+window 41/283 frames 640-671: 1.85s, peak 9.64 GB, depth/point 0.012, GT pos rms 3.9% rot 0.11 deg
+window 42/283 frames 656-687: 1.85s, peak 9.64 GB, depth/point 0.011, GT pos rms 3.9% rot 0.16 deg
+window 43/283 frames 672-703: 1.85s, peak 9.64 GB, depth/point 0.011, GT pos rms 3.4% rot 0.12 deg
+window 44/283 frames 688-719: 1.84s, peak 9.64 GB, depth/point 0.009, GT pos rms 3.2% rot 0.08 deg
+window 45/283 frames 704-735: 1.84s, peak 9.64 GB, depth/point 0.008, GT pos rms 3.1% rot 0.19 deg
+window 46/283 frames 720-751: 1.86s, peak 9.64 GB, depth/point 0.015, GT pos rms 3.9% rot 1.04 deg
+window 47/283 frames 736-767: 1.85s, peak 9.64 GB, depth/point 0.014, GT pos rms 2.2% rot 1.94 deg
+window 48/283 frames 752-783: 1.87s, peak 9.64 GB, depth/point 0.011, GT pos rms 3.2% rot 0.55 deg
+window 49/283 frames 768-799: 1.85s, peak 9.64 GB, depth/point 0.010, GT pos rms 3.5% rot 0.17 deg
+window 50/283 frames 784-815: 1.85s, peak 9.64 GB, depth/point 0.013, GT pos rms 3.4% rot 0.13 deg
+window 51/283 frames 800-831: 1.85s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.7% rot 0.24 deg
+window 52/283 frames 816-847: 1.85s, peak 9.64 GB, depth/point 0.010, GT pos rms 2.5% rot 0.28 deg
+window 53/283 frames 832-863: 1.85s, peak 9.64 GB, depth/point 0.007, GT pos rms 3.2% rot 0.34 deg
+window 54/283 frames 848-879: 1.85s, peak 9.64 GB, depth/point 0.011, GT pos rms 3.1% rot 0.13 deg
+window 55/283 frames 864-895: 1.85s, peak 9.64 GB, depth/point 0.015, GT pos rms 2.4% rot 0.22 deg
+window 56/283 frames 880-911: 1.86s, peak 9.64 GB, depth/point 0.015, GT pos rms 3.6% rot 0.30 deg
+window 57/283 frames 896-927: 1.87s, peak 9.64 GB, depth/point 0.015, GT pos rms 2.5% rot 0.22 deg
+window 58/283 frames 912-943: 1.86s, peak 9.64 GB, depth/point 0.010, GT pos rms 2.5% rot 0.33 deg
+window 59/283 frames 928-959: 1.85s, peak 9.64 GB, depth/point 0.012, GT pos rms 4.1% rot 1.13 deg
+window 60/283 frames 944-975: 1.86s, peak 9.64 GB, depth/point 0.020, GT pos rms 4.4% rot 2.64 deg
+window 61/283 frames 960-991: 1.86s, peak 9.64 GB, depth/point 0.013, GT pos rms 1.8% rot 1.03 deg
+window 62/283 frames 976-1007: 1.91s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.6% rot 0.27 deg
+window 63/283 frames 992-1023: 1.86s, peak 9.64 GB, depth/point 0.012, GT pos rms 2.3% rot 0.11 deg
+window 64/283 frames 1008-1039: 1.87s, peak 9.64 GB, depth/point 0.011, GT pos rms 2.8% rot 0.19 deg
+window 65/283 frames 1024-1055: 1.88s, peak 9.64 GB, depth/point 0.011, GT pos rms 3.8% rot 0.23 deg
+window 66/283 frames 1040-1071: 1.87s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.9% rot 0.25 deg
+window 67/283 frames 1056-1087: 1.89s, peak 9.64 GB, depth/point 0.017, GT pos rms 2.9% rot 0.28 deg
+window 68/283 frames 1072-1103: 1.86s, peak 9.64 GB, depth/point 0.015, GT pos rms 2.9% rot 0.18 deg
+window 69/283 frames 1088-1119: 1.87s, peak 9.64 GB, depth/point 0.010, GT pos rms 3.2% rot 0.12 deg
+window 70/283 frames 1104-1135: 1.87s, peak 9.64 GB, depth/point 0.015, GT pos rms 3.3% rot 0.41 deg
+window 71/283 frames 1120-1151: 1.88s, peak 9.64 GB, depth/point 0.017, GT pos rms 3.4% rot 0.79 deg
+window 72/283 frames 1136-1167: 1.88s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.9% rot 0.55 deg
+window 73/283 frames 1152-1183: 1.88s, peak 9.64 GB, depth/point 0.010, GT pos rms 3.1% rot 0.22 deg
+window 74/283 frames 1168-1199: 1.89s, peak 9.64 GB, depth/point 0.009, GT pos rms 2.6% rot 0.20 deg
+window 75/283 frames 1184-1215: 1.87s, peak 9.64 GB, depth/point 0.011, GT pos rms 1.3% rot 0.78 deg
+window 76/283 frames 1200-1231: 1.90s, peak 9.64 GB, depth/point 0.010, GT pos rms 5.1% rot 0.57 deg
+window 77/283 frames 1216-1247: 1.87s, peak 9.64 GB, depth/point 0.013, GT pos rms 4.2% rot 1.63 deg
+window 78/283 frames 1232-1263: 1.86s, peak 9.64 GB, depth/point 0.023, GT pos rms 2.9% rot 0.61 deg
+window 79/283 frames 1248-1279: 1.86s, peak 9.64 GB, depth/point 0.017, GT pos rms 3.1% rot 0.57 deg
+window 80/283 frames 1264-1295: 1.87s, peak 9.64 GB, depth/point 0.025, GT pos rms 3.3% rot 1.05 deg
+window 81/283 frames 1280-1311: 1.87s, peak 9.64 GB, depth/point 0.011, GT pos rms 3.3% rot 0.32 deg
+window 82/283 frames 1296-1327: 1.87s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.6% rot 0.18 deg
+window 83/283 frames 1312-1343: 1.85s, peak 9.64 GB, depth/point 0.010, GT pos rms 3.1% rot 0.19 deg
+window 84/283 frames 1328-1359: 1.85s, peak 9.64 GB, depth/point 0.010, GT pos rms 2.5% rot 0.14 deg
+window 85/283 frames 1344-1375: 1.85s, peak 9.64 GB, depth/point 0.008, GT pos rms 3.3% rot 0.15 deg
+window 86/283 frames 1360-1391: 1.85s, peak 9.64 GB, depth/point 0.009, GT pos rms 1.7% rot 0.30 deg
+window 87/283 frames 1376-1407: 1.85s, peak 9.64 GB, depth/point 0.014, GT pos rms 4.6% rot 0.35 deg
+window 88/283 frames 1392-1423: 1.85s, peak 9.64 GB, depth/point 0.009, GT pos rms 4.5% rot 0.27 deg
+window 89/283 frames 1408-1439: 1.86s, peak 9.64 GB, depth/point 0.009, GT pos rms 2.8% rot 0.54 deg
+window 90/283 frames 1424-1455: 1.87s, peak 9.64 GB, depth/point 0.009, GT pos rms 3.0% rot 0.24 deg
+window 91/283 frames 1440-1471: 1.86s, peak 9.64 GB, depth/point 0.012, GT pos rms 2.6% rot 0.14 deg
+window 92/283 frames 1456-1487: 1.85s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.3% rot 0.17 deg
+window 93/283 frames 1472-1503: 1.86s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.6% rot 0.23 deg
+window 94/283 frames 1488-1519: 1.85s, peak 9.64 GB, depth/point 0.016, GT pos rms 2.3% rot 0.18 deg
+window 95/283 frames 1504-1535: 1.86s, peak 9.64 GB, depth/point 0.010, GT pos rms 2.5% rot 0.12 deg
+window 96/283 frames 1520-1551: 1.85s, peak 9.64 GB, depth/point 0.009, GT pos rms 2.6% rot 0.29 deg
+window 97/283 frames 1536-1567: 1.86s, peak 9.64 GB, depth/point 0.011, GT pos rms 4.2% rot 0.94 deg
+window 98/283 frames 1552-1583: 1.85s, peak 9.64 GB, depth/point 0.015, GT pos rms 1.6% rot 1.81 deg
+window 99/283 frames 1568-1599: 1.85s, peak 9.64 GB, depth/point 0.010, GT pos rms 3.1% rot 0.53 deg
+window 100/283 frames 1584-1615: 1.85s, peak 9.64 GB, depth/point 0.010, GT pos rms 2.6% rot 0.30 deg
+window 101/283 frames 1600-1631: 1.86s, peak 9.64 GB, depth/point 0.012, GT pos rms 3.0% rot 0.62 deg
+window 102/283 frames 1616-1647: 1.85s, peak 9.64 GB, depth/point 0.010, GT pos rms 3.5% rot 0.71 deg
+window 103/283 frames 1632-1663: 1.86s, peak 9.64 GB, depth/point 0.012, GT pos rms 4.0% rot 0.68 deg
+window 104/283 frames 1648-1679: 1.86s, peak 9.64 GB, depth/point 0.011, GT pos rms 3.5% rot 0.29 deg
+window 105/283 frames 1664-1695: 1.85s, peak 9.64 GB, depth/point 0.011, GT pos rms 3.8% rot 0.56 deg
+window 106/283 frames 1680-1711: 1.86s, peak 9.64 GB, depth/point 0.009, GT pos rms 3.1% rot 0.22 deg
+window 107/283 frames 1696-1727: 1.85s, peak 9.64 GB, depth/point 0.008, GT pos rms 2.7% rot 0.21 deg
+window 108/283 frames 1712-1743: 1.85s, peak 9.64 GB, depth/point 0.012, GT pos rms 2.3% rot 0.22 deg
+window 109/283 frames 1728-1759: 1.86s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.3% rot 0.23 deg
+window 110/283 frames 1744-1775: 1.85s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.2% rot 0.23 deg
+window 111/283 frames 1760-1791: 1.85s, peak 9.64 GB, depth/point 0.011, GT pos rms 1.9% rot 0.50 deg
+window 112/283 frames 1776-1807: 1.86s, peak 9.64 GB, depth/point 0.015, GT pos rms 3.3% rot 1.86 deg
+window 113/283 frames 1792-1823: 1.85s, peak 9.64 GB, depth/point 0.015, GT pos rms 2.3% rot 0.71 deg
+window 114/283 frames 1808-1839: 1.87s, peak 9.64 GB, depth/point 0.016, GT pos rms 3.0% rot 0.38 deg
+window 115/283 frames 1824-1855: 1.85s, peak 9.64 GB, depth/point 0.016, GT pos rms 3.3% rot 0.39 deg
+window 116/283 frames 1840-1871: 1.87s, peak 9.64 GB, depth/point 0.017, GT pos rms 2.8% rot 0.32 deg
+window 117/283 frames 1856-1887: 1.86s, peak 9.64 GB, depth/point 0.017, GT pos rms 2.2% rot 0.49 deg
+window 118/283 frames 1872-1903: 1.85s, peak 9.64 GB, depth/point 0.019, GT pos rms 1.8% rot 0.25 deg
+window 119/283 frames 1888-1919: 1.85s, peak 9.64 GB, depth/point 0.015, GT pos rms 3.1% rot 0.37 deg
+window 120/283 frames 1904-1935: 1.85s, peak 9.64 GB, depth/point 0.010, GT pos rms 4.8% rot 0.57 deg
+window 121/283 frames 1920-1951: 1.85s, peak 9.64 GB, depth/point 0.012, GT pos rms 5.4% rot 0.41 deg
+window 122/283 frames 1936-1967: 1.85s, peak 9.64 GB, depth/point 0.018, GT pos rms 20.5% rot 1.38 deg
+window 123/283 frames 1952-1983: 1.85s, peak 9.64 GB, depth/point 0.019, GT pos rms 6.2% rot 3.96 deg
+window 124/283 frames 1968-1999: 1.86s, peak 9.64 GB, depth/point 0.014, GT pos rms 3.2% rot 0.85 deg
+window 125/283 frames 1984-2015: 1.85s, peak 9.64 GB, depth/point 0.014, GT pos rms 2.7% rot 0.17 deg
+window 126/283 frames 2000-2031: 1.85s, peak 9.64 GB, depth/point 0.017, GT pos rms 2.6% rot 0.20 deg
+window 127/283 frames 2016-2047: 1.86s, peak 9.64 GB, depth/point 0.014, GT pos rms 1.9% rot 0.22 deg
+window 128/283 frames 2032-2063: 1.87s, peak 9.64 GB, depth/point 0.017, GT pos rms 1.9% rot 0.45 deg
+window 129/283 frames 2048-2079: 1.85s, peak 9.64 GB, depth/point 0.016, GT pos rms 3.3% rot 0.36 deg
+window 130/283 frames 2064-2095: 1.85s, peak 9.64 GB, depth/point 0.012, GT pos rms 3.2% rot 0.17 deg
+window 131/283 frames 2080-2111: 1.87s, peak 9.64 GB, depth/point 0.021, GT pos rms 3.6% rot 0.13 deg
+window 132/283 frames 2096-2127: 1.86s, peak 9.64 GB, depth/point 0.022, GT pos rms 11.9% rot 0.64 deg
+window 133/283 frames 2112-2143: 1.85s, peak 9.64 GB, depth/point 0.019, GT pos rms 7.1% rot 1.49 deg
+window 134/283 frames 2128-2159: 1.85s, peak 9.64 GB, depth/point 0.012, GT pos rms 3.7% rot 0.64 deg
+window 135/283 frames 2144-2175: 1.86s, peak 9.64 GB, depth/point 0.015, GT pos rms 2.3% rot 0.45 deg
+window 136/283 frames 2160-2191: 1.86s, peak 9.64 GB, depth/point 0.013, GT pos rms 4.3% rot 0.42 deg
+window 137/283 frames 2176-2207: 1.85s, peak 9.64 GB, depth/point 0.020, GT pos rms 3.0% rot 0.32 deg
+window 138/283 frames 2192-2223: 1.85s, peak 9.64 GB, depth/point 0.019, GT pos rms 2.7% rot 0.13 deg
+window 139/283 frames 2208-2239: 1.85s, peak 9.64 GB, depth/point 0.013, GT pos rms 3.2% rot 0.16 deg
+window 140/283 frames 2224-2255: 1.85s, peak 9.64 GB, depth/point 0.011, GT pos rms 5.3% rot 0.39 deg
+window 141/283 frames 2240-2271: 1.85s, peak 9.64 GB, depth/point 0.008, GT pos rms 6.4% rot 0.36 deg
+window 142/283 frames 2256-2287: 1.85s, peak 9.64 GB, depth/point 0.011, GT pos rms 3.3% rot 0.64 deg
+window 143/283 frames 2272-2303: 1.86s, peak 9.64 GB, depth/point 0.019, GT pos rms 3.3% rot 1.02 deg
+window 144/283 frames 2288-2319: 1.86s, peak 9.64 GB, depth/point 0.015, GT pos rms 3.2% rot 0.20 deg
+window 145/283 frames 2304-2335: 1.85s, peak 9.64 GB, depth/point 0.020, GT pos rms 3.0% rot 0.78 deg
+window 146/283 frames 2320-2351: 1.85s, peak 9.64 GB, depth/point 0.015, GT pos rms 3.6% rot 1.50 deg
+window 147/283 frames 2336-2367: 1.86s, peak 9.64 GB, depth/point 0.017, GT pos rms 2.1% rot 0.28 deg
+window 148/283 frames 2352-2383: 1.85s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.1% rot 0.17 deg
+window 149/283 frames 2368-2399: 1.85s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.2% rot 0.20 deg
+window 150/283 frames 2384-2415: 1.85s, peak 9.64 GB, depth/point 0.016, GT pos rms 2.7% rot 0.21 deg
+window 151/283 frames 2400-2431: 1.85s, peak 9.64 GB, depth/point 0.017, GT pos rms 5.7% rot 0.38 deg
+window 152/283 frames 2416-2447: 1.78s, peak 9.64 GB, depth/point 0.016, GT pos rms 5.0% rot 0.51 deg
+window 153/283 frames 2432-2463: 1.79s, peak 9.64 GB, depth/point 0.017, GT pos rms 3.5% rot 0.47 deg
+window 154/283 frames 2448-2479: 1.80s, peak 9.64 GB, depth/point 0.016, GT pos rms 2.5% rot 0.33 deg
+window 155/283 frames 2464-2495: 1.80s, peak 9.64 GB, depth/point 0.020, GT pos rms 2.8% rot 0.30 deg
+window 156/283 frames 2480-2511: 1.81s, peak 9.64 GB, depth/point 0.017, GT pos rms 2.0% rot 0.30 deg
+window 157/283 frames 2496-2527: 1.81s, peak 9.64 GB, depth/point 0.013, GT pos rms 3.6% rot 0.17 deg
+window 158/283 frames 2512-2543: 1.82s, peak 9.64 GB, depth/point 0.014, GT pos rms 2.4% rot 0.35 deg
+window 159/283 frames 2528-2559: 1.82s, peak 9.64 GB, depth/point 0.012, GT pos rms 1.9% rot 0.26 deg
+window 160/283 frames 2544-2575: 1.83s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.4% rot 0.24 deg
+window 161/283 frames 2560-2591: 1.83s, peak 9.64 GB, depth/point 0.010, GT pos rms 2.8% rot 0.22 deg
+window 162/283 frames 2576-2607: 1.83s, peak 9.64 GB, depth/point 0.008, GT pos rms 3.1% rot 0.31 deg
+window 163/283 frames 2592-2623: 1.85s, peak 9.64 GB, depth/point 0.010, GT pos rms 2.2% rot 0.41 deg
+window 164/283 frames 2608-2639: 1.84s, peak 9.64 GB, depth/point 0.009, GT pos rms 3.7% rot 0.40 deg
+window 165/283 frames 2624-2655: 1.84s, peak 9.64 GB, depth/point 0.011, GT pos rms 2.9% rot 0.23 deg
+window 166/283 frames 2640-2671: 1.84s, peak 9.64 GB, depth/point 0.011, GT pos rms 2.8% rot 0.17 deg
+window 167/283 frames 2656-2687: 1.84s, peak 9.64 GB, depth/point 0.015, GT pos rms 2.5% rot 0.40 deg
+window 168/283 frames 2672-2703: 1.86s, peak 9.64 GB, depth/point 0.020, GT pos rms 10.5% rot 2.06 deg
+window 169/283 frames 2688-2719: 1.85s, peak 9.64 GB, depth/point 0.030, GT pos rms 7.1% rot 0.95 deg
+window 170/283 frames 2704-2735: 1.86s, peak 9.64 GB, depth/point 0.016, GT pos rms 3.4% rot 0.78 deg
+window 171/283 frames 2720-2751: 1.85s, peak 9.64 GB, depth/point 0.011, GT pos rms 3.5% rot 0.16 deg
+window 172/283 frames 2736-2767: 1.86s, peak 9.64 GB, depth/point 0.012, GT pos rms 2.6% rot 0.18 deg
+window 173/283 frames 2752-2783: 1.85s, peak 9.64 GB, depth/point 0.015, GT pos rms 2.5% rot 0.22 deg
+window 174/283 frames 2768-2799: 1.85s, peak 9.64 GB, depth/point 0.012, GT pos rms 4.1% rot 0.55 deg
+window 175/283 frames 2784-2815: 1.86s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.6% rot 0.71 deg
+window 176/283 frames 2800-2831: 1.85s, peak 9.64 GB, depth/point 0.016, GT pos rms 2.1% rot 0.64 deg
+window 177/283 frames 2816-2847: 1.86s, peak 9.64 GB, depth/point 0.012, GT pos rms 2.8% rot 0.65 deg
+window 178/283 frames 2832-2863: 1.87s, peak 9.64 GB, depth/point 0.014, GT pos rms 4.4% rot 0.33 deg
+window 179/283 frames 2848-2879: 1.87s, peak 9.64 GB, depth/point 0.047, GT pos rms 12.1% rot 0.99 deg
+window 180/283 frames 2864-2895: 1.88s, peak 9.64 GB, depth/point 0.026, GT pos rms 9.0% rot 2.05 deg
+window 181/283 frames 2880-2911: 1.88s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.1% rot 0.52 deg
+window 182/283 frames 2896-2927: 1.88s, peak 9.64 GB, depth/point 0.011, GT pos rms 2.2% rot 0.15 deg
+window 183/283 frames 2912-2943: 1.90s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.6% rot 0.19 deg
+window 184/283 frames 2928-2959: 1.89s, peak 9.64 GB, depth/point 0.015, GT pos rms 2.9% rot 0.29 deg
+window 185/283 frames 2944-2975: 1.92s, peak 9.64 GB, depth/point 0.012, GT pos rms 2.9% rot 2.63 deg
+window 186/283 frames 2960-2991: 1.89s, peak 9.64 GB, depth/point 0.015, GT pos rms 7.3% rot 3.01 deg
+window 187/283 frames 2976-3007: 1.91s, peak 9.64 GB, depth/point 0.013, GT pos rms 3.3% rot 1.92 deg
+window 188/283 frames 2992-3023: 1.92s, peak 9.64 GB, depth/point 0.020, GT pos rms 3.7% rot 0.81 deg
+window 189/283 frames 3008-3039: 1.91s, peak 9.64 GB, depth/point 0.015, GT pos rms 2.9% rot 0.68 deg
+window 190/283 frames 3024-3055: 1.92s, peak 9.64 GB, depth/point 0.012, GT pos rms 2.2% rot 0.13 deg
+window 191/283 frames 3040-3071: 1.90s, peak 9.64 GB, depth/point 0.015, GT pos rms 2.3% rot 0.18 deg
+window 192/283 frames 3056-3087: 1.90s, peak 9.64 GB, depth/point 0.010, GT pos rms 2.7% rot 0.22 deg
+window 193/283 frames 3072-3103: 1.89s, peak 9.64 GB, depth/point 0.013, GT pos rms 3.3% rot 0.42 deg
+window 194/283 frames 3088-3119: 1.88s, peak 9.64 GB, depth/point 0.012, GT pos rms 3.1% rot 0.31 deg
+window 195/283 frames 3104-3135: 1.88s, peak 9.64 GB, depth/point 0.022, GT pos rms 2.4% rot 0.62 deg
+window 196/283 frames 3120-3151: 1.87s, peak 9.64 GB, depth/point 0.011, GT pos rms 2.7% rot 0.26 deg
+window 197/283 frames 3136-3167: 1.88s, peak 9.64 GB, depth/point 0.011, GT pos rms 3.5% rot 0.14 deg
+window 198/283 frames 3152-3183: 1.88s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.6% rot 0.17 deg
+window 199/283 frames 3168-3199: 1.87s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.4% rot 0.25 deg
+window 200/283 frames 3184-3215: 1.88s, peak 9.64 GB, depth/point 0.009, GT pos rms 2.4% rot 0.15 deg
+window 201/283 frames 3200-3231: 1.86s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.7% rot 0.15 deg
+window 202/283 frames 3216-3247: 1.86s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.2% rot 0.14 deg
+window 203/283 frames 3232-3263: 1.87s, peak 9.64 GB, depth/point 0.009, GT pos rms 1.7% rot 0.19 deg
+window 204/283 frames 3248-3279: 1.86s, peak 9.64 GB, depth/point 0.012, GT pos rms 5.7% rot 0.19 deg
+window 205/283 frames 3264-3295: 1.88s, peak 9.64 GB, depth/point 0.014, GT pos rms 8.4% rot 0.82 deg
+window 206/283 frames 3280-3311: 1.85s, peak 9.64 GB, depth/point 0.030, GT pos rms 5.6% rot 1.17 deg
+window 207/283 frames 3296-3327: 1.87s, peak 9.64 GB, depth/point 0.014, GT pos rms 4.3% rot 0.31 deg
+window 208/283 frames 3312-3343: 1.86s, peak 9.64 GB, depth/point 0.013, GT pos rms 3.2% rot 0.19 deg
+window 209/283 frames 3328-3359: 1.85s, peak 9.64 GB, depth/point 0.015, GT pos rms 3.3% rot 0.23 deg
+window 210/283 frames 3344-3375: 1.85s, peak 9.64 GB, depth/point 0.015, GT pos rms 4.4% rot 0.40 deg
+window 211/283 frames 3360-3391: 1.85s, peak 9.64 GB, depth/point 0.021, GT pos rms 6.4% rot 0.47 deg
+window 212/283 frames 3376-3407: 1.87s, peak 9.64 GB, depth/point 0.011, GT pos rms 4.1% rot 0.22 deg
+window 213/283 frames 3392-3423: 1.86s, peak 9.64 GB, depth/point 0.016, GT pos rms 3.5% rot 0.53 deg
+window 214/283 frames 3408-3439: 1.86s, peak 9.64 GB, depth/point 0.019, GT pos rms 8.9% rot 1.32 deg
+window 215/283 frames 3424-3455: 1.85s, peak 9.64 GB, depth/point 0.018, GT pos rms 6.3% rot 1.52 deg
+window 216/283 frames 3440-3471: 1.85s, peak 9.64 GB, depth/point 0.013, GT pos rms 3.0% rot 0.35 deg
+window 217/283 frames 3456-3487: 1.86s, peak 9.64 GB, depth/point 0.015, GT pos rms 2.7% rot 0.16 deg
+window 218/283 frames 3472-3503: 1.85s, peak 9.64 GB, depth/point 0.014, GT pos rms 2.5% rot 0.13 deg
+window 219/283 frames 3488-3519: 1.85s, peak 9.64 GB, depth/point 0.010, GT pos rms 1.3% rot 0.15 deg
+window 220/283 frames 3504-3535: 1.86s, peak 9.64 GB, depth/point 0.009, GT pos rms 2.5% rot 0.26 deg
+window 221/283 frames 3520-3551: 1.85s, peak 9.64 GB, depth/point 0.016, GT pos rms 7.9% rot 0.51 deg
+window 222/283 frames 3536-3567: 1.85s, peak 9.64 GB, depth/point 0.015, GT pos rms 4.3% rot 1.37 deg
+window 223/283 frames 3552-3583: 1.85s, peak 9.64 GB, depth/point 0.012, GT pos rms 2.5% rot 0.66 deg
+window 224/283 frames 3568-3599: 1.87s, peak 9.64 GB, depth/point 0.011, GT pos rms 2.6% rot 0.21 deg
+window 225/283 frames 3584-3615: 1.85s, peak 9.64 GB, depth/point 0.013, GT pos rms 3.1% rot 0.12 deg
+window 226/283 frames 3600-3631: 1.87s, peak 9.64 GB, depth/point 0.013, GT pos rms 3.5% rot 0.14 deg
+window 227/283 frames 3616-3647: 1.86s, peak 9.64 GB, depth/point 0.013, GT pos rms 3.7% rot 0.13 deg
+window 228/283 frames 3632-3663: 1.87s, peak 9.64 GB, depth/point 0.010, GT pos rms 3.1% rot 0.11 deg
+window 229/283 frames 3648-3679: 1.85s, peak 9.64 GB, depth/point 0.008, GT pos rms 3.2% rot 0.27 deg
+window 230/283 frames 3664-3695: 1.86s, peak 9.64 GB, depth/point 0.013, GT pos rms 3.9% rot 2.18 deg
+window 231/283 frames 3680-3711: 1.86s, peak 9.64 GB, depth/point 0.016, GT pos rms 2.2% rot 1.81 deg
+window 232/283 frames 3696-3727: 1.85s, peak 9.64 GB, depth/point 0.010, GT pos rms 3.3% rot 0.28 deg
+window 233/283 frames 3712-3743: 1.85s, peak 9.64 GB, depth/point 0.011, GT pos rms 2.8% rot 0.16 deg
+window 234/283 frames 3728-3759: 1.85s, peak 9.64 GB, depth/point 0.016, GT pos rms 3.2% rot 0.20 deg
+window 235/283 frames 3744-3775: 1.85s, peak 9.64 GB, depth/point 0.012, GT pos rms 2.8% rot 0.25 deg
+window 236/283 frames 3760-3791: 1.85s, peak 9.64 GB, depth/point 0.007, GT pos rms 3.5% rot 0.28 deg
+window 237/283 frames 3776-3807: 1.85s, peak 9.64 GB, depth/point 0.016, GT pos rms 2.8% rot 0.23 deg
+window 238/283 frames 3792-3823: 1.85s, peak 9.64 GB, depth/point 0.022, GT pos rms 3.2% rot 0.29 deg
+window 239/283 frames 3808-3839: 1.87s, peak 9.64 GB, depth/point 0.015, GT pos rms 2.5% rot 0.22 deg
+window 240/283 frames 3824-3855: 1.86s, peak 9.64 GB, depth/point 0.012, GT pos rms 2.6% rot 0.18 deg
+window 241/283 frames 3840-3871: 1.85s, peak 9.64 GB, depth/point 0.013, GT pos rms 3.2% rot 0.18 deg
+window 242/283 frames 3856-3887: 1.85s, peak 9.64 GB, depth/point 0.016, GT pos rms 2.9% rot 0.31 deg
+window 243/283 frames 3872-3903: 1.85s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.4% rot 0.47 deg
+window 244/283 frames 3888-3919: 1.85s, peak 9.64 GB, depth/point 0.012, GT pos rms 2.9% rot 0.33 deg
+window 245/283 frames 3904-3935: 1.85s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.2% rot 0.56 deg
+window 246/283 frames 3920-3951: 1.86s, peak 9.64 GB, depth/point 0.007, GT pos rms 2.9% rot 0.34 deg
+window 247/283 frames 3936-3967: 1.85s, peak 9.64 GB, depth/point 0.010, GT pos rms 3.7% rot 0.38 deg
+window 248/283 frames 3952-3983: 1.85s, peak 9.64 GB, depth/point 0.021, GT pos rms 6.0% rot 1.88 deg
+window 249/283 frames 3968-3999: 1.88s, peak 9.64 GB, depth/point 0.021, GT pos rms 2.4% rot 1.94 deg
+window 250/283 frames 3984-4015: 1.86s, peak 9.64 GB, depth/point 0.017, GT pos rms 3.5% rot 0.33 deg
+window 251/283 frames 4000-4031: 1.86s, peak 9.64 GB, depth/point 0.017, GT pos rms 3.8% rot 0.50 deg
+window 252/283 frames 4016-4047: 1.85s, peak 9.64 GB, depth/point 0.018, GT pos rms 3.1% rot 0.27 deg
+window 253/283 frames 4032-4063: 1.85s, peak 9.64 GB, depth/point 0.023, GT pos rms 2.6% rot 0.33 deg
+window 254/283 frames 4048-4079: 1.85s, peak 9.64 GB, depth/point 0.023, GT pos rms 2.3% rot 0.24 deg
+window 255/283 frames 4064-4095: 1.86s, peak 9.64 GB, depth/point 0.019, GT pos rms 3.1% rot 0.20 deg
+window 256/283 frames 4080-4111: 1.88s, peak 9.64 GB, depth/point 0.018, GT pos rms 2.3% rot 0.18 deg
+window 257/283 frames 4096-4127: 1.86s, peak 9.64 GB, depth/point 0.019, GT pos rms 2.8% rot 0.18 deg
+window 258/283 frames 4112-4143: 1.86s, peak 9.64 GB, depth/point 0.019, GT pos rms 3.2% rot 0.38 deg
+window 259/283 frames 4128-4159: 1.86s, peak 9.64 GB, depth/point 0.018, GT pos rms 3.0% rot 0.24 deg
+window 260/283 frames 4144-4175: 1.86s, peak 9.64 GB, depth/point 0.019, GT pos rms 2.8% rot 0.41 deg
+window 261/283 frames 4160-4191: 1.86s, peak 9.64 GB, depth/point 0.023, GT pos rms 2.4% rot 0.23 deg
+window 262/283 frames 4176-4207: 1.86s, peak 9.64 GB, depth/point 0.024, GT pos rms 2.8% rot 0.23 deg
+window 263/283 frames 4192-4223: 1.86s, peak 9.64 GB, depth/point 0.023, GT pos rms 2.7% rot 0.16 deg
+window 264/283 frames 4208-4239: 1.85s, peak 9.64 GB, depth/point 0.018, GT pos rms 3.5% rot 0.19 deg
+window 265/283 frames 4224-4255: 1.86s, peak 9.64 GB, depth/point 0.015, GT pos rms 2.7% rot 0.27 deg
+window 266/283 frames 4240-4271: 1.87s, peak 9.64 GB, depth/point 0.016, GT pos rms 2.0% rot 0.25 deg
+window 267/283 frames 4256-4287: 1.85s, peak 9.64 GB, depth/point 0.020, GT pos rms 3.3% rot 0.19 deg
+window 268/283 frames 4272-4303: 1.86s, peak 9.64 GB, depth/point 0.022, GT pos rms 3.0% rot 0.31 deg
+window 269/283 frames 4288-4319: 1.86s, peak 9.64 GB, depth/point 0.025, GT pos rms 2.3% rot 0.14 deg
+window 270/283 frames 4304-4335: 1.86s, peak 9.64 GB, depth/point 0.019, GT pos rms 2.6% rot 0.19 deg
+window 271/283 frames 4320-4351: 1.87s, peak 9.64 GB, depth/point 0.016, GT pos rms 2.1% rot 0.22 deg
+window 272/283 frames 4336-4367: 1.86s, peak 9.64 GB, depth/point 0.019, GT pos rms 2.5% rot 0.52 deg
+window 273/283 frames 4352-4383: 1.86s, peak 9.64 GB, depth/point 0.020, GT pos rms 3.6% rot 1.58 deg
+window 274/283 frames 4368-4399: 1.85s, peak 9.64 GB, depth/point 0.020, GT pos rms 2.3% rot 1.30 deg
+window 275/283 frames 4384-4415: 1.85s, peak 9.64 GB, depth/point 0.013, GT pos rms 3.5% rot 0.17 deg
+window 276/283 frames 4400-4431: 1.85s, peak 9.64 GB, depth/point 0.008, GT pos rms 3.1% rot 0.24 deg
+window 277/283 frames 4416-4447: 1.86s, peak 9.64 GB, depth/point 0.011, GT pos rms 2.6% rot 0.17 deg
+window 278/283 frames 4432-4463: 1.85s, peak 9.64 GB, depth/point 0.009, GT pos rms 3.0% rot 0.95 deg
+window 279/283 frames 4448-4479: 1.85s, peak 9.64 GB, depth/point 0.012, GT pos rms 2.2% rot 0.75 deg
+window 280/283 frames 4464-4495: 1.85s, peak 9.64 GB, depth/point 0.013, GT pos rms 2.6% rot 0.22 deg
+window 281/283 frames 4480-4511: 1.85s, peak 9.64 GB, depth/point 0.014, GT pos rms 3.5% rot 0.19 deg
+window 282/283 frames 4496-4527: 1.85s, peak 9.64 GB, depth/point 0.011, GT pos rms 2.9% rot 0.12 deg
+window 283/283 frames 4512-4540: 1.67s, peak 9.39 GB, depth/point 0.010, GT pos rms 3.9% rot 0.12 deg
+/scratch2/vpr-team/kavish/mr/external/VGGT-Long/./LoopModels/dinov2/dinov2/layers/swiglu_ffn.py:51: UserWarning: xFormers is not available (SwiGLU)
+  warnings.warn("xFormers is not available (SwiGLU)")
+/scratch2/vpr-team/kavish/mr/external/VGGT-Long/./LoopModels/dinov2/dinov2/layers/attention.py:33: UserWarning: xFormers is not available (Attention)
+  warnings.warn("xFormers is not available (Attention)")
+/scratch2/vpr-team/kavish/mr/external/VGGT-Long/./LoopModels/dinov2/dinov2/layers/block.py:40: UserWarning: xFormers is not available (Block)
+  warnings.warn("xFormers is not available (Block)")
+DINOv2 model loaded.
+Model loaded: /scratch2/vpr-team/kavish/mr/external/VGGT-Long/weights/dino_salad.ckpt
+Extracting features:   0%|          | 0/142 [00:00<?, ?it/s]Extracting features:   1%|          | 1/142 [00:00<00:50,  2.79it/s]Extracting features:   1%|▏         | 2/142 [00:00<00:47,  2.97it/s]Extracting features:   2%|▏         | 3/142 [00:01<00:45,  3.03it/s]Extracting features:   3%|▎         | 4/142 [00:01<00:45,  3.06it/s]Extracting features:   4%|▎         | 5/142 [00:01<00:44,  3.08it/s]Extracting features:   4%|▍         | 6/142 [00:01<00:44,  3.08it/s]Extracting features:   5%|▍         | 7/142 [00:02<00:43,  3.09it/s]Extracting features:   6%|▌         | 8/142 [00:02<00:43,  3.11it/s]Extracting features:   6%|▋         | 9/142 [00:02<00:42,  3.12it/s]Extracting features:   7%|▋         | 10/142 [00:03<00:42,  3.13it/s]Extracting features:   8%|▊         | 11/142 [00:03<00:41,  3.12it/s]Extracting features:   8%|▊         | 12/142 [00:03<00:41,  3.13it/s]Extracting features:   9%|▉         | 13/142 [00:04<00:41,  3.14it/s]Extracting features:  10%|▉         | 14/142 [00:04<00:40,  3.14it/s]Extracting features:  11%|█         | 15/142 [00:04<00:40,  3.14it/s]Extracting features:  11%|█▏        | 16/142 [00:05<00:40,  3.13it/s]Extracting features:  12%|█▏        | 17/142 [00:05<00:40,  3.12it/s]Extracting features:  13%|█▎        | 18/142 [00:05<00:39,  3.12it/s]Extracting features:  13%|█▎        | 19/142 [00:06<00:39,  3.11it/s]Extracting features:  14%|█▍        | 20/142 [00:06<00:39,  3.11it/s]Extracting features:  15%|█▍        | 21/142 [00:06<00:38,  3.11it/s]Extracting features:  15%|█▌        | 22/142 [00:07<00:38,  3.11it/s]Extracting features:  16%|█▌        | 23/142 [00:07<00:38,  3.11it/s]Extracting features:  17%|█▋        | 24/142 [00:07<00:37,  3.12it/s]Extracting features:  18%|█▊        | 25/142 [00:08<00:37,  3.11it/s]Extracting features:  18%|█▊        | 26/142 [00:08<00:37,  3.11it/s]Extracting features:  19%|█▉        | 27/142 [00:08<00:36,  3.12it/s]Extracting features:  20%|█▉        | 28/142 [00:09<00:36,  3.12it/s]Extracting features:  20%|██        | 29/142 [00:09<00:36,  3.11it/s]Extracting features:  21%|██        | 30/142 [00:09<00:36,  3.10it/s]Extracting features:  22%|██▏       | 31/142 [00:09<00:35,  3.11it/s]Extracting features:  23%|██▎       | 32/142 [00:10<00:35,  3.10it/s]Extracting features:  23%|██▎       | 33/142 [00:10<00:35,  3.10it/s]Extracting features:  24%|██▍       | 34/142 [00:10<00:34,  3.09it/s]Extracting features:  25%|██▍       | 35/142 [00:11<00:34,  3.08it/s]Extracting features:  25%|██▌       | 36/142 [00:11<00:34,  3.10it/s]Extracting features:  26%|██▌       | 37/142 [00:11<00:33,  3.10it/s]Extracting features:  27%|██▋       | 38/142 [00:12<00:33,  3.08it/s]Extracting features:  27%|██▋       | 39/142 [00:12<00:33,  3.09it/s]Extracting features:  28%|██▊       | 40/142 [00:12<00:33,  3.09it/s]Extracting features:  29%|██▉       | 41/142 [00:13<00:32,  3.08it/s]Extracting features:  30%|██▉       | 42/142 [00:13<00:32,  3.09it/s]Extracting features:  30%|███       | 43/142 [00:13<00:31,  3.10it/s]Extracting features:  31%|███       | 44/142 [00:14<00:31,  3.10it/s]Extracting features:  32%|███▏      | 45/142 [00:14<00:31,  3.11it/s]Extracting features:  32%|███▏      | 46/142 [00:14<00:30,  3.10it/s]Extracting features:  33%|███▎      | 47/142 [00:15<00:30,  3.08it/s]Extracting features:  34%|███▍      | 48/142 [00:15<00:30,  3.08it/s]Extracting features:  35%|███▍      | 49/142 [00:15<00:30,  3.09it/s]Extracting features:  35%|███▌      | 50/142 [00:16<00:29,  3.09it/s]Extracting features:  36%|███▌      | 51/142 [00:16<00:29,  3.10it/s]Extracting features:  37%|███▋      | 52/142 [00:16<00:29,  3.10it/s]Extracting features:  37%|███▋      | 53/142 [00:17<00:28,  3.10it/s]Extracting features:  38%|███▊      | 54/142 [00:17<00:28,  3.11it/s]Extracting features:  39%|███▊      | 55/142 [00:17<00:28,  3.11it/s]Extracting features:  39%|███▉      | 56/142 [00:18<00:27,  3.11it/s]Extracting features:  40%|████      | 57/142 [00:18<00:27,  3.10it/s]Extracting features:  41%|████      | 58/142 [00:18<00:27,  3.11it/s]Extracting features:  42%|████▏     | 59/142 [00:19<00:26,  3.10it/s]Extracting features:  42%|████▏     | 60/142 [00:19<00:26,  3.08it/s]Extracting features:  43%|████▎     | 61/142 [00:19<00:26,  3.07it/s]Extracting features:  44%|████▎     | 62/142 [00:20<00:26,  3.07it/s]Extracting features:  44%|████▍     | 63/142 [00:20<00:25,  3.06it/s]Extracting features:  45%|████▌     | 64/142 [00:20<00:25,  3.06it/s]Extracting features:  46%|████▌     | 65/142 [00:20<00:25,  3.06it/s]Extracting features:  46%|████▋     | 66/142 [00:21<00:24,  3.07it/s]Extracting features:  47%|████▋     | 67/142 [00:21<00:24,  3.06it/s]Extracting features:  48%|████▊     | 68/142 [00:21<00:24,  3.07it/s]Extracting features:  49%|████▊     | 69/142 [00:22<00:23,  3.06it/s]Extracting features:  49%|████▉     | 70/142 [00:22<00:23,  3.07it/s]Extracting features:  50%|█████     | 71/142 [00:22<00:23,  3.08it/s]Extracting features:  51%|█████     | 72/142 [00:23<00:22,  3.06it/s]Extracting features:  51%|█████▏    | 73/142 [00:23<00:22,  3.06it/s]Extracting features:  52%|█████▏    | 74/142 [00:23<00:22,  3.05it/s]Extracting features:  53%|█████▎    | 75/142 [00:24<00:22,  3.04it/s]Extracting features:  54%|█████▎    | 76/142 [00:24<00:21,  3.06it/s]Extracting features:  54%|█████▍    | 77/142 [00:24<00:21,  3.08it/s]Extracting features:  55%|█████▍    | 78/142 [00:25<00:20,  3.08it/s]Extracting features:  56%|█████▌    | 79/142 [00:25<00:20,  3.08it/s]Extracting features:  56%|█████▋    | 80/142 [00:25<00:20,  3.08it/s]Extracting features:  57%|█████▋    | 81/142 [00:26<00:19,  3.08it/s]Extracting features:  58%|█████▊    | 82/142 [00:26<00:19,  3.08it/s]Extracting features:  58%|█████▊    | 83/142 [00:26<00:19,  3.08it/s]Extracting features:  59%|█████▉    | 84/142 [00:27<00:18,  3.08it/s]Extracting features:  60%|█████▉    | 85/142 [00:27<00:18,  3.08it/s]Extracting features:  61%|██████    | 86/142 [00:27<00:18,  3.08it/s]Extracting features:  61%|██████▏   | 87/142 [00:28<00:17,  3.07it/s]Extracting features:  62%|██████▏   | 88/142 [00:28<00:17,  3.06it/s]Extracting features:  63%|██████▎   | 89/142 [00:28<00:17,  3.06it/s]Extracting features:  63%|██████▎   | 90/142 [00:29<00:17,  3.05it/s]Extracting features:  64%|██████▍   | 91/142 [00:29<00:16,  3.07it/s]Extracting features:  65%|██████▍   | 92/142 [00:29<00:16,  3.07it/s]Extracting features:  65%|██████▌   | 93/142 [00:30<00:15,  3.08it/s]Extracting features:  66%|██████▌   | 94/142 [00:30<00:15,  3.07it/s]Extracting features:  67%|██████▋   | 95/142 [00:30<00:15,  3.06it/s]Extracting features:  68%|██████▊   | 96/142 [00:31<00:15,  3.06it/s]Extracting features:  68%|██████▊   | 97/142 [00:31<00:14,  3.07it/s]Extracting features:  69%|██████▉   | 98/142 [00:31<00:14,  3.07it/s]Extracting features:  70%|██████▉   | 99/142 [00:32<00:14,  3.07it/s]Extracting features:  70%|███████   | 100/142 [00:32<00:13,  3.06it/s]Extracting features:  71%|███████   | 101/142 [00:32<00:13,  3.06it/s]Extracting features:  72%|███████▏  | 102/142 [00:33<00:13,  3.07it/s]Extracting features:  73%|███████▎  | 103/142 [00:33<00:12,  3.08it/s]Extracting features:  73%|███████▎  | 104/142 [00:33<00:12,  3.07it/s]Extracting features:  74%|███████▍  | 105/142 [00:34<00:12,  3.06it/s]Extracting features:  75%|███████▍  | 106/142 [00:34<00:11,  3.08it/s]Extracting features:  75%|███████▌  | 107/142 [00:34<00:11,  3.09it/s]Extracting features:  76%|███████▌  | 108/142 [00:34<00:10,  3.09it/s]Extracting features:  77%|███████▋  | 109/142 [00:35<00:10,  3.09it/s]Extracting features:  77%|███████▋  | 110/142 [00:35<00:10,  3.08it/s]Extracting features:  78%|███████▊  | 111/142 [00:35<00:10,  3.07it/s]Extracting features:  79%|███████▉  | 112/142 [00:36<00:09,  3.07it/s]Extracting features:  80%|███████▉  | 113/142 [00:36<00:09,  3.07it/s]Extracting features:  80%|████████  | 114/142 [00:36<00:09,  3.07it/s]Extracting features:  81%|████████  | 115/142 [00:37<00:08,  3.07it/s]Extracting features:  82%|████████▏ | 116/142 [00:37<00:08,  3.06it/s]Extracting features:  82%|████████▏ | 117/142 [00:37<00:08,  3.05it/s]Extracting features:  83%|████████▎ | 118/142 [00:38<00:07,  3.06it/s]Extracting features:  84%|████████▍ | 119/142 [00:38<00:07,  3.08it/s]Extracting features:  85%|████████▍ | 120/142 [00:38<00:07,  3.06it/s]Extracting features:  85%|████████▌ | 121/142 [00:39<00:06,  3.07it/s]Extracting features:  86%|████████▌ | 122/142 [00:39<00:06,  3.07it/s]Extracting features:  87%|████████▋ | 123/142 [00:39<00:06,  3.07it/s]Extracting features:  87%|████████▋ | 124/142 [00:40<00:05,  3.07it/s]Extracting features:  88%|████████▊ | 125/142 [00:40<00:05,  3.06it/s]Extracting features:  89%|████████▊ | 126/142 [00:40<00:05,  3.05it/s]Extracting features:  89%|████████▉ | 127/142 [00:41<00:04,  3.05it/s]Extracting features:  90%|█████████ | 128/142 [00:41<00:04,  3.05it/s]Extracting features:  91%|█████████ | 129/142 [00:41<00:04,  3.05it/s]Extracting features:  92%|█████████▏| 130/142 [00:42<00:03,  3.05it/s]Extracting features:  92%|█████████▏| 131/142 [00:42<00:03,  3.05it/s]Extracting features:  93%|█████████▎| 132/142 [00:42<00:03,  3.05it/s]Extracting features:  94%|█████████▎| 133/142 [00:43<00:02,  3.05it/s]Extracting features:  94%|█████████▍| 134/142 [00:43<00:02,  3.05it/s]Extracting features:  95%|█████████▌| 135/142 [00:43<00:02,  3.05it/s]Extracting features:  96%|█████████▌| 136/142 [00:44<00:01,  3.05it/s]Extracting features:  96%|█████████▋| 137/142 [00:44<00:01,  3.05it/s]Extracting features:  97%|█████████▋| 138/142 [00:44<00:01,  3.05it/s]Extracting features:  98%|█████████▊| 139/142 [00:45<00:00,  3.06it/s]Extracting features:  99%|█████████▊| 140/142 [00:45<00:00,  3.05it/s]Extracting features:  99%|█████████▉| 141/142 [00:45<00:00,  3.07it/s]Extracting features: 100%|██████████| 142/142 [00:46<00:00,  3.15it/s]Extracting features: 100%|██████████| 142/142 [00:46<00:00,  3.08it/s]
+20 loop pairs -> 20 loop windows (salad, threshold 0.85)
+loop window 1/20: frames [3617, 3637] + [672, 692] (2.36s)
+loop window 2/20: frames [3792, 3812] + [880, 900] (2.37s)
+loop window 3/20: frames [3760, 3780] + [832, 852] (2.38s)
+loop window 4/20: frames [3344, 3364] + [2400, 2420] (2.39s)
+loop window 5/20: frames [1585, 1605] + [144, 164] (2.39s)
+loop window 6/20: frames [3472, 3492] + [467, 487] (2.39s)
+loop window 7/20: frames [3589, 3609] + [640, 660] (2.44s)
+loop window 8/20: frames [3568, 3588] + [608, 628] (2.42s)
+loop window 9/20: frames [3392, 3412] + [2432, 2452] (2.44s)
+loop window 10/20: frames [3504, 3524] + [512, 532] (2.45s)
+loop window 11/20: frames [3424, 3444] + [416, 436] (2.49s)
+loop window 12/20: frames [3312, 3332] + [2368, 2388] (2.53s)
+loop window 13/20: frames [560, 580] + [544, 564] (2.58s)
+loop window 14/20: frames [3717, 3737] + [784, 804] (2.58s)
+loop window 15/20: frames [3840, 3860] + [928, 948] (2.62s)
+loop window 16/20: frames [4499, 4519] + [64, 84] (2.60s)
+loop window 17/20: frames [1620, 1640] + [181, 201] (2.57s)
+loop window 18/20: frames [4467, 4487] + [18, 38] (2.59s)
+loop window 19/20: frames [3696, 3716] + [752, 772] (2.56s)
+loop window 20/20: frames [3664, 3684] + [720, 740] (2.52s)
+done: /scratch2/vpr-team/kavish/mr/cache/kitti/00

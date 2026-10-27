@@ -1,0 +1,74 @@
+== fit
+  fitted on 227 seams / 11 loops from ['05', '07']; pixel power law p = 0.743
+== tune
+  vggt_long: huber k=5, dcs phi=10
+  uniform: huber k=1, dcs phi=100
+  raw_conf: huber k=2, dcs phi=100
+  geometry: huber k=0.5, dcs phi=100
+  calibrated: huber k=0.5, dcs phi=300
+  oracle: huber k=1, dcs phi=300
+  power_law: huber k=0.5, dcs phi=30
+== solve
+  [05] vggt_long  ATE [m]: chain 48.70 | loops 10.02 | huber 10.02 | dcs 10.02
+  [05] uniform    ATE [m]: chain 48.70 | loops 11.52 | huber 11.52 | dcs 11.52
+  [05] raw_conf   ATE [m]: chain 48.70 | loops 10.05 | huber 10.05 | dcs 10.05
+  [05] geometry   ATE [m]: chain 48.70 | loops 11.10 | huber 11.10 | dcs 11.10
+  [05] calibrated ATE [m]: chain 48.70 | loops 9.57 | huber 9.57 | dcs 9.57
+  [05] oracle     ATE [m]: chain 48.70 | loops 8.94 | huber 8.94 | dcs 8.94
+  [05] power_law  ATE [m]: chain 48.70 | loops 10.39 | huber 10.38 | dcs 10.39
+  [07] vggt_long  ATE [m]: chain 22.36 | loops 4.06 | huber 4.06 | dcs 4.06
+  [07] uniform    ATE [m]: chain 22.36 | loops 3.61 | huber 3.61 | dcs 3.61
+  [07] raw_conf   ATE [m]: chain 22.36 | loops 4.55 | huber 4.55 | dcs 4.55
+  [07] geometry   ATE [m]: chain 22.36 | loops 4.49 | huber 4.49 | dcs 4.49
+  [07] calibrated ATE [m]: chain 22.36 | loops 4.37 | huber 4.37 | dcs 4.37
+  [07] oracle     ATE [m]: chain 22.36 | loops 4.59 | huber 4.59 | dcs 4.59
+  [07] power_law  ATE [m]: chain 22.36 | loops 4.37 | huber 4.37 | dcs 4.37
+  [00] vggt_long  ATE [m]: chain 140.49 | loops 9.18 | huber 9.18 | dcs 9.18
+  [00] uniform    ATE [m]: chain 140.49 | loops 10.15 | huber 10.15 | dcs 10.15
+  [00] raw_conf   ATE [m]: chain 140.49 | loops 10.28 | huber 10.28 | dcs 10.28
+  [00] geometry   ATE [m]: chain 140.49 | loops 9.34 | huber 9.34 | dcs 9.34
+  [00] calibrated ATE [m]: chain 140.49 | loops 9.09 | huber 9.09 | dcs 9.09
+  [00] oracle     ATE [m]: chain 140.49 | loops 11.92 | huber 11.92 | dcs 11.92
+  [00] power_law  ATE [m]: chain 140.49 | loops 9.89 | huber 9.85 | dcs 9.89
+  [02] vggt_long  ATE [m]: chain 181.52 | loops 105.07 | huber 105.07 | dcs 105.07
+  [02] uniform    ATE [m]: chain 181.52 | loops 113.36 | huber 113.36 | dcs 175.65
+  [02] raw_conf   ATE [m]: chain 181.52 | loops 119.60 | huber 119.60 | dcs 175.68
+  [02] geometry   ATE [m]: chain 181.52 | loops 113.27 | huber 113.27 | dcs 174.54
+  [02] calibrated ATE [m]: chain 181.52 | loops 117.07 | huber 117.07 | dcs 117.07
+  [02] oracle     ATE [m]: chain 181.52 | loops 116.08 | huber 116.08 | dcs 116.08
+  [02] power_law  ATE [m]: chain 181.52 | loops 119.70 | huber 119.70 | dcs 175.69
+== upstream
+Traceback (most recent call last):
+  File "/scratch2/vpr-team/kavish/mr/.pixi/envs/default/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/scratch2/vpr-team/kavish/mr/.pixi/envs/default/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/scratch2/vpr-team/kavish/mr/mr_cpu/pipeline.py", line 323, in <module>
+    main()
+  File "/scratch2/vpr-team/kavish/mr/mr_cpu/pipeline.py", line 319, in main
+    globals()[f"step_{step}"](cfg)
+  File "/scratch2/vpr-team/kavish/mr/mr_cpu/pipeline.py", line 280, in step_upstream
+    _write_csv(_run(cfg) / "upstream.csv", rows)
+  File "/scratch2/vpr-team/kavish/mr/mr_cpu/pipeline.py", line 290, in _write_csv
+    w.writerows(rows)
+  File "/scratch2/vpr-team/kavish/mr/.pixi/envs/default/lib/python3.10/csv.py", line 157, in writerows
+    return self.writer.writerows(map(self._dict_to_list, rowdicts))
+  File "/scratch2/vpr-team/kavish/mr/.pixi/envs/default/lib/python3.10/csv.py", line 149, in _dict_to_list
+    raise ValueError("dict contains fields not in fieldnames: "
+ValueError: dict contains fields not in fieldnames: 'ate_first_4661'
+  upstream 00_w30_o15: ATE 9.07 m, t_rel 4.96 %
+  upstream 00_w32_o16: ATE 9.13 m, t_rel 4.81 %
+  upstream 00_w60_o30: ATE 8.63 m, t_rel 4.72 %
+  upstream 00_w75_o30: ATE 10.83 m, t_rel 5.42 %
+  upstream 02_w30_o15: ATE 99.65 m, t_rel 26.38 %
+  upstream 02_w32_o16: ATE 104.61 m, t_rel 26.82 %
+  upstream 02_w60_o30: ATE 52.78 m, t_rel 13.71 %
+  upstream 02_w75_o30: ATE 55.90 m, t_rel 15.04 %
+  upstream 05_w30_o15: ATE 10.24 m, t_rel 5.24 %
+  upstream 05_w32_o16: ATE 10.04 m, t_rel 5.11 %
+  upstream 05_w60_o30: ATE 9.85 m, t_rel 4.99 %
+  upstream 05_w75_o30: ATE 10.15 m, t_rel 5.08 %
+  upstream 07_w30_o15: ATE 3.98 m, t_rel 4.02 %
+  upstream 07_w32_o16: ATE 4.09 m, t_rel 3.95 %
+  upstream 07_w60_o30: ATE 2.66 m, t_rel 3.27 %
+  upstream 07_w75_o30: ATE 2.84 m, t_rel 3.71 %

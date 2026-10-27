@@ -1,0 +1,25 @@
+[2026-10-25 15:18:24] upstream 05_w30_o15 start (mem available 109 GB)
+/dev/shm/kavish_vl/05_w30_o15/exps/_scratch2_vpr-team_kavish_mr_data_kitti_sequences_05_image_2/2026-10-25-15-18-28/pcd/combined_pcd.ply: 2678907 points, kept 1500000 -> /scratch2/vpr-team/kavish/mr/results/mid/upstream/05_w30_o15/pointcloud_sample.npz
+[2026-10-25 15:31:38] upstream 05_w30_o15 done (792 s, peak temp 16396 MB)
+[2026-10-25 15:31:38] upstream 05_w60_o30 start (mem available 109 GB)
+/dev/shm/kavish_vl/05_w60_o30/exps/_scratch2_vpr-team_kavish_mr_data_kitti_sequences_05_image_2/2026-10-25-15-31-42/pcd/combined_pcd.ply: 2650098 points, kept 1500000 -> /scratch2/vpr-team/kavish/mr/results/mid/upstream/05_w60_o30/pointcloud_sample.npz
+[2026-10-25 15:49:12] upstream 05_w60_o30 done (1053 s, peak temp 16574 MB)
+[2026-10-25 15:49:12] upstream 05_w32_o16 start (mem available 109 GB)
+/dev/shm/kavish_vl/05_w32_o16/exps/_scratch2_vpr-team_kavish_mr_data_kitti_sequences_05_image_2/2026-10-25-15-49-16/pcd/combined_pcd.ply: 2704662 points, kept 1500000 -> /scratch2/vpr-team/kavish/mr/results/mid/upstream/05_w32_o16/pointcloud_sample.npz
+[2026-10-25 16:01:47] upstream 05_w32_o16 done (753 s, peak temp 16371 MB)
+[2026-10-25 16:01:47] upstream 05_w75_o30 start (mem available 109 GB)
+/dev/shm/kavish_vl/05_w75_o30/exps/_scratch2_vpr-team_kavish_mr_data_kitti_sequences_05_image_2/2026-10-25-16-01-56/pcd/combined_pcd.ply: 2172496 points, kept 1500000 -> /scratch2/vpr-team/kavish/mr/results/mid/upstream/05_w75_o30/pointcloud_sample.npz
+[2026-10-25 16:16:37] upstream 05_w75_o30 done (889 s, peak temp 14068 MB)
+[2026-10-25 16:16:37] VGGT (ours) 05 start
+[2026-10-25 16:27:07] VGGT (ours) 05 done: 8.1G
+[2026-10-25 16:27:07] CPU edges labels audit qual 05 start
+[2026-10-25 16:43:55] CPU 05 done
+    seam 170/170: scale 0.845, conf 2.25, inliers 0.98
+  [05] 171 seams, 12 loops (796s)
+== labels
+  [05] labels: 176/183 edges usable; 4 degenerate windows (car nearly stopped)
+== audit
+  [05] depth audit: 101279565 LiDAR pixels
+== qual
+  [05] qualitative material extracted
+STAGE_DONE_05

@@ -16,6 +16,15 @@ from .geometry import transform_points
 from .labels import block_targets
 from .weighting import BLOCKS, Fitted, info_from_var
 
+# VGGT-Long paper (Deng et al., arXiv:2507.16443v2), Table 1: KITTI ATE RMSE [m], overlap = chunk size / 2
+PAPER_ATE = {30: {"00": 9.06, "01": 96.20, "02": 99.95, "03": 19.76, "04": 11.36, "05": 10.20, "06": 10.04,
+                  "07": 4.00, "08": 139.79, "09": 50.53, "10": 40.94},
+             60: {"00": 8.06, "01": 96.96, "02": 34.16, "03": 6.83, "04": 4.16, "05": 9.15, "06": 4.68,
+                  "07": 2.68, "08": 63.15, "09": 32.24, "10": 27.87},
+             90: {"00": 11.97, "01": 40.51, "02": 49.85, "03": 5.41, "04": 2.86, "05": 9.88, "06": 6.07,
+                  "07": 3.47, "08": 66.27, "09": 32.27, "10": 21.33},
+             120: {"00": 16.13, "01": 53.43, "02": 51.98, "03": 4.37, "04": 2.15, "05": 12.69, "06": 11.33,
+                   "07": 3.603, "08": 70.29, "09": 34.55, "10": 21.05}}
 LABEL = {"vggt_long": "(a) VGGT-Long (identity)", "uniform": "(b) uniform", "raw_conf": "(c) raw confidence",
          "geometry": "(d) geometry-only", "calibrated": "(e) calibrated (ours)", "oracle": "(f) oracle*",
          "power_law": "(g) power law"}
@@ -64,8 +73,8 @@ def _audit(run, seq):
     p = run / seq / "depth_audit.npz"
     if not p.exists():
         return None
-    with np.load(p) as d:
-        return {k: d[k] for k in d.files}
+    with np.load(p) as d:  # confidences are stored as float16 (their cache precision); compute in float32
+        return {k: d[k].astype(np.float32) if d[k].dtype == np.float16 else d[k] for k in d.files}
 
 
 def write_report(cfg):
@@ -172,7 +181,9 @@ def write_report(cfg):
     for feat in ("conf_mean", "conf_median", "conf_p10", "residual_rel", "inlier_fraction", "spread_condition", "valid_fraction"):
         if "f_" + feat not in tab_t:
             continue
-        rank_rows.append([feat] + [_fmt(spearmanr(tab_t["f_" + feat][m], tg_t[b][m])[0]) for b in BLOCKS])
+        x = tab_t["f_" + feat][m]
+        rank_rows.append([feat] + (["-"] * len(BLOCKS) if np.ptp(x) == 0 else  # constant feature: undefined
+                                   [_fmt(spearmanr(x, tg_t[b][m])[0]) for b in BLOCKS]))
     md += ["### Does the feature rank seam errors? (Spearman, held-out seams)", "",
            _md_table(["feature", "rotation", "translation", "scale"], rank_rows), ""]
 
@@ -265,7 +276,7 @@ def write_report(cfg):
     fig.savefig(figs / "seam_error_vs_confidence.png", dpi=130)
     plt.close(fig)
     # trajectories
-    for seq in test_s + fit_s:
+    for seq in dict.fromkeys(test_s + fit_s):
         p = run / "trajectories" / f"{seq}.npz"
         if not p.exists():
             continue
@@ -310,9 +321,70 @@ def write_report(cfg):
         fig.savefig(figs / "ate_vs_length.png", dpi=130)
         plt.close(fig)
 
+    # ---------------- upstream VGGT-Long (its own code, scored with our metrics) vs our reproduction
+    up = _read_csv(run / "upstream.csv")
+    if up:
+        settings = sorted({(int(r["window"]), int(r["overlap"])) for r in up}, reverse=True)
+        man = Cache(Path(cfg["cache_root"]) / test_s[0]).manifest
+        rows, seqs = [], [s for s in dict.fromkeys(fit_s + test_s) if any(r["sequence"] == s for r in up)]
+        for seq in seqs:
+            u = {(int(r["window"]), int(r["overlap"])): r for r in up if r["sequence"] == seq}
+            ours = [ate(seq, "vggt_long", "none", True), ate(seq, "calibrated", "none", True)]
+            paper = [PAPER_ATE.get(w, {}).get(seq) if o * 2 == w else None for w, o in settings]
+            rows.append([seq] + [f"{_fmt(u[s]['ate_rmse_m'])} / {_fmt(u[s]['t_rel_percent'])}"
+                                 + (f" (paper {p:.2f})" if p is not None else "") if s in u else "-"
+                                 for s, p in zip(settings, paper)]
+                        + [f"{_fmt(r['ate_rmse_m'])} / {_fmt(r['t_rel_percent'])}" if r else "-" for r in ours])
+        md += ["## Upstream VGGT-Long (original code) vs our reproduction", "",
+               "ATE [m] / KITTI t_rel [%]. Upstream = `vggt_long.py` at the pinned commit with its KITTI config "
+               "(only chunk size / overlap changed), scored with our metrics; `paper` = ATE in Table 1 of the "
+               "VGGT-Long paper (arXiv:2507.16443v2, overlap = half the chunk). Ours uses window "
+               f"{man['window']} / overlap {man['overlap']}; scheme (a) is VGGT-Long's identity weighting.", "",
+               _md_table(["seq"] + [f"upstream W{w}/O{o}" for w, o in settings]
+                         + [f"ours (a) W{man['window']}/O{man['overlap']}", f"ours (e) W{man['window']}/O{man['overlap']}"],
+                         rows), ""]
+        fig, axes = plt.subplots(1, len(seqs), figsize=(4.6 * len(seqs), 4.6), squeeze=False)
+        for ax, seq in zip(axes[0], seqs):
+            p = run / "trajectories" / f"{seq}.npz"
+            if not p.exists():
+                continue
+            with np.load(p) as d:
+                gt, ours = d["gt"], d["vggt_long_loops"]
+            ax.plot(gt[:, 0], gt[:, 2], color=COLOR["gt"], lw=2.5, label="ground truth")
+            styles = [("-", "#009e73"), ("--", "#56b4e9"), (":", "#009e73"), ("-.", "#cc79a7"), ("-", "#e69f00")]
+            for (w, o), (style, col) in zip(settings, styles):
+                q = run / "upstream" / f"{seq}_w{w}_o{o}" / "positions.npy"
+                if q.exists():
+                    est = np.load(q)
+                    al = transform_points(sim3_align(est, gt), est)
+                    ax.plot(al[:, 0], al[:, 2], style, color=col, lw=1.2, label=f"upstream W{w}/O{o}")
+            al = transform_points(sim3_align(ours, gt), ours)
+            ax.plot(al[:, 0], al[:, 2], "-", color=COLOR["vggt_long"], lw=1, label="ours (a)")
+            ax.set_aspect("equal"), ax.grid(alpha=.3), ax.set_title(f"KITTI {seq}", fontsize=10)
+            ax.legend(fontsize=6)
+        fig.tight_layout()
+        fig.savefig(figs / "upstream_vs_ours.png", dpi=130)
+        plt.close(fig)
+
+    # ---------------- qualitative figures (point clouds need the solved window poses)
+    from .qualitative import render
+    qual = render(cfg, LABEL)
+    qdir = figs / "qualitative"
+    if qdir.exists():
+        names = sorted(p.name for p in qdir.glob("*.png"))
+        md += ["## Qualitative figures (`figures/qualitative/`)", "",
+               "* `depth_lidar_<seq>`: image, depth head, its confidence and the scale-aligned error at LiDAR pixels",
+               "* `loops_<seq>`: loop windows with the largest / smallest edge error (per-loop numbers in "
+               "`tables/loops_<seq>.csv`)",
+               "* `seams_<seq>`: seams with the largest / smallest true error and both windows' confidence",
+               "* `pointcloud_<seq>`, `trajectory_error_<seq>`: points and trajectories placed by the solved poses",
+               "* `upstream_pointcloud_<run>`: upstream VGGT-Long's own point export", "",
+               f"{len(names)} files: " + ", ".join(f"`{n}`" for n in names), ""]
+        print(f"  qualitative: {len(qual)} rendered after solve, {len(names)} in total")
+
     # ---------------- systems (GPU runs record timings in the manifest)
     sys_rows = []
-    for seq in test_s + fit_s:
+    for seq in dict.fromkeys(test_s + fit_s):
         man = Cache(Path(cfg["cache_root"]) / seq).manifest
         t = man.get("timing", {})
         sys_rows.append([seq, man["n_frames"], len(man["windows"]), len(man.get("loop_windows", [])),
@@ -321,6 +393,7 @@ def write_report(cfg):
     md += ["## Frontend cost", "", _md_table(["seq", "frames", "windows", "loop windows", "peak GPU mem [GB]",
                                              "s / window", "frames / s", "GPU"], sys_rows), "",
            "Figures: `figures/pixel_calibration.png`, `figures/edge_calibration.png`, "
-           "`figures/seam_error_vs_confidence.png`, `figures/ate_vs_length.png`, `figures/trajectory_<seq>.png`.", ""]
+           "`figures/seam_error_vs_confidence.png`, `figures/ate_vs_length.png`, `figures/trajectory_<seq>.png`"
+           + (", `figures/upstream_vs_ours.png`" if up else "") + ".", ""]
     (run / "summary.md").write_text("\n".join(md), encoding="utf-8")
     print(f"  wrote {run / 'summary.md'} and {len(list(figs.glob('*.png')))} figures")

@@ -19,8 +19,9 @@ from .alignment import camera_depths
 from .cache import Cache
 
 
-def collect(cache_dir, lidar_fn, max_per_frame=800, seed=0, log=print):
-    """lidar_fn(frame_id, stride) -> (rows, cols, depth) or None if no scan for that frame."""
+def collect(cache_dir, lidar_fn, max_per_frame=None, seed=0, log=print):
+    """lidar_fn(frame_id, stride) -> (rows, cols, depth) or None if no scan for that frame.
+    max_per_frame=None keeps every LiDAR pixel; an integer randomly subsamples each frame."""
     cache = Cache(cache_dir)
     rng = np.random.default_rng(seed)
     out = {k: [] for k in ("window", "frame", "lidar", "d_conf", "d_err", "p_conf", "p_err")}
@@ -46,7 +47,7 @@ def collect(cache_dir, lidar_fn, max_per_frame=800, seed=0, log=print):
         sp = np.median(lid[okp] / ppred[okp]) if okp.any() else np.nan
         for f, d, dp, dc, pp, pc in samples:
             idx = np.arange(len(d))
-            if len(idx) > max_per_frame:
+            if max_per_frame and len(idx) > max_per_frame:
                 idx = rng.choice(len(idx), max_per_frame, replace=False)
             out["window"].append(np.full(len(idx), k))
             out["frame"].append(np.full(len(idx), f))
@@ -57,7 +58,8 @@ def collect(cache_dir, lidar_fn, max_per_frame=800, seed=0, log=print):
             out["p_err"].append(np.where(pp[idx] > 0, np.abs(sp * pp[idx] - d[idx]) / d[idx], np.nan))
         if log and k % 50 == 0:
             log(f"    depth audit window {k}/{len(cache.ranges) - 1}")
-    small = {"window": np.int32, "frame": np.int32}
+    # lossless compact storage (hundreds of millions of pixels uncapped): confidences are float16 in the cache
+    small = {"window": np.int32, "frame": np.int32, "d_conf": np.float16, "p_conf": np.float16}
     return {k: np.concatenate(v).astype(small.get(k, np.float32)) if v else np.array([]) for k, v in out.items()}
 
 
