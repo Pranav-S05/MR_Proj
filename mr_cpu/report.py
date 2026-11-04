@@ -25,11 +25,11 @@ PAPER_ATE = {30: {"00": 9.06, "01": 96.20, "02": 99.95, "03": 19.76, "04": 11.36
                   "07": 3.47, "08": 66.27, "09": 32.27, "10": 21.33},
              120: {"00": 16.13, "01": 53.43, "02": 51.98, "03": 4.37, "04": 2.15, "05": 12.69, "06": 11.33,
                    "07": 3.603, "08": 70.29, "09": 34.55, "10": 21.05}}
-LABEL = {"vggt_long": "(a) VGGT-Long (identity)", "uniform": "(b) uniform", "raw_conf": "(c) raw confidence",
-         "geometry": "(d) geometry-only", "calibrated": "(e) calibrated (ours)", "oracle": "(f) oracle*",
-         "power_law": "(g) power law"}
-COLOR = {"vggt_long": "#d55e00", "uniform": "#7f7f7f", "raw_conf": "#cc79a7", "geometry": "#e69f00",
-         "calibrated": "#0072b2", "oracle": "#009e73", "power_law": "#56b4e9", "gt": "#222222"}
+LABEL = {"vggt_long": "(a) VGGT-Long (identity)", "equal": "(a') equal, our residual", "uniform": "(b) uniform",
+         "raw_conf": "(c) raw confidence", "geometry": "(d) geometry-only", "calibrated": "(e) calibrated (ours)",
+         "oracle": "(f) oracle*", "power_law": "(g) power law"}
+COLOR = {"vggt_long": "#d55e00", "equal": "#8c510a", "uniform": "#7f7f7f", "raw_conf": "#cc79a7",
+         "geometry": "#e69f00", "calibrated": "#0072b2", "oracle": "#009e73", "power_law": "#56b4e9", "gt": "#222222"}
 
 
 def _read_csv(path):
@@ -190,6 +190,11 @@ def write_report(cfg):
     # ---------------- pixel audit
     pix = fitted.d.get("pixel", {})
     pix_rows = []
+    have_audit = any((run / s / "depth_audit.npz").exists() for s in test_s + fit_s)
+    if not have_audit and (tabs / "pixel_audit.csv").exists():
+        # the raw audit arrays (GBs) are not here: keep the pixel table and figure from the run that had them
+        pix, pix_rows = {}, _read_csv(tabs / "pixel_audit.csv")
+        print("  pixel audit arrays not found; reusing tables/pixel_audit.csv and figures/pixel_calibration.png")
     fig, axes = plt.subplots(1, 2, figsize=(11, 4))
     for ax, head, title in zip(axes, ("d", "p"), ("depth head (depth_conf)", "point head (world_points_conf)")):
         if head not in pix:
@@ -225,9 +230,10 @@ def write_report(cfg):
         pix_rows.append(row)
     fig.suptitle("Pixel confidence vs LiDAR depth error (per-window scale-aligned)", fontsize=11)
     fig.tight_layout()
-    fig.savefig(figs / "pixel_calibration.png", dpi=130)
+    if pix:
+        fig.savefig(figs / "pixel_calibration.png", dpi=130)
+        _write_csv(tabs / "pixel_audit.csv", pix_rows)
     plt.close(fig)
-    _write_csv(tabs / "pixel_audit.csv", pix_rows)
     if pix_rows:
         md += ["## Pixel confidence audit (LiDAR)", "",
                "A slope of -1 is what the loss optimum C = alpha/E[e] would give. Calibration errors use bins fixed on "

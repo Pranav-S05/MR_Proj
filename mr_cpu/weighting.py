@@ -7,6 +7,7 @@ predicted depth of node j's window, so translation variances are scale-free).
 
 Schemes (labels follow the proposal):
   a  vggt_long   identity information with VGGT-Long's residual convention (reproduction anchor)
+  a' equal       identity information with our residual convention (the control for b-g, which use ours)
   b  uniform     one fitted variance per block, the same for every edge (pure DoF balancing)
   c  raw_conf    uniform blocks scaled by (mean confidence)^2, the loss-implied heuristic
   d  geometry    isotonic map from the alignment's relative residual (geometry only)
@@ -28,7 +29,7 @@ from .calibration import Isotonic, shrunk_inflation, fit_power_law
 from .labels import block_targets
 
 BLOCKS = ("rot", "trans", "scale")
-SCHEMES = {"a": "vggt_long", "b": "uniform", "c": "raw_conf", "d": "geometry", "e": "calibrated",
+SCHEMES = {"a": "vggt_long", "a'": "equal", "b": "uniform", "c": "raw_conf", "d": "geometry", "e": "calibrated",
            "f": "oracle", "g": "power_law"}
 FLOORS = {"rot": (1e-4) ** 2, "trans": (1e-4) ** 2, "scale": (1e-5) ** 2}
 
@@ -125,7 +126,7 @@ class Fitted:
         raise ValueError(scheme)
 
     def information(self, scheme, table, errors=None, normalise=True):
-        if scheme == "vggt_long":
+        if scheme in ("vggt_long", "equal"):  # same identity; they differ in the residual convention (pipeline)
             return np.tile(np.eye(7), (len(table["kind"]), 1, 1))
         info = info_from_var(self.variances(scheme, table, errors), table["f_char_length"])
         return info * self.d["norm"][scheme] if normalise else info

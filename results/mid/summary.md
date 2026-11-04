@@ -10,6 +10,9 @@ Fitting sequences: 05, 07. Held-out sequences: 00, 02. Window 32, overlap 16.
 | (a) VGGT-Long (identity) | none | 9.18 / 4.82 | 105.07 / 26.95 |
 | (a) VGGT-Long (identity) | huber (5) | 9.18 / 4.82 | 105.07 / 26.95 |
 | (a) VGGT-Long (identity) | dcs (10) | 9.18 / 4.82 | 105.07 / 26.95 |
+| (a') equal, our residual | none | 9.14 / 4.74 | 106.90 / 27.45 |
+| (a') equal, our residual | huber (5) | 9.14 / 4.74 | 106.90 / 27.45 |
+| (a') equal, our residual | dcs (30) | 9.14 / 4.74 | 106.90 / 27.45 |
 | (b) uniform | none | 10.15 / 4.88 | 113.36 / 29.81 |
 | (b) uniform | huber (1) | 10.15 / 4.88 | 113.36 / 29.81 |
 | (b) uniform | dcs (100) | 10.15 / 4.88 | 175.65 / 39.15 |
@@ -37,6 +40,9 @@ Fitting sequences: 05, 07. Held-out sequences: 00, 02. Window 32, overlap 16.
 | (a) VGGT-Long (identity) | none | 10.02 / 5.11 | 4.06 / 3.94 |
 | (a) VGGT-Long (identity) | huber (5) | 10.02 / 5.11 | 4.06 / 3.94 |
 | (a) VGGT-Long (identity) | dcs (10) | 10.02 / 5.11 | 4.06 / 3.94 |
+| (a') equal, our residual | none | 9.80 / 5.05 | 4.07 / 3.93 |
+| (a') equal, our residual | huber (5) | 9.80 / 5.05 | 4.07 / 3.93 |
+| (a') equal, our residual | dcs (30) | 9.80 / 5.05 | 4.07 / 3.93 |
 | (b) uniform | none | 11.52 / 5.83 | 3.61 / 3.53 |
 | (b) uniform | huber (1) | 11.52 / 5.83 | 3.61 / 3.53 |
 | (b) uniform | dcs (100) | 11.52 / 5.83 | 3.61 / 3.53 |

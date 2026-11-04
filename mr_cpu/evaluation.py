@@ -121,7 +121,14 @@ def main():
     ap.add_argument("--kitti", default="data/kitti")
     ap.add_argument("--evo", action="store_true", help="also compute ATE with evo")
     a = ap.parse_args()
-    est = read_poses(a.estimate)
+    try:
+        est = read_poses(a.estimate)
+    except ValueError:  # e.g. VGGT-Long before Dec 2025 writes C2W with the Sim(3) scale left in the rotation block
+        import sys
+        est = np.loadtxt(a.estimate, ndmin=2).reshape(-1, 4, 4)
+        u, _, vt = np.linalg.svd(est[:, :3, :3])
+        est[:, :3, :3] = u @ vt  # nearest rotation; positions (all that ATE uses) are unchanged
+        print("note: rotations were not orthonormal; replaced by the nearest rotation", file=sys.stderr)
     gt = gt_cam2_poses(a.kitti, a.seq)[:len(est)]
     if len(gt) != len(est):
         raise SystemExit(f"{len(est)} estimated poses but only {len(gt)} GT poses")

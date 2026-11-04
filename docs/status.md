@@ -27,6 +27,7 @@
 | upstream code, 32/16 | 10.04 | 4.09 | 9.13 | 104.61 |
 | ours, no loops | 48.70 | 22.36 | 140.49 | 181.52 |
 | ours (a) VGGT-Long weighting, 32/16 | 10.02 | 4.06 | 9.18 | 105.07 |
+| ours (a') equal weights, our residual (control for b-g), 32/16 | 9.80 | 4.07 | 9.14 | 106.90 |
 | ours (e) calibrated, 32/16 | 9.57 | 4.37 | 9.09 | 117.07 |
 
 Pixel audit (held-out 00+02, 338M pixels, depth head): calibration error 0.40 raw, 0.25 power law, 0.18 isotonic;
@@ -39,16 +40,30 @@ log-log slope -0.70 (the loss optimum would give -1). Point head: 0.60 / 0.53 / 
   gives exactly 52.78 m again (deterministic), and the older loop threshold 0.7 instead of 0.85 finds the same 8 loops
   and the same 52.78 m (each frame's top-5 retrieval neighbours are mostly its own temporal neighbours, so the
   threshold does not matter on 02). The released code at the pinned commit therefore does not give the paper's
-  chunk-60 number on 02; the other 15 paper comparisons agree.
-- **Loop windows merge revisits.** On 02 the two passes of a revisit are 1-4 m apart (different lanes), but VGGT's
-  loop window places them 0.1-1.1 m apart, while each pass alone is reconstructed to 0.1-0.4 m
-  (`tables/loops_<seq>.csv`, `figures/qualitative/loops_02.png`). Loop-edge error tracks the true lane offset;
-  confidence and inlier ratios do not flag it; loop uncertainty fitted on 05 under-predicts held-out loops ~20x.
+  chunk-60 number on 02. Of the other seven paper numbers, five are matched within 1% and two (05 and 00 at
+  60/30) within 8%. Further checks on Nov 4 (`results/mid/upstream_checks/`): VGGT-Long's loop optimiser falls back
+  from C++ to Python and always stops at 30 iterations, but 200 iterations give exactly 52.78 m again (cost settles at
+  6.04e-5); the pre-refactor commit 97bbc20 (Oct 2025) gives exactly the current code's numbers (02: 52.78 at 60/30 and
+  99.65 at 30/15; 05: 9.85; 07: 2.66; its 00 run ran out of GPU memory on a shared card); and the current code on 02 at
+  90/45 gives 50.56 m against the paper's 49.85 m. So on 02 we match the paper at windows 30 and 90 but not 60; the
+  paper's own 02 column (99.95, 34.16, 49.85, 51.98 for windows 30, 60, 90, 120) has 60 as the outlier. Not reproducible
+  with the released code; cause unknown (remaining difference: compiled C++ solver, GPU).
+- **Ground truth is inconsistent at the 02 revisits (corrected finding).** The ground-truth gap between the two visits
+  of a loop on 02 is 1-4 m and almost all vertical (camera frame: sideways 0.03-1.1 m, vertical 0.85-4.0 m). Placing both
+  visits' LiDAR scans with the ground-truth poses puts the two road surfaces 0.8-4.1 m apart in height at the same spot
+  (00: up to 1.3 m; 05 and 07: within 0.2 m, two loops of 05 at 0.5 m), so the ground-truth heights are wrong there.
+  VGGT putting the visits together is right; most of the measured loop-edge error on 02 is ground-truth error. The
+  earlier "different lanes" explanation was wrong. Measured held-out loop squared errors are ~20x the predicted
+  variance (about 4.7x in error size), but on 00/02 this is dominated by these label errors. Seam labels are not
+  affected (one short window each). Check: `scripts/check_revisit_ground.py`.
 - **Seams.** Seam translation errors are hard to rank from confidence (Spearman -0.12); the alignment residual ranks
   them better (0.55). The worst seams are low-texture vegetation and turns with low confidence
   (`figures/qualitative/seams_<seq>.png`).
-- **Weighting.** Calibrated weights help slightly on 00 and 05, not on 07, and hurt on 02, where the loop edges
-  themselves are biased; small windows also drift more (02: ~100 m at chunk 30 in the paper too).
+- **Weighting.** Against the fair control (a'), calibrated weights help slightly on 05 (9.57 vs 9.80 m) and 00
+  (9.09 vs 9.14 m), not on 07, and hurt on 02 (cause not isolated; the 02 loop labels used for fitting-based schemes
+  are not involved, since fitting uses 05/07, but evaluation on 02 is against inconsistent ground truth). Small windows
+  drift more (02: ~100 m at chunk 30 in the paper too). Scheme (a) vs (a') shows the residual convention alone moves
+  ATE by up to 2%. The oracle not winning only shows that inverse true-error weighting is not an upper bound here.
 
 ## Pending (after the mid submission, as planned in the proposal)
 - Waymo subset (download needs the team's Waymo Open Dataset account and licence acceptance) and TUM loaders;

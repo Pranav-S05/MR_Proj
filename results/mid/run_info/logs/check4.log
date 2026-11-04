@@ -1,0 +1,9 @@
+commits: new c160869 old 97bbc20 2025-10-28
+[2026-11-04 19:15:00] 02 images ready: 4661
+[2026-11-04 19:15:00] old_02_w60_o30 already done
+[2026-11-04 19:15:00] new_02_w60_o30_it200 waiting for an idle GPU
+[2026-11-04 19:16:00] new_02_w60_o30_it200 got GPU 0
+[2026-11-04 19:16:00] new_02_w60_o30_it200 start
+[2026-11-04 20:51:16] new_02_w60_o30_it200 done: ATE 52.78 m, loops 8, 5579 s
+[2026-11-04 20:51:17] new_02_w90_o45 waiting for an idle GPU
+[2026-11-04 20:51:30] switched to v5

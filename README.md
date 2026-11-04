@@ -19,10 +19,10 @@ Proposal: [mobile_robotics_2026.pdf](mobile_robotics_2026.pdf). Plain-language e
 
 Reproduction (ATE, m; 00 / 02 / 05 / 07): VGGT-Long paper at chunk 30: 9.06 / 99.95 / 10.20 / 4.00; upstream code at
 30/15 on our setup: 9.07 / 99.65 / 10.24 / 3.98; upstream at 32/16: 9.13 / 104.61 / 10.04 / 4.09; our
-re-implementation (scheme a) at 32/16: 9.18 / 105.07 / 10.02 / 4.06. On 02 the loop windows place the two passes of a
-revisit 0.1-1.1 m apart while they are 1-4 m apart in reality, so loop edges carry an error close to the true lane
-offset that confidence does not flag. Details: [docs/status.md](docs/status.md); run logs and per-sequence settings in
-`results/mid/run_info/`.
+re-implementation (scheme a) at 32/16: 9.18 / 105.07 / 10.02 / 4.06. KITTI's ground truth is inconsistent in height
+(up to 4 m) at the loop revisits of 02 and, less so, 00, checked with LiDAR (`scripts/check_revisit_ground.py`), so loop
+errors measured there are mostly ground-truth error. Details: [docs/status.md](docs/status.md); run logs and
+per-sequence settings in `results/mid/run_info/`.
 
 Verified:
 * our ATE equals `evo_ape --align --correct_scale` on all 56 trajectories of our run and all 16 upstream runs

@@ -14,8 +14,8 @@ checkpoints/
 *.pth
 *.ckpt
 *.safetensors
-# large per-sequence arrays written by the pipeline (summaries, tables and figures stay tracked)
-results/*/[0-9][0-9]/
-results/*/trajectories/
+# large per-sequence arrays written by the pipeline; edges, labels and trajectories (~10 MB) stay tracked
+results/*/[0-9][0-9]/depth_audit.npz
+results/*/[0-9][0-9]/qual/
 # upstream VGGT-Long point-cloud samples (only used to draw figures)
 results/*/upstream/*/pointcloud_sample.npz

@@ -233,6 +233,7 @@ class KittiAndEndToEndTests(unittest.TestCase):
 
 
 class AuditAndUpstreamFormatTests(unittest.TestCase):
+    @unittest.skipUnless(HAVE_KITTI, "KITTI poses/calibration not downloaded")
     def test_audit_keeps_every_lidar_pixel_unless_capped(self):
         from mr_cpu import depth_audit, synthetic
         tmp = Path(tempfile.mkdtemp())

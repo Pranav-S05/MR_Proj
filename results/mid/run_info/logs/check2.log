@@ -1,0 +1,31 @@
+commits: new c160869 old 97bbc20 2025-10-28
+[2026-11-04 18:35:41] 02 images ready: 4661
+[2026-11-04 18:35:41] old_02_w60_o30 waiting for an idle GPU
+[2026-11-04 18:35:41] old_02_w60_o30 got GPU 0
+[2026-11-04 18:35:41] old_02_w60_o30 start
+Traceback (most recent call last):
+  File "/scratch2/vpr-team/kavish/mr_check/.pixi/envs/default/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/scratch2/vpr-team/kavish/mr_check/.pixi/envs/default/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/scratch2/vpr-team/kavish/mr_check/mr_cpu/evaluation.py", line 135, in <module>
+    main()
+  File "/scratch2/vpr-team/kavish/mr_check/mr_cpu/evaluation.py", line 124, in main
+    est = read_poses(a.estimate)
+  File "/scratch2/vpr-team/kavish/mr_check/mr_cpu/trajectory.py", line 24, in read_poses
+    return validate_camera_poses(poses)
+  File "/scratch2/vpr-team/kavish/mr_check/mr_cpu/geometry.py", line 130, in validate_camera_poses
+    raise ValueError("Camera poses must contain unit, proper rotations")
+ValueError: Camera poses must contain unit, proper rotations
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/scratch2/vpr-team/kavish/mr_check/.pixi/envs/default/lib/python3.10/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+  File "/scratch2/vpr-team/kavish/mr_check/.pixi/envs/default/lib/python3.10/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/scratch2/vpr-team/kavish/mr_check/.pixi/envs/default/lib/python3.10/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/scratch2/vpr-team/kavish/mr_check/.pixi/envs/default/lib/python3.10/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[2026-11-04 19:11:22] switched to v3

@@ -21,10 +21,27 @@ Results: paper chunk 30 (00/02/05/07) 9.06/99.95/10.20/4.00; upstream 30/15 9.07
 9.13/104.61/10.04/4.09; ours (a) 32/16 9.18/105.07/10.02/4.06; ours (e) 9.09/117.07/9.57/4.37; chain
 140.49/181.52/48.70/22.36. Pixel depth head calib err 0.40 raw / 0.25 power / 0.18 isotonic, slope -0.70.
 
+## Review response (2026-11-04, friend's review)
+- WRONG earlier claim withdrawn: "VGGT merges revisits in different lanes". The 02 revisit gaps are VERTICAL (camera
+  frame: sideways 0.03-1.1 m, vertical 0.85-4.0 m). LiDAR check (`scripts/check_revisit_ground.py`, scans from the lab
+  mirror datasets.rrcx.tk): both visits' road surfaces placed with GT differ 0.8-4.1 m in height on 02, up to 1.3 m on
+  00, <=0.2 m on 07, 05 mostly ~0 (two loops 0.5 m) => KITTI GT heights inconsistent at revisits; loop labels on
+  00/02 mostly GT error. Seam labels unaffected. "~20x" is a squared-error ratio (~4.7x RMS).
+- Added control scheme (a') `equal`: identity info with OUR residual convention (b-g use ours, (a) uses upstream's).
+  ATE 05/07/00/02: 9.80/4.07/9.14/106.90. Residual convention alone moves ATE by up to 2%.
+- Test `test_audit_keeps_every_lidar_pixel_unless_capped` got its missing KITTI skip guard. Edges/labels/trajectories
+  now tracked in git (.gitignore only drops depth_audit.npz and qual/).
+- 02 @ 60/30 (paper 34.16, ours 52.78) checks DONE (Nov 4-5, `results/mid/upstream_checks/`): 200 optimiser
+  iterations -> 52.78; pre-refactor commit 97bbc20 -> 52.78 (also identical on 02@30/15 99.65, 05 9.85, 07 2.66; its 00
+  run OOMed on shared GPU 0, not rerun); current code 02 @ 90/45 -> 50.56 (paper 49.85). Paper's 02 column 99.95/34.16/
+  49.85/51.98 => 60 is the outlier. Report says "could not reproduce this one number". Only untested difference:
+  compiled C++ sim3solve, GPU (paper: RTX 4090).
+- Report regenerated locally with (a') (`report` step reuses tables/pixel_audit.csv when audit arrays are absent).
+- KITTI images on Phoenix: anay's zip is gone; use the RRC lab mirror https://datasets.rrcx.tk/KITTI/odometry/
+  (internal network; whole-zip download ~110 MB/s, per-file range requests slow).
+
 ## Findings
-- VGGT collapses two visits of the same place: in 02 the passes are 1-4 m apart (different lanes) but the loop
-  window puts them 0.1-1.1 m apart, while each visit alone is fine (0.1-0.4 m rms). Loop-edge translation error ~=
-  true revisit offset; confidence/inliers do not flag it; loop calibration from 05 under-predicts 00/02 loops ~20x.
+- KITTI GT height is inconsistent at 02 revisits (see above); not a VGGT failure.
 - 02's ~100 m ATE at small windows is also in the paper (chunk 30: 99.95 m); larger chunks help (60: 34 m).
 - Worst seams: low-texture vegetation / turning, low confidence; best seams: high confidence (figures/qualitative).
 

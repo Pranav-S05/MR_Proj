@@ -1,0 +1,4 @@
+inherit_from: "configs/kitti.yaml"
+Model:
+  chunk_size: 60
+  overlap: 30

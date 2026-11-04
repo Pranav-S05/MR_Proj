@@ -1,0 +1,35 @@
+commits: new c160869 old 97bbc20 2025-10-28
+[2026-11-04 20:52:29] 02 images ready: 4661
+[2026-11-04 20:52:30] 02 images in RAM: 4661
+[2026-11-04 20:52:30] old_02_w60_o30 already done
+[2026-11-04 20:52:30] new_02_w60_o30_it200 already done
+[2026-11-04 20:52:30] new_02_w90_o45 waiting for an idle GPU
+[2026-11-04 20:53:30] new_02_w90_o45 got GPU 0
+[2026-11-04 20:53:30] new_02_w90_o45 start
+[2026-11-04 21:47:02] new_02_w90_o45 done: ATE 50.56 m, loops 8, 3211 s
+[2026-11-04 21:47:02] old_02_w30_o15 waiting for an idle GPU
+[2026-11-04 21:48:02] old_02_w30_o15 got GPU 0
+[2026-11-04 21:48:02] old_02_w30_o15 start
+note: rotations were not orthonormal; replaced by the nearest rotation
+[2026-11-04 22:15:08] old_02_w30_o15 done: ATE 99.65 m, loops 8, 1626 s
+[2026-11-04 22:15:09] 00 images ready: 4541
+[2026-11-04 22:15:51] 00 images in RAM: 4541
+[2026-11-04 22:15:51] old_00_w60_o30 waiting for an idle GPU
+[2026-11-04 22:16:51] old_00_w60_o30 got GPU 0
+[2026-11-04 22:16:51] old_00_w60_o30 start
+[2026-11-04 22:29:34] old_00_w60_o30 FAILED
+[2026-11-04 22:29:35] 05 images ready: 2761
+[2026-11-04 22:29:51] 05 images in RAM: 2761
+[2026-11-04 22:29:51] old_05_w60_o30 waiting for an idle GPU
+[2026-11-04 22:57:04] old_05_w60_o30 got GPU 0
+[2026-11-04 22:57:04] old_05_w60_o30 start
+note: rotations were not orthonormal; replaced by the nearest rotation
+[2026-11-04 23:16:28] old_05_w60_o30 done: ATE 9.85 m, loops 12, 1164 s
+[2026-11-04 23:16:29] 07 images ready: 1101
+[2026-11-04 23:16:35] 07 images in RAM: 1101
+[2026-11-04 23:16:35] old_07_w60_o30 waiting for an idle GPU
+[2026-11-04 23:17:35] old_07_w60_o30 got GPU 0
+[2026-11-04 23:17:35] old_07_w60_o30 start
+note: rotations were not orthonormal; replaced by the nearest rotation
+[2026-11-04 23:24:24] old_07_w60_o30 done: ATE 2.66 m, loops 3, 408 s
+[2026-11-04 23:24:24] CHECK_DONE
