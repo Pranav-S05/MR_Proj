@@ -8,195 +8,165 @@
 \usepackage{float}
 \usepackage{caption}
 \usepackage{subcaption}
-\usepackage{listings}
+\usepackage[section]{placeins}
 \usepackage[hidelinks]{hyperref}
 
 \graphicspath{{../results/mid/figures/}{../results/mid/figures/qualitative/}}
-\captionsetup{font=small, labelfont=bf}
-\lstset{basicstyle=\ttfamily\small, frame=single, columns=fullflexible, keepspaces=true,
-        showstringspaces=false, breaklines=true, xleftmargin=4pt, xrightmargin=4pt}
-\setlength{\parskip}{4pt}
-\renewcommand{\arraystretch}{1.1}
+\captionsetup{font=small, labelfont=bf, skip=3pt}
+\setlength{\parskip}{3pt}
+\setlength{\textfloatsep}{8pt}
+\setlength{\floatsep}{6pt}
+\setlength{\intextsep}{6pt}
+\renewcommand{\arraystretch}{1.05}
+\setlength{\emergencystretch}{1.5em}
 
-\title{\textbf{Calibrated Confidence for Kilometre-Scale Feed-Forward SLAM}\\[4pt]
+\title{\vspace{-1.2cm}\textbf{Calibrated Confidence for Kilometre-Scale Feed-Forward SLAM}\\[2pt]
 \large Mid-Submission Report, Mobile Robotics (Monsoon 2026)}
-\author{Kavish Vora \quad Pranav Srivastava \quad Mehrish Khan\\ IIIT Hyderabad}
+\author{Kavish Vora \quad Pranav Srivastava \quad Mehrish Khan \quad (IIIT Hyderabad)}
 \date{}
 
 \begin{document}
 \maketitle
+\vspace{-1.0cm}
 
-\noindent This report covers the work done so far: the tasks completed, the objectives achieved,
-the experimental results and metrics obtained so far, and the plan for the rest of the project. We test whether
-VGGT's per-pixel confidence \cite{vggt} can tell VGGT-Long \cite{vggtlong} how much to trust each joint between
-windows (seams) and each loop closure, and whether weighting the pose graph with calibrated confidence improves the
-trajectory.
+\section{Problem statement}
 
-\section{Tasks completed}
+Feed-forward 3D models such as VGGT \cite{vggt} take a few dozen images and, in one forward pass, return camera poses,
+depth and point maps, and a per-pixel confidence $C \ge 1$. GPU memory limits one pass to about 30 to 100 images, so
+VGGT-Long \cite{vggtlong} runs VGGT on overlapping windows of a long monocular drive and joins them in a pose graph.
+Every window $k$ is a node with an unknown placement $S_k \in \mathrm{Sim}(3)$ (rotation, translation, scale). Every
+edge $(i,j)$ is a measured relative placement $Z_{ij}$: a \emph{seam} between neighbouring windows, from the Sim(3) that
+aligns the 3D points of their shared frames, or a \emph{loop} between two visits of the same place. The trajectory is
+the solution of
+\begin{equation}
+  \{S_k^\star\} = \arg\min_{\{S_k\}} \sum_{(i,j)} \rho\!\left(r_{ij}^\top \Lambda_{ij}\, r_{ij}\right),\qquad
+  r_{ij} = \mathrm{Log}\!\left(Z_{ij}^{-1} S_i^{-1} S_j\right) \in \mathbb{R}^7,
+\end{equation}
+where $\rho$ is an optional robust kernel and $\Lambda_{ij}$ is the $7\times7$ information matrix of the edge. VGGT-Long
+sets $\Lambda_{ij} = I$ for every edge, although some edges are clearly worse than others (low texture, turns,
+little overlap) and VGGT already reports how confident it is in every pixel.
 
-Table~\ref{tab:tasks} lists every task planned for the mid submission and what was done. All runs used KITTI
-\cite{kitti} sequences 05 and 07 for fitting (everything learned is learned there) and 00 and 02 as held-out test
-sequences.
+\textbf{Our problem.} Learn, without any training of the network, a map $g$ from confidence statistics $\phi_{ij}$ of an
+edge to a diagonal information matrix $\Lambda_{ij} = \mathrm{diag}(\sigma_{\mathrm{rot}}^{-2} I_3,
+\sigma_{\mathrm{trans}}^{-2} I_3, \sigma_{\mathrm{scale}}^{-2})$ that is \emph{calibrated}, i.e.\
+$\mathbb{E}[e_{ij,b}^2 \mid \phi_{ij}] \approx \sigma_b^2(\phi_{ij})$ for each block $b$, where $e_{ij}$ is the true
+7-number error of the edge. We ask three questions:
+(Q1) does pixel confidence predict depth error, and can it be calibrated; (Q2) does it predict the error of seams and
+loops; (Q3) do calibrated edge weights give a more accurate trajectory than equal weights? Everything that is fitted is
+fitted on KITTI \cite{kitti} sequences 05 and 07; sequences 00 and 02 are held out and only used for scoring.
 
-\begin{table}[!t]
-\centering
-\caption{Mid-submission tasks and what was done.}
-\label{tab:tasks}
-\small
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{4.1cm} X}
-\toprule
-Task & What we did \\
-\midrule
-Data and conventions &
-KITTI images, ground-truth poses, calibration and the 13{,}064 LiDAR scans of 00, 02, 05, 07. Ground truth converted
-from camera 0 to the colour camera 2 that VGGT sees; LiDAR projected onto VGGT's 518$\times$154 input grid and checked
-visually. \\
-VGGT set-up and memory test &
-VGGT-1B on one RTX A4000 (16\,GB, bfloat16). Memory and speed measured for windows of 8 to 64 frames. Four automatic
-convention checks (smoke test) passed before the long runs. \\
-Run VGGT on all sequences &
-814 windows of 32 frames with 16 frames overlap, plus 43 loop windows. \\
-Reproduce VGGT-Long &
-(i) Our own back end (alignment, loops, pose graph) checked against VGGT-Long's code piece by piece. (ii) The original
-\texttt{vggt\_long.py} run on all four sequences at window/overlap 30/15 and 60/30 (the paper's settings), 32/16 (ours)
-and 75/30 (released default): 16 runs; plus checks on 02 (another code version, more optimiser iterations, 90/45). \\
-True error of every seam and loop &
-For every window, the Sim(3) that places its predicted cameras on the ground truth; the true 7-number error of each edge
-follows from these. 834 of 853 edges usable (windows where the car is nearly stopped are skipped). \\
-Pixel confidence audit &
-LiDAR depth compared with the depth head and the point head after one scale per window: 478 million
-(confidence, error) pairs. \\
-Calibration on 05/07 &
-Pixel level: raw $1/C$ rule; the two-constant power law from the calibration audit of feed-forward 3D reconstruction
-models by N.~Deng et al.~\cite{dengaudit}; isotonic curve. Edge level: isotonic map from an edge feature to the expected
-squared error of rotation, translation and scale. \\
-Weighting schemes (a) to (g) on 00/02 &
-Seven schemes plus a control (a$'$), each without loops, with loops, and with a robust kernel on loop edges: Huber, or
-Dynamic Covariance Scaling (DCS) by Agarwal et al.~\cite{dcs}; thresholds tuned on 05/07. \\
-Ground truth at loop revisits &
-LiDAR scans of both visits of every loop placed with the ground-truth poses, to check whether the ground truth itself
-is consistent where the car comes back. \\
-Tables, figures, qualitative results &
-All tables and 45 figures produced by one command from the saved outputs. \\
-\bottomrule
-\end{tabularx}
-\end{table}
+\textbf{Refinements since the proposal.} (i) VGGT-Long and our schemes measure the edge residual differently (the order of
+the product inside $\mathrm{Log}$), so we add an equal-weight control in our convention, (a$'$), next to VGGT-Long's own
+(a). (ii) True edge errors $e_{ij}$ come from ground-truth placements of each window; we found that KITTI's ground truth
+is not consistent in height at the loop revisits of 02 (and less so 00), so loop labels there measure ground-truth
+error and are reported separately. (iii) We use windows of 32 frames with 16 frames overlap, chosen by a GPU memory
+sweep, close to the paper's smallest setting.
 
-\noindent The schemes differ only in how much each edge of the pose graph is trusted:
-(a) VGGT-Long's equal weights, with VGGT-Long's own way of measuring an edge's mismatch (the reproduction anchor);
-(a$'$) equal weights with the mismatch measure used by all other schemes, the fair control for (b) to (g);
-(b) one fitted variance each for rotation, translation (relative to the window's depth) and scale, with a separate fitted
-factor for loops, but no per-edge information; (c) (b) scaled by the square of the edge's mean confidence;
-(d) the alignment residual only (no confidence); (e) our calibrated confidence;
-(f) an oracle using each edge's true error (a reference, not a method); (g) the per-pixel power law from ``A calibration
-audit of confidence in feed-forward 3D reconstruction models'' by N.~Deng et al.~\cite{dengaudit}.
-An edge's weight is the inverse of its predicted variance, block by block:
-\begin{lstlisting}
-info[:, :3]  = 1 / var_rot              # rotation (3 numbers)
-info[:, 3:6] = 1 / (var_trans * L**2)   # translation (3 numbers); L: typical depth
-info[:, 6]   = 1 / var_scale            # scale (1 number)
-\end{lstlisting}
+\section{Literature review}
 
-\section{Objectives achieved}
+\textbf{Feed-forward reconstruction.} DUSt3R \cite{dust3r} and MASt3R \cite{mast3r} regress dense point maps with
+confidence for image pairs; VGGT \cite{vggt} handles many views at once and also predicts cameras. CUT3R \cite{cut3r}
+and StreamVGGT \cite{streamvggt} process video as a stream with a persistent memory, and VGGT-$\Omega$ \cite{vggtomega}
+adds scene-summarising register tokens. These models are trained to output confidence with a loss of the form
+$C e - \alpha \log C$ \cite{kendall}, which is minimised at $C = \alpha/\mathbb{E}[e]$; a perfectly trained model would
+therefore have error proportional to $1/C$. This gives a concrete, testable expectation for Q1.
 
-\begin{itemize}
-  \item \textbf{Data, model and conventions verified.} All four smoke-test checks passed (depth head and point head agree;
-        the first camera of each window is the identity; cameras match ground truth after one Sim(3); poses are
-        camera-to-world).
-  \item \textbf{VGGT-Long reproduced.} The original code matches the paper within 0.5\% at the paper's 30/15 setting on all
-        four sequences, and our re-implementation matches the original code within 0.7\% at 32/16. Both loop finders
-        return identical loop pairs on all four sequences.
-  \item \textbf{Confidence audit done.} True errors for all usable seams and loops, and a confidence audit on 478 million
-        LiDAR pixels for both heads.
-  \item \textbf{End-to-end baseline ready.} Calibration fitted on 05/07; all seven schemes, with and without loops and robust
-        kernels, evaluated on 00/02; first tables and figures.
-\end{itemize}
+\textbf{Long sequences with feed-forward models.} VGGT-Long \cite{vggtlong} is our baseline: chunking, confidence-weighted
+Sim(3) alignment, SALAD \cite{salad} loop retrieval on DINOv2 \cite{dinov2} features, and a Sim(3) pose graph with equal
+weights. VGGT-SLAM \cite{vggtslam} aligns submaps with 15-DoF SL(4) transforms for uncalibrated cameras; our weighting
+applies there unchanged. MASt3R-SLAM \cite{mast3rslam} uses MASt3R's confidence as weights in its back end without
+checking whether it is calibrated, and DROID-SLAM \cite{droid} learns its weights end to end, which needs training. Sim(3)
+pose graphs for monocular scale drift go back to Strasdat et al.~\cite{strasdat}, and ORB-SLAM3 \cite{orbslam3} is the
+standard classical monocular baseline.
 
-\section{Experimental results and metrics}
+\textbf{Is confidence trustworthy?} Hillemann et al.~\cite{hillemann} study the uncertainty quality of VGGT on DTU. The
+calibration audit of N.~Deng et al.~\cite{dengaudit} checks native confidence of seven feed-forward models on 13 datasets
+including KITTI, finds that confidence ranks errors well but understates their size, and proposes a two-constant power-law
+correction; we use it as baseline (g). Both work per pixel. GeoCond \cite{geocond} (WACV 2027) is the closest work to ours:
+it observes that pose failures of feed-forward models track geometric conditioning (overlap, parallax, rotation) that
+native confidence captures poorly, trains a small adapter that outputs pose-level uncertainty, and uses it for gated
+refinement and pose-graph weighting. Our project differs in scope: we do not train anything, we target the Sim(3)
+window-to-window seams and loop closures of a kilometre-scale pipeline including scale, and we measure trajectory error
+over whole drives. GeoCond's finding also motivates our geometry-only baseline (d).
 
-\paragraph{Metrics.} \textbf{ATE}: root-mean-square distance between estimated and true camera positions after the best
-rotation, shift and scale (Umeyama alignment \cite{umeyama}), in metres. \textbf{t\_rel}: KITTI's average translation
-drift (\%) over 100 to 800\,m segments. For uncertainty: the \textbf{ratio} of mean squared error to mean predicted
-variance (1 is perfect), a binned \textbf{calibration error} (0 is perfect), \textbf{NEES} (7 is perfect for 7 numbers)
-and \textbf{coverage} of the predicted 95\% region (0.95 is perfect). Our ATE equals the evo tool \cite{evo} on all 72
-trajectories (largest difference $10^{-9}$\,m).
+\textbf{Calibration and robust back ends.} Kuleshov et al.~\cite{kuleshov} measure the calibration of regression models
+with reliability diagrams and fix it with isotonic regression, which we follow. Dynamic Covariance Scaling (DCS) by
+Agarwal et al.~\cite{dcs} protects pose graphs against wrong loop closures; we use it and the Huber kernel on loop edges.
+Trajectories are scored with Sim(3)-aligned ATE \cite{umeyama, tum}, checked against the evo tool \cite{evo}.
 
-\subsection{Data and running cost}
+\textbf{Why the project is viable and worth doing.} The audits above show that pixel confidence ranks errors but is
+miscalibrated; GeoCond shows that pose-level reliability can improve graph weighting when it is learned. Nobody has
+tested whether VGGT's native confidence, calibrated without training, is a reliable weight for the edges of a long
+Sim(3) pose graph. All parts are available and cheap: VGGT and VGGT-Long are open, KITTI provides ground-truth poses
+and LiDAR, and the calibration is fitted on a CPU in seconds.
 
-\begin{table}[H]
-\centering
-\caption{Sequences used and VGGT's cost. LiDAR pixels count each LiDAR point once per window containing its frame.}
-\label{tab:data}
-\small
-\begin{tabular}{lcrrrrrr}
-\toprule
-Seq. & Role & Frames & Windows & Loops & Usable edges & LiDAR pixels & Frames / s \\
-\midrule
-05 & fit  & 2761 & 172 & 12 & 176 / 183 & 101.3\,M & 17.4 \\
-07 & fit  & 1101 &  68 &  3 &  62 / 70  &  39.1\,M & 17.4 \\
-00 & test & 4541 & 283 & 20 & 298 / 302 & 163.5\,M & 17.3 \\
-02 & test & 4661 & 291 &  8 & 298 / 298 & 174.4\,M & 17.2 \\
-\bottomrule
-\end{tabular}
-\end{table}
+\section{Progress so far}
 
-\noindent One VGGT pass on the A4000 needs 7.7, 8.4, 9.0, 9.6, 10.9 and 12.2\,GB for windows of 8, 16, 24, 32, 48 and 64
-frames; a 32-frame window takes 1.8\,s. The original VGGT-Long code took 5 to 6 minutes for 07 and 18 to 26 minutes for 00
-and 02 per setting.
+\textbf{Pipeline and runs (all on one RTX A4000, 16\,GB).} (1) KITTI 00, 02, 05, 07: images, ground truth converted from
+camera 0 to the colour camera 2 that VGGT sees, and all 13{,}064 LiDAR scans projected onto VGGT's 518$\times$154 input
+grid. (2) VGGT-1B in bfloat16 on 814 windows plus 43 loop windows; a memory sweep (7.7 to 12.2\,GB for 8 to 64 frames,
+about 17 frames/s) and four automatic convention checks before the long runs. (3) A re-implementation of VGGT-Long's
+back end in which edge weights can be changed, checked against VGGT-Long's code (same alignment to $10^{-15}$, same loop
+pairs, same optimum), and the original \texttt{vggt\_long.py} run at four window sizes on all four drives. (4) The true
+error of every seam and loop from ground-truth placements of each window (834 of 853 edges usable; windows where the car
+is nearly stopped are skipped). (5) A pixel audit of both VGGT heads against LiDAR (478 million confidence/error pairs).
+(6) Calibration on 05/07 and eight weighting schemes on all four drives, each without loops, with loops, and with Huber
+or DCS on loop edges. (7) Checks: 44 automated tests, ATE equal to evo on all 72 trajectories (largest difference
+$10^{-9}$\,m), and a LiDAR check of the ground truth at every loop revisit.
+
+\textbf{Weighting schemes.} (a) VGGT-Long's equal weights; (a$'$) equal weights in our residual convention, the control
+for (b) to (g); (b) one fitted variance each for rotation, translation (relative to the window's depth) and scale, with a
+separate factor for loops; (c) (b) scaled by the squared mean confidence of the edge; (d) isotonic map from the
+alignment residual (geometry only); (e) \textbf{ours}: isotonic map from the edge's mean point confidence; (f) an oracle
+using each edge's measured error (a reference, not a method); (g) the per-pixel power law of \cite{dengaudit}, summed over
+the edge's pixels. Each predicted variance $\sigma_b^2$ becomes the weight $1/\sigma_b^2$ of its block.
 
 \subsection{Reproduction of VGGT-Long}
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
-\caption{ATE (m). Paper: Table 1 of \cite{vggtlong}. Original code: \texttt{vggt\_long.py} run by us. Ours (a): our
-re-implementation with VGGT-Long's equal weights.}
+\caption{ATE (m). Paper: Table 1 of \cite{vggtlong}. Original: \texttt{vggt\_long.py} run by us. Ours (a): our
+re-implementation with equal weights. ``--'': not run.}
 \label{tab:repro}
 \small
-\begin{tabular}{llrrrr}
+\begin{tabular}{llrrrr@{\hspace{2.2em}}llrrrr}
 \toprule
-Source & Window / overlap & 05 & 07 & 00 & 02 \\
+Source & W/O & 05 & 07 & 00 & 02 & Source & W/O & 05 & 07 & 00 & 02 \\
 \midrule
-Paper          & 30 / 15 & 10.20 & 4.00 & 9.06 & 99.95 \\
-Original code  & 30 / 15 & 10.24 & 3.98 & 9.07 & 99.65 \\
-Original code  & 32 / 16 & 10.04 & 4.09 & 9.13 & 104.61 \\
-\textbf{Ours (a)} & 32 / 16 & \textbf{10.02} & \textbf{4.06} & \textbf{9.18} & \textbf{105.07} \\
-\midrule
-Paper          & 60 / 30 & 9.15 & 2.68 & 8.06 & 34.16 \\
-Original code  & 60 / 30 & 9.85 & 2.66 & 8.63 & 52.78 \\
-Original code  & 75 / 30 & 10.15 & 2.84 & 10.83 & 55.90 \\
-\midrule
-Paper          & 90 / 45 & 9.88 & 3.47 & 11.97 & 49.85 \\
-Original code  & 90 / 45 & -- & -- & -- & 50.56 \\
+Paper & 30/15 & 10.20 & 4.00 & 9.06 & 99.95 & Paper & 60/30 & 9.15 & 2.68 & 8.06 & 34.16 \\
+Original & 30/15 & 10.24 & 3.98 & 9.07 & 99.65 & Original & 60/30 & 9.85 & 2.66 & 8.63 & 52.78 \\
+Original & 32/16 & 10.04 & 4.09 & 9.13 & 104.61 & Paper & 90/45 & 9.88 & 3.47 & 11.97 & 49.85 \\
+\textbf{Ours (a)} & 32/16 & \textbf{10.02} & \textbf{4.06} & \textbf{9.18} & \textbf{105.07} & Original & 90/45 & -- & -- & -- & 50.56 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\noindent The original code reproduces the paper within 0.5\% at 30/15, and our version matches the original code within
-0.7\% at 32/16 (Figure~\ref{fig:upstream}), so our baseline is VGGT-Long itself. The large error on 02 with small windows is
-also in the paper. At 60/30 our runs are within 8\% of the paper on 05, 07 and 00. On 02 at 60/30 we get 52.78\,m where the
-paper reports 34.16\,m, although the same code matches the paper on 02 at 30/15 and 90/45 (99.65 against 99.95\,m, 50.56
-against 49.85\,m). An October 2025 version of the code, 200 instead of 30 iterations of its loop optimiser, and its older
-loop threshold all give exactly 52.78\,m, so we could not reproduce this one number.
+\noindent The original code reproduces the paper within 0.5\% at 30/15 on all four drives, and our re-implementation
+matches the original code within 0.7\% at 32/16 (Figure~\ref{fig:upstream}), so our baseline is VGGT-Long itself. The very
+large error on 02 with small windows is also in the paper. At 60/30 three drives are within 8\% of the paper. On 02 at
+60/30 we get 52.78\,m against the paper's 34.16\,m, although the same code matches the paper on 02 at 30/15 and 90/45; an
+October 2025 version of the code, 200 instead of 30 optimiser iterations and the older loop threshold all give exactly
+52.78\,m, so we could not reproduce this one number.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{upstream_vs_ours.png}
-\caption{Top view of the trajectories (m) after Sim(3) alignment: ground truth (black), the original VGGT-Long code at four
-settings and our version (a) at 32/16, which lies on top of the original code at the same setting.}
+\caption{Top view of the trajectories (m) after Sim(3) alignment: ground truth (black), the original VGGT-Long code at
+four settings, and our re-implementation (a) at 32/16, which lies on top of the original code at the same setting.}
 \label{fig:upstream}
 \end{figure}
 
-\subsection{Pixel confidence against LiDAR}
+\subsection{Q1: pixel confidence against LiDAR}
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
-\caption{Held-out sequences (00, 02). Slope of log(error) against log(confidence): $-1$ would match the simple rule
-error $\propto 1/C$. Calibration error: 0 is perfect. Fitted on 140 million pixels of 05/07.}
+\caption{Held-out sequences (00, 02). Slope of log(error) against log(confidence) ($-1$ would match error $\propto 1/C$).
+Calibration error: 0 is perfect. Calibration fitted on 140 million pixels of 05/07.}
 \label{tab:pixel}
 \small
 \begin{tabular}{lrrrrrr}
 \toprule
-Head & Pixels & Slope & Spearman & Raw $\kappa/C$ & Power law & Isotonic \\
+Head & Pixels & Slope & Spearman & Raw $\kappa/C$ & Power law \cite{dengaudit} & Isotonic \\
 \midrule
 Depth head & 337.9\,M & $-0.70$ & $-0.34$ & 0.40 & 0.25 & \textbf{0.18} \\
 Point head & 337.9\,M & $-0.63$ & $-0.40$ & 0.60 & 0.53 & \textbf{0.32} \\
@@ -204,108 +174,65 @@ Point head & 337.9\,M & $-0.63$ & $-0.40$ & 0.60 & 0.53 & \textbf{0.32} \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[H]
+\noindent Confidence ranks pixel errors correctly but the error falls more slowly than $1/C$ (slope about $-0.7$). A
+monotone calibration learned on other sequences removes most of the mismatch (0.40 to 0.18 for the depth head;
+Figure~\ref{fig:pixel}). The largest errors sit on object borders, which also get low confidence (Figure~\ref{fig:depth},
+appendix).
+
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.88\textwidth]{pixel_calibration.png}
-\caption{Root-mean-square depth error per confidence bin on 00 and 02 (black) and what each predictor expects. Higher
-confidence does mean lower error, but less steeply than $1/C$; the isotonic curve fitted on 05/07 follows the data best.}
+\includegraphics[width=0.78\textwidth]{pixel_calibration.png}
+\caption{Root-mean-square depth error per confidence bin on 00 and 02 (black) and what each predictor expects.}
 \label{fig:pixel}
 \end{figure}
 
-\noindent Confidence ranks pixel errors correctly but understates how slowly the error falls (slope $-0.7$, not $-1$).
-A monotone calibration learned on other sequences removes most of the mismatch (0.40 to 0.18 for the depth head). The
-largest errors sit on object borders, which also get low confidence (Figure~\ref{fig:depth}).
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{depth_lidar_07.png}
-\caption{KITTI 07, three frames. From left: image, VGGT depth, depth confidence (log), and relative depth error at LiDAR
-pixels after scale alignment (median 2 to 6\%; high on object borders).}
-\label{fig:depth}
-\end{figure}
-
-\subsection{Seams and loops}
+\subsection{Q2: seams and loops}
 
 \begin{table}[H]
 \centering
-\caption{Predicted uncertainty against true error on the held-out edges, before rescaling. Ratio: mean squared error over
-mean predicted variance (1 is perfect, above 1 is over-confident). NEES: 7 is perfect. Coverage: share of edges inside the
-predicted 95\% region (0.95 is perfect). The loop rows use loop labels that include ground-truth height errors on 00
-and 02 (see Loops below).}
+\caption{Predicted against true error on held-out edges. Ratio: mean squared error over mean predicted variance (1 is
+perfect). NEES: 7 is perfect. Coverage: share of edges inside the predicted 95\% region (0.95 is perfect). Right:
+Spearman correlation of a seam feature with the seam's true error (569 held-out seams).}
 \label{tab:edges}
 \small
-\begin{tabular}{llrrrrr}
+\begin{tabular}{llrrrrr@{\hspace{1.8em}}lrr}
 \toprule
-& & \multicolumn{3}{c}{Ratio} & & \\
-\cmidrule(lr){3-5}
-Edges & Scheme & rotation & translation & scale & NEES & Coverage \\
+Edges & Scheme & rot & trans & scale & NEES & Cov. & Feature & rot & trans \\
 \midrule
-569 seams & (b) uniform        & 1.36 & 1.32 & 1.29 &  9.3 & 0.80 \\
-          & (c) raw confidence & 0.90 & 0.87 & 0.85 &  7.7 & 0.86 \\
-          & (d) geometry only  & 1.44 & 1.40 & 1.33 & 11.0 & 0.77 \\
-          & (e) calibrated     & 1.29 & 1.26 & 1.29 & 11.5 & 0.76 \\
-          & (g) power law      & 1.57 & 1.07 & 1.04 &  9.9 & 0.78 \\
+569 seams & (b) uniform    & 1.36 & 1.32 & 1.29 &  9.3 & 0.80 & Mean confidence    & $-0.44$ & $-0.12$ \\
+          & (c) raw conf.  & 0.90 & 0.87 & 0.85 &  7.7 & 0.86 & Median confidence  & $-0.26$ & $-0.13$ \\
+          & (d) geometry   & 1.44 & 1.40 & 1.33 & 11.0 & 0.77 & Alignment residual & $0.24$ & $\mathbf{0.55}$ \\
+          & (e) calibrated & 1.29 & 1.26 & 1.29 & 11.5 & 0.76 & Inlier fraction    & $-0.17$ & $-0.25$ \\
+          & (g) power law  & 1.57 & 1.07 & 1.04 &  9.9 & 0.78 & & & \\
 \midrule
-27 loops  & (b) uniform        & 2.00 & 22.36 &  9.78 &  82.9 & 0.11 \\
-          & (e) calibrated     & 1.58 & 23.27 & 10.70 & 119.8 & 0.15 \\
-          & (g) power law      & 0.26 &  4.63 &  0.65 &  25.3 & 0.63 \\
+27 loops  & (b) uniform    & 2.00 & 22.36 &  9.78 &  82.9 & 0.11 & & & \\
+          & (e) calibrated & 1.58 & 23.27 & 10.70 & 119.8 & 0.15 & & & \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\noindent \textbf{Seams.} All schemes predict the right size of seam error within a factor of about 1.5. Ranking is weaker
-(Table~\ref{tab:rank}): a seam's mean confidence ranks its rotation error (Spearman $-0.44$) but hardly its translation
-error ($-0.12$); the alignment residual ranks translation best ($0.55$). The worst seams look at vegetation or are taken
-during turns, where confidence is low almost everywhere (Figure~\ref{fig:seams}).
+\noindent \textbf{Seams.} All schemes predict the size of seam errors within a factor of about 1.5. A seam's mean
+confidence ranks its rotation error (Spearman $-0.44$) but hardly its translation error ($-0.12$); the alignment residual
+ranks translation best ($0.55$), in line with GeoCond's observation that geometry matters for pose reliability. The worst
+seams see vegetation or are taken during turns, where confidence is low almost everywhere (Figure~\ref{fig:seams}).
 
-\begin{table}[H]
+\noindent \textbf{Loops.} All 43 loops are real revisits, yet on held-out loops the squared errors are about 20 times the
+prediction (about 4.7 times in error size). The cause is mostly the ground truth (Table~\ref{tab:loops}): on 02 the ground
+truth places the two visits of the same road 1 to 4\,m apart \emph{in height}. Placing both visits' LiDAR scans with the
+ground-truth poses puts their road surfaces 0.8 to 4.1\,m apart at the same spot on 02, up to 1.3\,m on 00, and within
+0.2\,m on 07 (0.5\,m for two loops of 05). A road cannot have two heights, so the ground-truth heights are inconsistent at
+these revisits and VGGT is right to place the visits together (Figure~\ref{fig:loops}). Seam labels are not affected,
+because each seam only uses the ground truth within one short window.
+
+\begin{table}[!htbp]
 \centering
-\caption{Spearman rank correlation between a seam feature and the seam's true error (569 held-out seams). For confidence,
-negative means ``more confident, smaller error'', the desired direction.}
-\label{tab:rank}
-\small
-\begin{tabular}{lrrr}
-\toprule
-Feature & rotation & translation & scale \\
-\midrule
-Mean confidence    & $-0.44$ & $-0.12$ & $-0.10$ \\
-Median confidence  & $-0.26$ & $-0.13$ & $-0.03$ \\
-Alignment residual & $0.24$  & $\mathbf{0.55}$ & $0.30$ \\
-Inlier fraction    & $-0.17$ & $-0.25$ & $-0.20$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{seams_07.png}
-\caption{KITTI 07, the two worst and two best seams by true error: shared frame (left) and point confidence of the two
-windows (log scale). Bad seams see hedges or turn corners with low confidence; good seams see buildings and road.}
-\label{fig:seams}
-\end{figure}
-
-\noindent \textbf{Loops.} We checked all 43 loops, and every one is a real revisit of the same place. On held-out loops the
-measured squared errors are about 20 times larger than predicted (about 4.7 times in error size). When we looked at where
-the loop errors come from, we found that the ground truth itself is not consistent at the revisits of 02 and, less so,
-00: the two visits of the same road are placed 1 to 4\,m apart \emph{in height} (Table~\ref{tab:loops}). To check this
-independently, we placed the LiDAR scans of both visits with the ground-truth poses and compared the road surface at the
-same spot. A road cannot be at two heights at once, yet the two road surfaces end up 0.8 to 4.1\,m apart on 02, matching
-the ground-truth gap almost exactly, while on 05 and 07 they agree to within 0.2\,m (0.5\,m for two loops of 05). So on 02 the ground-truth heights at
-the revisits are off by up to 4\,m, and most of what we measured as loop error there is error in the ground truth, not
-in VGGT (Figure~\ref{fig:loops}). Seam errors are not affected, because each seam only uses the ground truth within one
-short window.
-
-\begin{table}[H]
-\centering
-\caption{Loops per sequence (medians, maxima in brackets). GT gap: distance between the two visits in the ground truth,
-and its vertical part. Road gap: height difference between the two visits' LiDAR road surfaces at the same spot after
-placing both with the ground truth (0 if the ground truth is consistent). Edge error: measured translation error of the
-loop edge.}
+\caption{Loops per sequence (medians, maxima in brackets). Ground-truth (GT) gap between the two visits, its vertical
+part, and the height difference between the two visits' LiDAR road surfaces after GT placement (0 if GT is consistent).}
 \label{tab:loops}
 \small
 \begin{tabular}{lrrrrr}
 \toprule
-Seq. & Loops (usable) & GT gap (m) & GT vertical gap (m) & LiDAR road gap (m) & Edge error (m) \\
+Seq. & Loops (usable) & GT gap (m) & GT vertical (m) & LiDAR road gap (m) & Edge error (m) \\
 \midrule
 05 & 12 (10) & 0.31 (0.81) & 0.05 (0.50) & 0.05 (0.52) & 0.37 (1.13) \\
 07 &  3 (1)  & 0.41 (0.52) & 0.12 (0.16) & 0.18 (0.21) & 0.97 (0.97) \\
@@ -315,21 +242,11 @@ Seq. & Loops (usable) & GT gap (m) & GT vertical gap (m) & LiDAR road gap (m) & 
 \end{tabular}
 \end{table}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{loops_02.png}
-\caption{KITTI 02, the loops with the largest and smallest measured error. Top: the ground truth places the two visits
-3.09\,m apart, almost all of it in height, while VGGT's loop window puts them 1.08\,m apart; the LiDAR road surfaces of
-the two visits, placed with the ground truth, are 3.09\,m apart in height, so the ground truth is inconsistent here.}
-\label{fig:loops}
-\end{figure}
+\subsection{Q3: trajectories}
 
-\subsection{Trajectories}
-
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
-\caption{ATE (m) / t\_rel (\%) with loops, window 32/16. Robust kernels change these numbers only where noted below.
-$^*$The oracle uses the true edge errors and is not a method.}
+\caption{ATE (m) / KITTI translation drift t\_rel (\%), loops on, window 32/16. $^*$Uses the measured edge errors.}
 \label{tab:traj}
 \small
 \begin{tabular}{lcccc}
@@ -337,11 +254,9 @@ $^*$The oracle uses the true edge errors and is not a method.}
 Weighting & 05 (fit) & 07 (fit) & 00 (test) & 02 (test) \\
 \midrule
 No loops (any scheme) & 48.70 / 13.78 & 22.36 / 13.30 & 140.49 / 34.47 & 181.52 / 40.90 \\
-\midrule
 (a) VGGT-Long         & 10.02 / 5.11 & 4.06 / 3.94 & 9.18 / 4.82 & \textbf{105.07 / 26.95} \\
-(a$'$) equal, control  & 9.80 / 5.05 & 4.07 / 3.93 & 9.14 / 4.74 & 106.90 / 27.45 \\
-\midrule
-(b) uniform         & 11.52 / 5.83 & \textbf{3.61 / 3.53} & 10.15 / 4.88 & 113.36 / 29.81 \\
+(a$'$) equal, control & 9.80 / 5.05 & 4.07 / 3.93 & 9.14 / 4.74 & 106.90 / 27.45 \\
+(b) uniform           & 11.52 / 5.83 & \textbf{3.61 / 3.53} & 10.15 / 4.88 & 113.36 / 29.81 \\
 (c) raw confidence    & 10.05 / 5.12 & 4.55 / 3.84 & 10.28 / 5.03 & 119.60 / 31.44 \\
 (d) geometry only     & 11.10 / 5.49 & 4.49 / 3.88 & 9.34 / 4.75 & 113.27 / 29.86 \\
 (e) calibrated (ours) & 9.57 / 4.78 & 4.37 / 3.83 & \textbf{9.09 / 4.68} & 117.07 / 30.59 \\
@@ -351,82 +266,140 @@ No loops (any scheme) & 48.70 / 13.78 & 22.36 / 13.30 & 140.49 / 34.47 & 181.52 
 \end{tabular}
 \end{table}
 
-\noindent Kernel effects: Huber never down-weighted a loop and changes ATE by at most 0.04\,m. DCS switched off all 8 (true)
-loops on 02 for schemes (b), (c), (d) and (g), raising their ATE to about 175\,m, close to the no-loop result. The main
-observations:
-\begin{itemize}
-  \item \textbf{Loops matter most:} they cut the error 5 to 15 times (00: 140\,m to 9\,m).
-  \item \textbf{Weighting matters less:} compared with the fair control (a$'$), our calibrated scheme (e) is better on 05
-        (9.57\,m against 9.80\,m) and 00 (9.09\,m against 9.14\,m) but worse on 07 and 02. Schemes differ by 10 to 25\% on a
-        given sequence. The way an edge's mismatch is measured alone changes ATE by up to 2\% ((a) against (a$'$)).
-  \item \textbf{On 02 every weighted scheme is worse than equal weights.} We have not yet isolated why; the loop labels on 02
-        are affected by ground-truth height errors (previous section), which also affects every scheme fitted from labels.
-  \item \textbf{The oracle is not the best either.} This shows only that weighting each edge by its own measured error is
-        not an upper bound here, not that per-edge weighting cannot help; on 02 its loop errors also include the
-        ground-truth height errors.
-\end{itemize}
+\noindent Closing loops cuts the error 5 to 15 times (00: 140\,m to 9\,m). Edge weights matter much less: against the fair
+control (a$'$), our calibrated scheme (e) is better on 05 (9.57 against 9.80\,m) and 00 (9.09 against 9.14\,m) but worse
+on 07 and 02; on a given sequence the schemes differ by 10 to 25\%, and the residual convention alone ((a) against (a$'$))
+changes ATE by up to 2\%. On 02 every weighted scheme is worse than equal weights; we have not yet isolated why. Huber
+never down-weighted a loop; DCS switched off all 8 true loops on 02 for schemes (b), (c), (d), (g) (ATE about 175\,m).
+The oracle is not the best either, which only shows that inverse measured-error weighting is not an upper bound here.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
-\begin{subfigure}{0.49\textwidth}\includegraphics[width=\textwidth]{trajectory_00.png}\end{subfigure}
-\begin{subfigure}{0.49\textwidth}\includegraphics[width=\textwidth]{trajectory_02.png}\end{subfigure}
-\caption{Held-out trajectories (top view, m). On 00 loops pull the drifting chain (dotted) onto the ground truth. On 02 all
-loops join the start of the drive to its end, so the long middle section keeps its drift.}
+\begin{subfigure}{0.43\textwidth}\includegraphics[width=\textwidth]{trajectory_00.png}\end{subfigure}
+\begin{subfigure}{0.43\textwidth}\includegraphics[width=\textwidth]{trajectory_02.png}\end{subfigure}
+\caption{Held-out trajectories (top view, m). On 00 loops pull the drifting chain (dotted) onto the ground truth. On 02
+all loops join the start of the drive to its end, so the long middle section keeps its drift.}
 \label{fig:traj}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{trajectory_error_00.png}
-\caption{KITTI 00, position error along the path with VGGT-Long's weights (left) and ours (right). The largest error (about
-20\,m) is on a detour that no loop closes; our weights lower the error on most other parts.}
+\includegraphics[width=0.72\textwidth]{trajectory_error_00.png}
+\caption{KITTI 00, position error along the path with VGGT-Long's weights (left) and ours (right). The largest error
+(about 20\,m) is on a detour that no loop closes.}
 \label{fig:trajerr}
 \end{figure}
 
-\begin{figure}[H]
+\textbf{Summary.} VGGT-Long is reproduced; pixel confidence ranks depth error and is well predicted after calibration (Q1);
+averaging it over a seam keeps information about rotation but loses most of it about translation (Q2); KITTI's ground
+truth is inconsistent in height at the 02 revisits, which affects loop labels; and calibrated edge weights so far give
+small gains on some sequences and losses on others (Q3).
+
+\section{Timeline for the rest of the project}
+
+\begin{table}[H]
 \centering
-\includegraphics[width=\textwidth]{pointcloud_07.png}
-\caption{KITTI 07, VGGT's points placed by the solved window poses (top view; true path in red). Without loops the map does
-not close; with loops (VGGT-Long's weights, middle, and ours, right) it does.}
-\label{fig:pc}
-\end{figure}
+\caption{Remaining work, as planned in the proposal. Final submission Nov 23, demo Nov 26.}
+\label{tab:plan}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.1cm} X}
+\toprule
+Dates & Work \\
+\midrule
+Nov 6 to Nov 9 & False-loop stress test: add 0, 1, 2, 4, 8, 16 wrong loops between distant windows (20 random seeds) and
+measure which schemes and robust kernels survive. \\
+Nov 10 to Nov 14 & Waymo Open Dataset \cite{waymo} and TUM RGB-D \cite{tum} loaders and runs; ORB-SLAM3 (monocular)
+\cite{orbslam3} as a classical reference. \\
+Nov 15 to Nov 19 & Bonus: streaming models CUT3R \cite{cut3r} and StreamVGGT \cite{streamvggt}, and VGGT-$\Omega$
+\cite{vggtomega}, in the same pipeline; memory and speed table. \\
+Nov 20 to Nov 22 & MASt3R-SLAM \cite{mast3rslam} if time allows; final figures and report; code freeze Nov 22. \\
+Nov 23 / Nov 26 & Final submission / demo. \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-\subsection{Summary of findings}
-\begin{itemize}
-  \item VGGT-Long is reproduced: the original code matches the paper, and our version matches the original code.
-  \item Pixel confidence is a reliable ranking of depth error and becomes a good error estimate after calibration.
-  \item Averaging confidence over a seam keeps information about rotation but loses most of it about translation.
-  \item KITTI's ground truth is inconsistent in height (up to 4\,m) at the revisits of 02 and, less so, 00, which we
-        confirmed with LiDAR. Loop errors measured against it on those sequences are therefore mostly ground-truth error.
-  \item At the trajectory level, calibrated weights so far give small gains on some sequences (05, 00, against the fair
-        control) and losses on others (07, 02); window size and loop closures matter more than edge weights.
-\end{itemize}
-
-\section{Plans for further improvements and development}
-
-\begin{itemize}
-  \item \textbf{False-loop stress test:} add 1 to 16 wrong loops between distant windows and compare how the weighting
-        schemes and robust kernels survive.
-  \item \textbf{More data and baselines:} Waymo Open Dataset and TUM RGB-D sequences; ORB-SLAM3 (monocular) as a classical
-        reference; a memory and speed comparison; MASt3R-SLAM if time allows.
-  \item \textbf{Bonus:} streaming models (CUT3R, StreamVGGT) and VGGT-$\Omega$ in the same pipeline.
-\end{itemize}
-
-\begin{thebibliography}{9}
+\FloatBarrier
+\begin{thebibliography}{99}
+\small
+\setlength{\itemsep}{0pt}
 \bibitem{vggt} J.~Wang, M.~Chen, N.~Karaev, A.~Vedaldi, C.~Rupprecht, and D.~Novotny, ``VGGT: Visual geometry grounded
 transformer,'' in \emph{Proc. CVPR}, 2025.
 \bibitem{vggtlong} K.~Deng, Z.~Ti, J.~Xu, J.~Yang, and J.~Xie, ``VGGT-Long: Chunk it, loop it, align it: Pushing VGGT's
-limits on kilometer-scale long RGB sequences,'' \emph{arXiv:2507.16443}, 2025.
-\bibitem{dengaudit} N.~N.~Deng, Q.~Cheng, N.~Zeller, and D.~Cremers, ``A calibration audit of confidence in feed-forward
-3D reconstruction models,'' arXiv:2608.29705v3, 2026.
-\bibitem{kitti} A.~Geiger, P.~Lenz, and R.~Urtasun, ``Are we ready for autonomous driving? The KITTI vision benchmark
-suite,'' in \emph{Proc. CVPR}, 2012.
-\bibitem{dcs} P.~Agarwal, G.~D.~Tipaldi, L.~Spinello, C.~Stachniss, and W.~Burgard, ``Robust map optimization using
-dynamic covariance scaling,'' in \emph{Proc. ICRA}, 2013.
+limits on kilometer-scale long RGB sequences,'' arXiv:2507.16443, 2025.
+\bibitem{strasdat} H.~Strasdat, J.~M.~M.~Montiel, and A.~J.~Davison, ``Scale drift-aware large scale monocular SLAM,'' in
+\emph{Proc. RSS}, 2010.
+\bibitem{dust3r} S.~Wang, V.~Leroy, Y.~Cabon, B.~Chidlovskii, and J.~Revaud, ``DUSt3R: Geometric 3D vision made easy,'' in
+\emph{Proc. CVPR}, 2024.
+\bibitem{mast3r} V.~Leroy, Y.~Cabon, and J.~Revaud, ``Grounding image matching in 3D with MASt3R,'' in \emph{Proc. ECCV},
+2024.
+\bibitem{kendall} A.~Kendall and Y.~Gal, ``What uncertainties do we need in Bayesian deep learning for computer vision?,''
+in \emph{Proc. NeurIPS}, 2017.
+\bibitem{hillemann} M.~Hillemann, R.~Langend\"orfer, S.~Landgraf, and M.~Ulrich, ``Uncertainty quality of VGGT: An analysis
+on the DTU benchmark dataset,'' \emph{ISPRS Annals}, vol.~XI-2-2026, pp.~665--672, 2026.
+\bibitem{dengaudit} N.~N.~Deng, Q.~Cheng, N.~Zeller, and D.~Cremers, ``A calibration audit of confidence in feed-forward 3D
+reconstruction models,'' arXiv:2608.29705v3, 2026.
+\bibitem{geocond} D.~Ahmedt-Aristizabal, M.~A.~Armin, R.~Tsuchida, and L.~Petersson, ``GeoCond: A conditioning-aware
+reliability adapter for feed-forward 3D reconstruction,'' in \emph{Proc. WACV}, 2027. arXiv:2609.18465.
+\bibitem{cut3r} Q.~Wang, Y.~Zhang, A.~Holynski, A.~A.~Efros, and A.~Kanazawa, ``Continuous 3D perception model with
+persistent state,'' in \emph{Proc. CVPR}, 2025.
+\bibitem{streamvggt} D.~Zhuo, W.~Zheng, J.~Guo, Y.~Wu, J.~Zhou, and J.~Lu, ``Streaming 4D visual geometry transformer,''
+arXiv:2507.11539, 2025.
+\bibitem{vggtomega} J.~Wang, M.~Chen, S.~Zhang, N.~Karaev, J.~Sch\"onberger, P.~Labatut, P.~Bojanowski, D.~Novotny,
+A.~Vedaldi, and C.~Rupprecht, ``VGGT-$\Omega$,'' in \emph{Proc. CVPR}, 2026. arXiv:2605.15195.
+\bibitem{vggtslam} D.~Maggio, H.~Lim, and L.~Carlone, ``VGGT-SLAM: Dense RGB SLAM optimized on the SL(4) manifold,'' in
+\emph{Proc. NeurIPS}, 2025.
+\bibitem{mast3rslam} R.~Murai, E.~Dexheimer, and A.~J.~Davison, ``MASt3R-SLAM: Real-time dense SLAM with 3D reconstruction
+priors,'' in \emph{Proc. CVPR}, 2025.
+\bibitem{droid} Z.~Teed and J.~Deng, ``DROID-SLAM: Deep visual SLAM for monocular, stereo, and RGB-D cameras,'' in
+\emph{Proc. NeurIPS}, 2021.
+\bibitem{kuleshov} V.~Kuleshov, N.~Fenner, and S.~Ermon, ``Accurate uncertainties for deep learning using calibrated
+regression,'' in \emph{Proc. ICML}, 2018.
+\bibitem{dcs} P.~Agarwal, G.~D.~Tipaldi, L.~Spinello, C.~Stachniss, and W.~Burgard, ``Robust map optimization using dynamic
+covariance scaling,'' in \emph{Proc. ICRA}, 2013.
 \bibitem{umeyama} S.~Umeyama, ``Least-squares estimation of transformation parameters between two point patterns,''
 \emph{IEEE TPAMI}, 13(4):376--380, 1991.
+\bibitem{dinov2} M.~Oquab, T.~Darcet, T.~Moutakanni, \emph{et al.}, ``DINOv2: Learning robust visual features without
+supervision,'' \emph{TMLR}, 2024.
+\bibitem{salad} S.~Izquierdo and J.~Civera, ``Optimal transport aggregation for visual place recognition,'' in \emph{Proc.
+CVPR}, 2024.
+\bibitem{kitti} A.~Geiger, P.~Lenz, and R.~Urtasun, ``Are we ready for autonomous driving? The KITTI vision benchmark
+suite,'' in \emph{Proc. CVPR}, 2012.
+\bibitem{waymo} P.~Sun, H.~Kretzschmar, X.~Dotiwalla, \emph{et al.}, ``Scalability in perception for autonomous driving:
+Waymo open dataset,'' in \emph{Proc. CVPR}, 2020.
+\bibitem{tum} J.~Sturm, N.~Engelhard, F.~Endres, W.~Burgard, and D.~Cremers, ``A benchmark for the evaluation of RGB-D SLAM
+systems,'' in \emph{Proc. IROS}, 2012.
 \bibitem{evo} M.~Grupp, ``evo: Python package for the evaluation of odometry and SLAM,''
 \url{https://github.com/MichaelGrupp/evo}, 2017.
+\bibitem{orbslam3} C.~Campos, R.~Elvira, J.~J.~G\'omez Rodr\'iguez, J.~M.~M.~Montiel, and J.~D.~Tard\'os, ``ORB-SLAM3: An
+accurate open-source library for visual, visual-inertial, and multimap SLAM,'' \emph{IEEE Trans. Robotics},
+37(6):1874--1890, 2021.
 \end{thebibliography}
+
+\clearpage
+\appendix
+\section{Additional figures}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{depth_lidar_07.png}
+\caption{KITTI 07: image, VGGT depth, depth confidence (log), and relative depth error at LiDAR pixels after scale
+alignment (median 2 to 6\%, high on object borders).}
+\label{fig:depth}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{seams_07.png}
+\caption{KITTI 07, the two worst and two best seams by true error: shared frame and point confidence of the two windows.}
+\label{fig:seams}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{loops_02.png}
+\caption{KITTI 02, loops with the largest and smallest measured error. Top: the ground truth places the two visits 3.09\,m
+apart, almost all in height; their LiDAR road surfaces, placed with the ground truth, are 3.09\,m apart in height.}
+\label{fig:loops}
+\end{figure}
 
 \end{document}
