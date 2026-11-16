@@ -140,7 +140,7 @@ drive, and loop closure cannot pull the long middle sections into place.}
 \section{Calibrated confidence as edge weights}
 \label{sec:weights}
 
-\textbf{Pixels.} Against 478 million LiDAR pixels of drives 00, 02, 05 and 07, the error of VGGT's depth falls with
+\textbf{Pixels.} Against 478 million LiDAR pixels of drives 00, 02, 05 and 07 (window 30/15), the error of VGGT's depth falls with
 confidence, but more slowly than $1/C$ (log-log slope $-0.71$ on 00 and 02, Spearman $-0.34$). An isotonic map from
 confidence to expected squared error, fitted on 05 and 07, reduces the calibration error on 00 and 02 from 0.40 (raw)
 and 0.25 (power law of \cite{audit}) to 0.17 (point head: 0.58, 0.52, 0.31).
@@ -173,7 +173,7 @@ true & 14.47 & 22.81 & 24.47 & 14.46 & 14.12 & 52.09 \\
 \end{table}
 
 \textbf{False loops.} Weights do matter when loops are wrong. We added 1 to 16 false loops between windows at least 50\,m
-apart (20 seeds, drives 00, 02, 05, 07), each with the weight of the most trusted true loop. Without a robust kernel or
+apart (20 seeds, drives 00, 02, 05, 07, window 30/15), each with the weight of the most trusted true loop. Without a robust kernel or
 with Huber, one false loop breaks every scheme. With DCS at the threshold tuned on 05 and 07, equal weights fail with a
 single false loop on every drive; in a sweep of the threshold from $10^{-6}$ to $10^3$, the best value lets them survive
 one or two false loops on 00, 02 and 05 but none on 07, because the residuals of true and false loops are not measured
@@ -506,7 +506,7 @@ on single drives (02).}
 \begin{figure}[!h]
 \centering
 \includegraphics[width=0.92\textwidth]{stress_ratio_vs_fake_loops_w30.png}
-\caption{False loops (DCS): worst ATE over 20 seeds relative to the clean graph without a kernel, against
+\caption{False loops (window 30/15, DCS): worst ATE over 20 seeds relative to the clean graph without a kernel, against
 the number of false loops added. The shaded band (within 1.25 times the clean graph) counts as surviving. Legend: (a) equal
 weights as in VGGT-Long, (c) raw confidence, (d) geometry, (e) calibrated confidence. Equal weights fail with a single
 false loop on every drive.}
