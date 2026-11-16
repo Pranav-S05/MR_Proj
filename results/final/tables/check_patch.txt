@@ -1,0 +1,2 @@
+seams ours / upstream: 72 72
+correlation 1.000, mean difference -0.0000

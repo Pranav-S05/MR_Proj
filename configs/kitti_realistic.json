@@ -1,0 +1,6 @@
+{
+  "kitti_root": "data/kitti",
+  "cache_root": "cache/kitti_realistic",
+  "fit_sequences": [],
+  "test_sequences": ["00", "02"]
+}

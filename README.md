@@ -46,11 +46,13 @@ Verified:
 | `mr_cpu/backend.py`, `lie.py` | sparse Levenberg-Marquardt Sim(3) pose graph with Huber/DCS; batched Sim(3) maths |
 | `mr_cpu/evaluation.py` | trajectory assembly, Sim(3) ATE, ATE vs length, KITTI t_rel/r_rel, evo check; CLI to score VGGT-Long's `camera_poses.txt` |
 | `mr_cpu/report.py` | `summary.md`, `tables/*.csv`, `figures/*.png` |
+| `mr_cpu/stress.py` | final: false-loop stress tests (adversarial fake loops, realistic SALAD thresholds, DCS threshold sweep) |
+| `mr_cpu/final_figures.py` | final: stress-test figures, MASt3R-SLAM baseline figures, qualitative examples, speed/memory table |
 | `mr_cpu/synthetic.py` | fake frontend (same cache format) for CPU testing |
 | `mr_cpu/geometry.py`, `trajectory.py`, `graph.py`, `lab.py` | earlier CPU foundations and teaching lab |
 | `configs/kitti_mid.json`, `configs/synthetic.json` | experiment configs (fit 05/07, test 00/02) |
 | `scripts/run_gpu_mid.sh` | the full GPU sequence for the mid submission |
-| `tests/` | 42 checks: `python -m unittest discover -s tests` |
+| `tests/` | 47 checks: `python -m unittest discover -s tests` |
 
 Weighting schemes: (a) VGGT-Long identity, (b) uniform per-DoF constants, (c) raw confidence (mean conf^2),
 (d) geometry-only isotonic (alignment residual), (e) calibrated isotonic (mean confidence, ours), (f) oracle with true
@@ -113,7 +115,57 @@ To check the code without a GPU: generate synthetic caches with
 `python -m mr_cpu.pipeline --config configs/synthetic.json`.
 
 Score any external trajectory with the same metrics:
-`python -m mr_cpu.evaluation --estimate <camera_poses.txt> --seq 07 --evo`.
+`python -m mr_cpu.evaluation --estimate <camera_poses.txt> --seq 07 --evo`. Keyframe-only trajectories in TUM
+format (MASt3R-SLAM writes `t = frame / 30`): add `--tum-fps 30`; this also reports where tracking was first lost
+and how much of the drive was tracked.
+
+## 4. Final-submission experiments (CPU, after the mid run)
+
+```bash
+python -m mr_cpu.stress --config configs/kitti_mid.json --out results/final/stress          # fake loops, 20 seeds
+python -m mr_cpu.stress --config configs/kitti_mid.json --dcs-sweep wide --out results/final/stress
+python -m mr_cpu.stress --config configs/kitti_mid.json --dcs-sweep fine --phis 0.0562,0.1,0.178 --out results/final/stress
+python -m mr_cpu.stress --config configs/kitti_realistic.json --realistic --out results/final/stress
+python -m mr_cpu.final_figures --config configs/kitti_mid.json                               # results/final/figures
+```
+The realistic test needs the per-frame SALAD descriptors in `cache/kitti_realistic/<seq>/descriptors.npy`
+(from `mr_gpu.run_vggt`). The MASt3R-SLAM baseline (github.com/rmurai0610/MASt3R-SLAM, unmodified, run headless and
+single-threaded on every KITTI frame, with and without the KITTI intrinsics) writes the keyframe trajectories copied
+to `results/final/mast3r_slam/`; image panels in the figures need the KITTI frames listed by
+`python -m mr_cpu.final_figures --list-images`.
+
+## 5. Final report: calibrated seam scale (`report/final_report.pdf`)
+
+The final report explains why calibrated edge weights do not improve VGGT-Long's trajectory (the error is a bias in
+the seam scale) and calibrates the mean of the seam scale instead. All of it runs from the repository root.
+
+GPU (Phoenix, one GPU), per drive and window setting; writes `results/final/runs/<ref>_w<W>_o<O>/<seq>/`:
+```bash
+python scripts/gpu_run.py --seq 07 --ref first --window 30 --overlap 15 --out results/final/runs/first_w30_o15/07
+W=30 O=15 bash scripts/run_queue.sh 0 "first:00 first:01 ..."          # queue with a GPU-free check
+```
+VGGT-Long's own code with the correction: `scripts/fit_upstream_coeffs.py` (coefficients, leave one drive out),
+`scripts/make_upstream_calib.py` (writes `external/VGGT-Long/vggt_long_calib.py`; the patch is
+`scripts/vggt_long_calib.diff`), `scripts/run_upstream_queue.sh` (plain and C4 runs).
+The analysis of the report at window 30/15 on 00/02/05/07 (pixel audit, edge calibration, false loops) is the
+pipeline of sections 3 and 4 with `configs/kitti_final30.json` (`scripts/run_final30.sh` runs it end to end; LiDAR
+scans as in section 1).
+
+CPU, from the small run files in `results/final/runs/` (tables in `results/final/tables/`, figures in
+`results/final/figures/`):
+```bash
+python scripts/exp_main.py --variant first_w30_o15        # our back end, C1..C4, nested choice (also w60_o30, w75_o30)
+python scripts/score_upstream.py --w 30 --o 15            # VGGT-Long's own code, plain and C4
+python scripts/stats.py results/final/tables/upstream_w30_o15.csv results/final/tables/first_w30_o15.csv
+python scripts/exp_oracle.py --variant first_w30_o15      # one seam component replaced by its true value
+python scripts/exp_weights.py --variant first_w30_o15     # six edge weightings, with measured / corrected / true scale
+python scripts/exp_profile.py --variant first_w30_o15     # in-window step profile, seam bias, drift
+python scripts/sim_real_drives.py --variant first_w30_o15 # weights against bias, simulated with each drive's errors
+python scripts/fig_report.py; python scripts/fig_ate.py results/final/tables/first_w{30_o15,60_o30,75_o30}.csv
+python scripts/make_summary.py                            # results/final/tables/SUMMARY.md (all numbers of the report)
+```
+Notes: `docs/final_findings.md` (log of all numbers), `docs/final_plan.md` (protocol), `docs/citation_check.md`
+(every quoted number of other papers checked against its PDF).
 
 ## Background documents
 [docs/explained_simply.md](docs/explained_simply.md) (start here), [docs/proposal_review.md](docs/proposal_review.md)

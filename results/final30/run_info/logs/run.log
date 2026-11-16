@@ -1,0 +1,23 @@
+[2026-11-16 16:19:51] no GPU with 13 GB free: waiting
+[2026-11-16 16:21:51] 07: VGGT start on GPU 0
+[2026-11-16 16:26:49] 07: VGGT done (3.2G cached)
+[2026-11-16 16:28:52] 07: edges, labels, audit done
+[2026-11-16 16:28:53] 05: VGGT start on GPU 0
+[2026-11-16 16:35:41] 05: VGGT FAILED:   File "/scratch2/vpr-team/kavish/final30/.pixi/envs/default/lib/python3.10/site-packages/PIL/PngImagePlugin.py", line 1025, in load_read
+    return self.fp.read(read_bytes)
+OSError: [Errno 5] Input/output error
+[2026-11-16 16:57:17] 05: VGGT start on GPU 0
+[2026-11-16 16:58:16] 05: VGGT start on GPU 0
+[2026-11-16 17:29:13] 05: VGGT done (8.1G cached)
+[2026-11-16 17:40:00] 05: edges, labels, audit done
+[2026-11-16 17:40:01] 00: VGGT start on GPU 0
+[2026-11-16 17:58:02] 00: VGGT done (14G cached)
+[2026-11-16 18:07:10] 00: edges, labels, audit done
+[2026-11-16 18:07:11] 02: VGGT start on GPU 0
+[2026-11-16 18:25:42] 02: VGGT done (13G cached)
+[2026-11-16 18:33:48] 02: edges, labels, audit done
+[2026-11-16 19:13:00] fit, tune, solve, report done
+[2026-11-16 19:36:56] stress done
+[2026-11-16 19:39:09] dcs wide done
+[2026-11-16 19:41:32] dcs fine done
+[2026-11-16 19:41:32] FINAL30_DONE

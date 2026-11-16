@@ -1,0 +1,9 @@
+[2026-11-14 00:35:35] 00 nocalib start on GPU 2
+[2026-11-14 00:57:52] 00 nocalib done: 122 keyframes, peak MiB 2849518, 4804 MiB
+[2026-11-14 00:58:53] 00 calib start on GPU 2
+[2026-11-14 01:12:40] 00 calib done: 114 keyframes, peak MiB 2861071, 4804 MiB
+[2026-11-14 02:52:07] 02 nocalib start on GPU 0
+[2026-11-14 03:13:46] 02 nocalib done: 254 keyframes, peak MiB 
+[2026-11-14 03:14:47] 02 calib start on GPU 0
+[2026-11-14 03:29:02] 02 calib done: 202 keyframes, peak MiB 2917604, 4804 MiB
+[2026-11-14 03:29:02] KITTI_DONE

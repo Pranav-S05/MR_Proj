@@ -174,30 +174,47 @@ together into one special **loop window**, and runs VGGT on it. Since both visit
 us exactly how the two moments relate. That gives a **loop edge**: a glue joint between two windows that are far apart
 in time.
 
-**Step 4, fix the whole path (the pose graph).** Now we have a placement for every window, many seams between neighbours
-and a few loop edges. They do not agree perfectly, so something has to decide where every window finally goes.
+**A worked example of Step 3 (drive 02).** Window k covers frames 16k to 16k+31, so window 120 covers frames 1920 to
+1951 and window 281 covers frames 4496 to 4527. SALAD says frame 4507 looks almost exactly like frame 1923 (similarity
+0.956), although they are 2,584 frames apart in time: the car is back on the same street. VGGT-Long builds a loop window
+from frames 4497 to 4516 (later visit) and 1920 to 1939 (earlier visit) and runs VGGT on all 40 together. Those frames
+also lie inside window 281 and window 120, so the result says directly "window 281 sits like *this* relative to
+window 120". Drive 02 has 8 such loop edges.
 
-Think of every window as a wooden block, and every seam or loop as a **spring** connecting two blocks, with the spring's
-natural length set by what that seam or loop measured. Let go, and the blocks settle into the position where the springs
-are, overall, as relaxed as possible. This network of blocks and springs is the **pose graph**, and the computer program
-that finds the settled position is the **optimiser** or **solver**. The blocks are called **nodes** and the springs
-**edges**.
+**Step 4, fix the whole path (the pose graph).** Now there are two different answers for where window 281 is:
+* **through the seams:** start at window 120, apply the seam to 121, then to 122, and so on up to 281. That is 161 seams,
+  each slightly wrong, so the errors add up;
+* **through the loop edge:** directly from window 120, in one measurement.
 
-How strongly each spring pulls is its **stiffness**, which we also call its **weight**. Technically it is a 7x7 table of
-numbers called the **information matrix** (one stiffness each for rotation, sliding and resizing, and how they interact).
-A stiff spring means "trust this measurement a lot".
+These two answers disagree, often by tens of metres. The program then moves all 291 window positions at once until the
+total disagreement with all 290 seams and all loop edges is as small as possible. In practice window 281 moves most of
+the way to where the loop says, and the correction is shared out over windows 121 to 280, a little each, so no single
+seam has to take all of it.
+
+The list of windows (**nodes**) and the measurements between them (seams and loop edges, together called **edges**) is
+the **pose graph**. The program that finds the best positions is the **optimiser** or **solver**.
+
+Each edge also has a **weight**: how much the optimiser should trust it. If the seam between windows 200 and 201 has a
+high weight, the optimiser tries hard to keep that seam exactly as measured, and pushes the correction into other seams.
+If it has a low weight, more of the correction goes into that seam. Technically the weight is a 7x7 table of numbers
+called the **information matrix** (separate trust for rotation, sliding and resizing, and how they interact).
 
 Two useful facts:
-* If there are no loops, the springs just form a chain, and every spring can be perfectly relaxed at once. Then the
+* If there are no loops, there is nothing to disagree with: every seam can be kept exactly as measured. Then the
   weights do not matter at all.
-* With loops, the chain and the loops disagree, and the weights decide who gives way. That is where weights matter.
+* With loops, the seams and the loops disagree, and the weights decide which edges absorb the correction. That is where
+  weights matter.
+
+This also explains why drive 02 stays bad even with loops: its 8 loops only connect frames around 940 to 1960 with
+frames around 4200 to 4550. Nothing ties the long stretch in between (roughly frames 2000 to 4200) to anything else, so
+its drift is never corrected.
 
 ### 3.4 The weakness we target
 
-**VGGT-Long gives every spring exactly the same stiffness.** But some seams are obviously worse than others: a window
+**VGGT-Long gives every edge exactly the same weight.** But some seams are obviously worse than others: a window
 that sees only a hedge while the car is turning is much harder than one that looks down a straight street full of
-buildings. And VGGT already tells us, for every pixel, how confident it is. Using that confidence to set the stiffness
-of each spring is the opening our project explores.
+buildings. And VGGT already tells us, for every pixel, how confident it is. Using that confidence to set the weight
+of each edge is the opening our project explores.
 
 ---
 
@@ -206,49 +223,78 @@ of each spring is the opening our project explores.
 ### 4.1 The two questions
 
 1. **Is VGGT's confidence honest?** First for single pixels, then for whole seams and loops.
-2. **If we turn confidence into an honest estimate of error and use it as the spring stiffness, does the car's path
+2. **If we turn confidence into an honest estimate of error and use it as the edge weight, does the car's path
    become more accurate?**
 
 ### 4.2 What "honest" means: ranking versus calibration
 
-Think of a weather forecaster. There are two different ways to be good:
-* **Ranking**: whenever they say one day is more likely to rain than another, they are right about which one is wetter.
-* **Calibration**: when they say "70% chance of rain", it really rains on about 70% of such days.
+VGGT gives every pixel a confidence number. Take three pixels as an example (the numbers are made up to show the idea):
 
-A forecaster can be good at ranking but bad at calibration (always saying 90% when it rains 30% of the time). VGGT's
-confidence could be like that: it might correctly say which pixels are better, but be wrong about *how much* better.
-For setting spring stiffness we need both: the right order and the right size. Fixing the size afterwards is called
-**calibrating**.
+| Pixel | VGGT confidence | True error (measured with LiDAR) |
+|---|---|---|
+| A | 2 | 1.0 m |
+| B | 4 | 0.7 m |
+| C | 8 | 0.5 m |
+
+**Check 1: is the order right? (ranking)** C has the highest confidence and the smallest error; A has the lowest
+confidence and the biggest error. So more confidence really means less error. VGGT passes this check.
+
+**Check 2: are the amounts right? (calibration)** VGGT's confidence roughly says "double the confidence, half the
+error". If that were true, going from A (2) to B (4) should halve the error to 0.5 m, and going to C (8) should halve it
+again to 0.25 m. In reality the errors are 0.7 m and 0.5 m: the error shrinks, but much more slowly than the confidence
+suggests. So VGGT is right about *which* pixel is better, but wrong about *how much* better. VGGT fails this check.
+
+**Why the amounts matter.** We turn the expected error E of an edge into its weight with the rule weight = 1 / E²
+(a standard rule from statistics). If we believed C's error is 0.25 m, its weight would be 16 times A's. With the real
+0.5 m, it is only 4 times A's. Taking VGGT at its word would make us trust confident edges far too much.
+
+Fixing the amounts, while keeping the order, is called **calibrating**.
 
 ### 4.3 How you calibrate
 
-You collect many pairs of (confidence, true error) on the fitting sequences 05 and 07, and you fit a curve that turns a
-confidence value into the typical size of the error. We use a very flexible but safe kind of curve, called **isotonic
-regression**: the only rule is that more confidence may never mean more error; apart from that, the curve simply follows
-the data. Then the curve is frozen and used, unchanged, on the test sequences 00 and 02.
+1. On the fitting drives 05 and 07, collect millions of (confidence, true error) pairs, using LiDAR as the truth.
+2. Build a lookup table from them, for example "confidence 2 means about 1.0 m of error, confidence 4 about 0.7 m,
+   confidence 8 about 0.5 m".
+3. The only rule the table must obey is that higher confidence may never give a bigger error; apart from that it simply
+   follows the data. This kind of table is called **isotonic regression**.
+4. Freeze the table and use it, unchanged, on the test drives 00 and 02. Nothing is learned from those two drives, so
+   the test stays fair.
 
-For springs, the rule from statistics is simple: if you expect an edge's error to be about E, its stiffness should be
-about 1 / E². So once we can predict each edge's error, we know its weight.
+### 4.4 How we measure whether it worked (calibration error)
 
-### 4.4 The seven ways of setting spring stiffness we compare
+To give one number for "how wrong are the predicted error sizes", we do this on the test drives:
+1. Sort all pixels by confidence and split them into 10 equal-size groups (lowest confidence to highest).
+2. In each group, compare the average squared error that was **predicted** with the average squared error that
+   **really happened** (from LiDAR). Divide one by the other. If the prediction is perfect, this ratio is 1.
+3. Note how far each ratio is from 1 (a ratio of 1.3 is 0.3 off; a ratio of 0.6 is 0.4 off), and average these
+   over the 10 groups.
+
+That average is the **calibration error**. 0 means the predicted sizes are exactly right; 0.40 means that, on average,
+the predicted squared error is about 40% too big or too small.
+
+Our result on drives 00 and 02: **0.40** if VGGT's confidence is taken at face value, **0.25** with the power-law formula
+from the 2026 paper by N. Deng et al., and **0.18** with our lookup table. The table, learned only on 05 and 07, more
+than halves the mistake.
+
+### 4.5 The seven ways of setting edge weights we compare
 
 To know whether *our* idea helps, we have to compare it with sensible alternatives, all tested in exactly the same way.
 
-| Name | Where the stiffness comes from | Why it is in the comparison |
+| Name | Where the weight comes from | Why it is in the comparison |
 |---|---|---|
-| (a) VGGT-Long | all springs equal | what we have to beat |
-| (b) uniform | one fitted stiffness for rotation, one for sliding, one for resizing, same for every edge | does just balancing those three help? |
+| (a) VGGT-Long | all edges weighted equally | what we have to beat |
+| (b) uniform | one fitted weight for rotation, one for sliding, one for resizing, same for every edge | does just balancing those three help? |
 | (c) raw confidence | VGGT's confidence, squared, no calibration | is the raw signal good enough on its own? |
 | (d) geometry only | how badly the two windows' points still disagree after gluing | the classical choice, without the network's confidence |
 | (e) **calibrated (ours)** | VGGT's confidence passed through the calibration curve | our method |
 | (f) oracle | the true error of each edge (cheating) | not a method; shows the most any weighting could possibly gain |
 | (g) power law | a calibration formula from a 2026 paper by N. Deng et al., refitted on 05/07 | the most recent published idea |
 
-On top of this, each one is run three ways for the loops: plain; with **Huber**, which softens springs that are pulling
-unusually hard; and with **DCS**, which can switch such springs off almost completely. These two are called **robust
+On top of this, each one is run three ways for the loops: plain; with **Huber**, which trusts a loop edge less when it
+disagrees unusually strongly with the rest; and with **DCS**, which can ignore such loop edges almost completely. These two are called **robust
 kernels**. How hard is "unusually hard" is chosen on 05 and 07 only. And everything is also run without loops at all.
 
-### 4.5 How we grade a result
+### 4.6 How we grade a result
 
 **ATE** (Absolute Trajectory Error) is the main score. Take the estimated path and the true path, rotate, shift and
 resize the estimate so it lines up with the truth as well as possible (allowed because of 2.5), then measure the
@@ -258,7 +304,7 @@ For example, an ATE of 9 m on a 3.7 km drive means the estimated path is, on ave
 We also report KITTI's own **drift** numbers (**t_rel**: how many % of the distance travelled the path is off, over
 stretches of 100 to 800 m) and, for the uncertainty itself, whether the predicted errors match the real ones on average.
 
-### 4.6 The plan over time (from our proposal)
+### 4.7 The plan over time (from our proposal)
 
 | Dates | Work | By |
 |---|---|---|
@@ -274,7 +320,7 @@ Everything in the mid-submission row is done (section 5).
 ### 5.1 The practical set-up
 
 * **Code.** Everything is written in Python. The project folder has two parts: `mr_gpu/` runs VGGT on the GPU, and
-  `mr_cpu/` does everything else (gluing, measuring errors, calibrating, the spring system, grading, tables and
+  `mr_cpu/` does everything else (gluing, measuring errors, calibrating, the pose graph, grading, tables and
   figures). There are 44 automatic tests in `tests/` that check the maths and the conventions.
 * **Computer.** The laptop has no suitable GPU, so the heavy work ran on the lab's server, **Phoenix**, which has three
   NVIDIA RTX A4000 graphics cards with 16 GB each. We used one card at a time, as the lab rules require.
@@ -310,10 +356,10 @@ Before anything else we checked the small details that silently ruin results if 
 **Reproducing** means: before claiming you improved a method, show that you can get the method's own published results.
 Otherwise you do not know whether a difference comes from your idea or from a mistake in your set-up.
 
-We had to rewrite VGGT-Long's gluing and spring system inside our own code, because the original code does not let you
-change the spring stiffness. So we checked two things:
+We had to rewrite VGGT-Long's gluing and pose graph inside our own code, because the original code does not let you
+change the edge weights. So we checked two things:
 1. **Our copy behaves like the original.** Piece by piece, our gluing gives the same numbers as theirs (to 15 decimal
-   places), our spring solver ends in the same place, and our loop finder finds exactly the same loops as theirs on all
+   places), our pose graph solver ends in the same place, and our loop finder finds exactly the same loops as theirs on all
    four drives.
 2. **The original reproduces its paper, and our copy matches the original.** We ran the original VGGT-Long program on all
    four drives at four window sizes and graded everything the same way:
@@ -323,7 +369,7 @@ change the spring stiffness. So we checked two things:
 | VGGT-Long paper, 30-frame windows | 10.20 | 4.00 | 9.06 | 99.95 |
 | original program, run by us, 30-frame windows | 10.24 | 3.98 | 9.07 | 99.65 |
 | original program, 32-frame windows | 10.04 | 4.09 | 9.13 | 104.61 |
-| **our copy, 32-frame windows, equal springs** | **10.02** | **4.06** | **9.18** | **105.07** |
+| **our copy, 32-frame windows, equal weights** | **10.02** | **4.06** | **9.18** | **105.07** |
 | VGGT-Long paper, 60-frame windows | 9.15 | 2.68 | 8.06 | 34.16 |
 | original program, 60-frame windows | 9.85 | 2.66 | 8.63 | 52.78 |
 
@@ -368,7 +414,7 @@ Findings, on the test drives 00 and 02 (338 million pixels):
 ### 5.7 Step 6: does confidence predict how wrong a seam is?
 
 Here the answer is "partly":
-* Averaged over many seams, all the stiffness schemes predict roughly the right size of error (within a factor of about
+* Averaged over many seams, all the weighting schemes predict roughly the right size of error (within a factor of about
   1.5).
 * A seam's average confidence predicts its **rotation** error reasonably well, but hardly its **sliding** (position)
   error. For the sliding error, how badly the two windows still disagree after gluing is a much better clue.
@@ -404,8 +450,8 @@ ATE in metres (lower is better), loops on, 32-frame windows:
 | | 05 (fit) | 07 (fit) | 00 (test) | 02 (test) |
 |---|---|---|---|---|
 | no loops at all | 48.70 | 22.36 | 140.49 | 181.52 |
-| (a) VGGT-Long, equal springs | 10.02 | 4.06 | 9.18 | **105.07** |
-| (a') equal springs, our way of measuring mismatch (the fair comparison for b to g) | 9.80 | 4.07 | 9.14 | 106.90 |
+| (a) VGGT-Long, equal weights | 10.02 | 4.06 | 9.18 | **105.07** |
+| (a') equal weights, our way of measuring mismatch (the fair comparison for b to g) | 9.80 | 4.07 | 9.14 | 106.90 |
 | (b) uniform | 11.52 | **3.61** | 10.15 | 113.36 |
 | (c) raw confidence | 10.05 | 4.55 | 10.28 | 119.60 |
 | (d) geometry only | 11.10 | 4.49 | 9.34 | 113.27 |
@@ -415,16 +461,16 @@ ATE in metres (lower is better), loops on, 32-frame windows:
 
 What this says, in plain words:
 * **Loops matter enormously.** On drive 00, closing loops takes the error from 140 m to about 9 m.
-* **Spring stiffness matters much less.** Compared with the fair version of equal springs (a'), our calibrated springs
+* **Edge weights matter much less.** Compared with the fair version of equal weights (a'), our calibrated weights
   are better on 05 (9.57 against 9.80) and test drive 00 (9.09 against 9.14), but worse on 07 and on test drive 02. The
-  schemes differ by 10 to 25% on the same drive. Just changing how a spring's stretch is measured ((a) against (a'))
+  schemes differ by 10 to 25% on the same drive. Just changing how an edge's disagreement is measured ((a) against (a'))
   moves the result by up to 2%.
-* **On drive 02, every scheme is worse than equal springs.** We have not yet pinned down why. Grading on 02 is also
+* **On drive 02, every scheme is worse than equal weights.** We have not yet pinned down why. Grading on 02 is also
   done against ground truth that is inconsistent at the revisits (5.8).
 * **DCS can do harm.** On 02 it switched off all 8 (correct) loops for four of the schemes, leaving about 175 m of error.
   Huber never did that.
-* **Even cheating does not win.** Using each edge's measured error as its stiffness is not the best on 00 or 07. That only
-  shows this particular rule is not the best possible one, not that per-spring stiffness cannot help; on 02 its loop
+* **Even cheating does not win.** Using each edge's measured error as its weight is not the best on 00 or 07. That only
+  shows this particular rule is not the best possible one, not that per-edge weights cannot help; on 02 its loop
   "true errors" also include the ground-truth height problem.
 
 ### 5.10 The pictures we made
@@ -477,7 +523,7 @@ LiDAR comparison data stay on the server (`/scratch2/vpr-team/kavish/mr_audit_ar
 * Try other driving data (Waymo) and indoor data (TUM), and a classical method (ORB-SLAM3) for comparison.
 * Use better clues for seams (confidence *and* how badly the windows disagree after gluing).
 * Clean the loop labels: correct or leave out revisits where the ground truth is inconsistent, then re-check loops.
-* Check that both spring solvers (ours and VGGT-Long's) really finish their job on every drive.
+* Check that both pose graph solvers (ours and VGGT-Long's) really finish their job on every drive.
 * Bonus: newer networks that read the video as one stream (CUT3R, StreamVGGT) and the newest VGGT (VGGT-Omega).
 
 ---
@@ -489,41 +535,41 @@ LiDAR comparison data stay on the server (`/scratch2/vpr-team/kavish/mr_audit_ar
 * **Calibration (of uncertainty):** making stated uncertainty match real error sizes ("70% rain" means rain 70% of the time).
 * **Camera 0 / camera 2:** KITTI's grey and colour cameras; ground truth is for 0, we use 2.
 * **Confidence:** VGGT's per-pixel "how sure am I" number, at least 1, bigger is more sure.
-* **DCS (Dynamic Covariance Scaling):** a robust kernel that can almost switch off springs that disagree a lot.
+* **DCS (Dynamic Covariance Scaling):** a robust kernel that can almost ignore loop edges that disagree a lot.
 * **Depth / depth map:** distance of a pixel's content from the camera / one such distance per pixel.
 * **Drift:** slow build-up of small errors along a path.
-* **Edge:** a spring in the pose graph: a seam or a loop edge.
+* **Edge:** a measurement between two windows in the pose graph: a seam or a loop edge.
 * **evo:** a standard program for grading trajectories, used to double-check our ATE.
 * **Fit / test sequences:** drives used to learn (05, 07) / drives used only for grading (00, 02).
 * **Frame:** one photo of a video.
 * **Frozen network:** a trained network used as is, without any further training.
 * **GPU:** graphics card; the chip that runs neural networks; ours has 16 GB of memory.
 * **Ground truth:** the correct answer, used for grading (KITTI's precise GPS poses and LiDAR depths).
-* **Huber:** a robust kernel that softens springs that pull unusually hard.
-* **Information matrix:** the 7x7 table that sets a spring's stiffness; about 1 / (expected error)².
+* **Huber:** a robust kernel that trusts edges less when they disagree unusually strongly.
+* **Information matrix:** the 7x7 table that sets an edge's weight; about 1 / (expected error)².
 * **Isotonic regression:** a curve fit that only requires "more confidence never means more error".
 * **KITTI:** a public driving dataset with cameras, LiDAR and precise ground truth; drives numbered 00 to 10.
 * **LiDAR:** a spinning laser scanner that measures exact distances to many points.
 * **Loop / loop closure:** recognising that you are back at a place you visited before, and using it to correct drift.
 * **Loop window:** 20 frames from each of the two visits, given to VGGT together.
 * **Monocular:** using a single camera.
-* **Node:** a block in the pose graph: one window's placement in the world.
-* **Optimiser / solver:** the program that finds where all the blocks settle.
+* **Node:** a window in the pose graph: one window's placement in the world.
+* **Optimiser / solver:** the program that finds the window positions that best agree with all edges.
 * **Oracle:** a "cheating" scheme that uses the true errors, only to show the best possible gain.
 * **Pixel:** one tiny coloured square of a digital photo.
 * **Place recognition:** recognising a place from its appearance (here with the SALAD network).
 * **Point cloud / point map:** 3D map made of dots / one 3D position per pixel.
 * **Pose:** position plus orientation of the camera (6 numbers).
-* **Pose graph:** the system of blocks (windows) and springs (seams and loops) that is solved for the final path.
+* **Pose graph:** the windows (nodes) and the seams and loop edges between them (edges), solved together for the final path.
 * **Ranking:** whether a score puts things in the right order (better before worse).
 * **Reproduction:** getting a published method's own numbers before claiming to improve it.
-* **Robust kernel:** a rule that weakens springs that disagree too much (Huber, DCS).
+* **Robust kernel:** a rule that weakens edges that disagree too much (Huber, DCS).
 * **Scale:** the unknown overall size of anything reconstructed from one camera.
 * **Seam:** the glue joint (a Sim(3)) between two neighbouring windows.
 * **Sim(3) / similarity transform:** rotate, shift and resize; 7 numbers.
 * **SLAM:** Simultaneous Localisation And Mapping: estimating your path and a map together, correcting past mistakes.
 * **Smoke test:** a quick check on a small piece of data before a long run.
-* **Stiffness / weight:** how strongly a spring pulls; how much an edge is trusted.
+* **Weight:** how much an edge is trusted by the optimiser.
 * **Trajectory:** the list of camera poses over a whole drive.
 * **t_rel:** KITTI's drift measure: % of distance travelled that the path is off, over 100 to 800 m stretches.
 * **VGGT:** the neural network that turns a few photos into poses, depth, 3D points and confidence in one go.
@@ -542,7 +588,7 @@ LiDAR comparison data stay on the server (`/scratch2/vpr-team/kavish/mr_audit_ar
 | `results/mid/upstream/` | the original VGGT-Long runs (paths, loops, settings) |
 | `results/mid/run_info/` | logs and scripts of the server run |
 | `mr_gpu/run_vggt.py` | runs VGGT on windows and loop windows |
-| `mr_cpu/` | everything else: `alignment.py` (gluing), `edges.py` (seams and loops), `labels.py` (true errors), `depth_audit.py` (LiDAR check), `calibration.py` and `weighting.py` (the seven schemes), `backend.py` (spring solver), `evaluation.py` (ATE), `qualitative.py` (pictures), `report.py` (tables and figures), `pipeline.py` (runs all steps in order) |
+| `mr_cpu/` | everything else: `alignment.py` (gluing), `edges.py` (seams and loops), `labels.py` (true errors), `depth_audit.py` (LiDAR check), `calibration.py` and `weighting.py` (the seven schemes), `backend.py` (pose graph solver), `evaluation.py` (ATE), `qualitative.py` (pictures), `report.py` (tables and figures), `pipeline.py` (runs all steps in order) |
 | `tests/` | the 44 automatic tests |
 | `docs/status.md` | short technical status with all numbers |
 | `README.md` | how to install and run everything |

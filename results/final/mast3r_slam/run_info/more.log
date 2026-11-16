@@ -1,0 +1,14 @@
+[2026-11-14 03:31:04] 05 nocalib start on GPU 0
+[2026-11-14 03:40:22] 05 nocalib done: 211 keyframes, peak MiB 2923483, 4804 MiB
+[2026-11-14 03:41:22] 05 calib start on GPU 0
+[2026-11-14 03:51:23] 05 calib done: 252 keyframes, peak MiB 2927424, 4804 MiB
+[2026-11-14 03:52:24] 07 nocalib start on GPU 0
+[2026-11-14 03:57:30] 07 nocalib done: 169 keyframes, peak MiB 2931347, 4804 MiB
+[2026-11-14 03:58:30] 07 calib start on GPU 0
+[2026-11-14 04:01:57] 07 calib done: 143 keyframes, peak MiB 2935007, 4804 MiB
+[2026-11-14 04:01:57] KITTI_DONE
+[2026-11-14 04:02:58] TUM desk calib start on GPU 0
+[2026-11-14 04:04:38] TUM desk calib:  rmse	0.016138
+[2026-11-14 04:05:38] TUM desk no_calib start on GPU 0
+[2026-11-14 04:06:45] TUM desk no_calib:  rmse	0.034978
+[2026-11-14 04:06:45] MORE_DONE

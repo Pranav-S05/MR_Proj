@@ -1,0 +1,10 @@
+# MASt3R-SLAM baseline environment (Phoenix). Python 3.11 from conda-forge; torch 2.5.1+cu118 and the CUDA
+# extensions are installed with pip by setup.sh against the system CUDA 11.8 toolkit.
+[workspace]
+name = "mast3r-slam"
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[dependencies]
+python = "3.11.*"
+pip = "*"

@@ -1,0 +1,8 @@
+
+results/upstream_w30_o15.csv: 11 drives
+  with loops
+    method                    mean  change  gmean    b/w  p_wilc     p_t  worst          ci95
+    none                     44.70   +0.0%  1.000   0/0    1.000   1.000   1.00     [+0%,+0%]
+    C4_fuse_depth+speed      28.09  -37.2%  0.704   8/2    0.019   0.009   1.15   [-51%,-15%]
+  chain
+    method                    mean  change  gmean    b/w  p_wilc     p_t  worst          ci95

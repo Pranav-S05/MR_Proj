@@ -14,8 +14,8 @@ Phoenix cleaned 2026-10-27: only `/scratch2/vpr-team/kavish/mr_audit_arrays/` (6
 copy, README inside) and `kavish/pixi/` remain (plus the unrelated `repro/`). 02 chunk-60 check done: repeat run and
 loop threshold 0.7 both give 52.78 m with the same 8 loops (deterministic; threshold irrelevant on 02); paper 34.16 m
 not reproducible with the released code. Results in `results/mid/upstream_checks/`.
-MID SUBMISSION COMPLETE. Next (after Oct 26, per proposal): Waymo (needs team account/licence), TUM, false-loop stress
-test, ORB-SLAM3, streaming models, VGGT-Omega.
+MID SUBMISSION COMPLETE. Final-submission work: see the section below. Still open from the proposal: Waymo, TUM loaders,
+ORB-SLAM3, streaming models, VGGT-Omega.
 
 Results: paper chunk 30 (00/02/05/07) 9.06/99.95/10.20/4.00; upstream 30/15 9.07/99.65/10.24/3.98; upstream 32/16
 9.13/104.61/10.04/4.09; ours (a) 32/16 9.18/105.07/10.02/4.06; ours (e) 9.09/117.07/9.57/4.37; chain
@@ -39,6 +39,22 @@ Results: paper chunk 30 (00/02/05/07) 9.06/99.95/10.20/4.00; upstream 30/15 9.07
 - Report regenerated locally with (a') (`report` step reuses tables/pixel_audit.csv when audit arrays are absent).
 - KITTI images on Phoenix: anay's zip is gone; use the RRC lab mirror https://datasets.rrcx.tk/KITTI/odometry/
   (internal network; whole-zip download ~110 MB/s, per-file range requests slow).
+
+## Final-submission work (2026-11-13/14), details in docs/status.md (last section)
+- Code: `mr_cpu/stress.py` (adversarial fake loops, `--realistic` SALAD thresholds from descriptors only,
+  `--dcs-sweep wide|fine`), `mr_cpu/final_figures.py` (figures + `results/final/speed_memory.md`), `--tum-fps` /
+  `--max-gap` keyframe scoring in `mr_cpu/evaluation.py`, `find_loop_pairs(skip_neighbours=)` in `cache.py`,
+  `tests/test_stress.py` (47 tests pass). Removed: run_vggt `--max-loop-windows`, `scripts/run_realistic_loops.sh`.
+- Results in `results/final/{stress,figures,mast3r_slam}`. Key facts: identity weights + DCS never survive 1 fake
+  loop at ANY threshold (20 seeds); on 02 DCS drops all 8 true loops for b/c/d/g but calibrated keeps them; SALAD
+  proposes no false loop on 00/02 down to 0.5; MASt3R-SLAM loses tracking on every KITTI drive (first lost after
+  frame 61 to 489, 6 to 45% of the path tracked; 00 calibrated: NaN poses) while its TUM fr1/desk check reproduces
+  the paper exactly (0.016 / 0.035 m). Error-bar (NEES) side check was negative and deliberately not kept.
+- Phoenix (all deleted 14 Nov after copying results; rebuild from results/final/mast3r_slam/run_info): MASt3R-SLAM was in `/scratch2/vpr-team/kavish/mast3r_slam/` (pixi env + pip inside it for its CUDA
+  extensions, CUDA 11.8 at /usr/local/cuda-11.8, torch 2.5.1+cu118; checkpoints there; Naver host is slow/flaky from
+  Phoenix: download on the laptop and scp). Driver scripts `run_kitti.sh`, `run_more.sh` (05/07 + TUM fr1/desk check).
+  KITTI 00/02/05/07 images in `/scratch2/vpr-team/kavish/mr_final/data/kitti/`. Delete both folders when done
+  (keep `pixi/`, `mr_audit_arrays/`). /tmp is on the 97%-full root disk: set TMPDIR to /scratch2 for pip.
 
 ## Findings
 - KITTI GT height is inconsistent at 02 revisits (see above); not a VGGT failure.

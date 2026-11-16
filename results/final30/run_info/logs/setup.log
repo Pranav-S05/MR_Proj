@@ -1,0 +1,10 @@
+[2026-11-16 15:00:09] code and KITTI metadata unpacked
+[2026-11-16 15:00:48] VGGT-Long at c160869d1d99c96bb227f414afb3bc68c29c9a76
+total 5591132
+drwxrwsr-x  2 vpr-team     vpr-team           4096 Nov 16 15:00 .
+drwxrwsr-x 15 vpr-team     vpr-team           4096 Nov 16 15:00 ..
+-rw-rw-r--  1 vpr-team     vpr-team      352040378 Oct  9 02:29 dino_salad.ckpt
+-rw-rw-r--  1 vpr-team     vpr-team      346378731 Apr 14  2023 dinov2_vitb14_pretrain.pth
+-rw-rw-r--  1 krish.pandya krish.pandya 5026874952 Apr 16  2026 model.pt
+[2026-11-16 15:05:18] pixi env ready
+[2026-11-16 15:05:18] SETUP_DONE

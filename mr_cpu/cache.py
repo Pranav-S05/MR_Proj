@@ -68,14 +68,19 @@ class Cache:
 
 # ---------------- loop candidates (port of VGGT-Long LoopModels/LoopModel.py) ----------------
 
-def find_loop_pairs(descriptors, threshold=0.85, top_k=5, min_gap=10, nms=25):
+def find_loop_pairs(descriptors, threshold=0.85, top_k=5, min_gap=10, nms=25, skip_neighbours=False):
     """Top-k inner-product retrieval + threshold + NMS, as in VGGT-Long's LoopDetector.
 
     descriptors: (n, D) L2-normalised. Returns [(later_idx, earlier_idx, similarity)].
+    skip_neighbours=False is VGGT-Long's rule: the top k are taken first and pairs <= min_gap frames apart
+    are dropped afterwards (the top k are then usually a frame's own neighbours). True drops them first.
     """
     d = np.asarray(descriptors, np.float32)
     sims = d @ d.T
     np.fill_diagonal(sims, -np.inf)
+    if skip_neighbours:
+        idx = np.arange(len(d))
+        sims[np.abs(idx[:, None] - idx[None]) <= min_gap] = -np.inf
     k = min(top_k, len(d) - 1)
     order = np.argsort(-sims, axis=1)[:, :k]
     pairs = set()

@@ -1,0 +1,11 @@
+method,seq,ate_chain,ate_loops,resid_mean,resid_std,auto_pick
+none,03,5.5763,5.5763,,,
+none,04,3.9218,3.9218,,,
+none,06,6.9424,6.9424,,,
+none,07,2.8447,2.8447,,,
+none,10,22.0868,22.0868,,,
+C4_fuse_depth+speed,03,12.2606,12.2606,,,
+C4_fuse_depth+speed,04,1.9921,1.9921,,,
+C4_fuse_depth+speed,06,4.4760,4.4760,,,
+C4_fuse_depth+speed,07,3.1000,3.1000,,,
+C4_fuse_depth+speed,10,11.6542,11.6542,,,

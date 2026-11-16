@@ -1,0 +1,54 @@
+{
+ "sequence": "04",
+ "ref": "first",
+ "window": 60,
+ "overlap": 30,
+ "n_frames": 271,
+ "windows": [
+  [
+   0,
+   60
+  ],
+  [
+   30,
+   90
+  ],
+  [
+   60,
+   120
+  ],
+  [
+   90,
+   150
+  ],
+  [
+   120,
+   180
+  ],
+  [
+   150,
+   210
+  ],
+  [
+   180,
+   240
+  ],
+  [
+   210,
+   270
+  ],
+  [
+   240,
+   271
+  ]
+ ],
+ "loop_windows": [],
+ "dtype": "torch.bfloat16",
+ "gpu": "NVIDIA RTX A4000",
+ "torch": "2.5.1+cu124",
+ "checkpoint": "/scratch2/vpr-team/kavish/scale_study/external/VGGT-Long/weights/model.pt",
+ "sec_per_window": 9.299502187305027,
+ "peak_gpu_mem_gb": 11.86315393447876,
+ "wall_seconds": 174.03352522850037,
+ "sub_stride": 4
+}

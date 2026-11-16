@@ -1,0 +1,42 @@
+DCS threshold sweep (wide), identity weights. Largest number of fake loops (of k = 1, 16) survived in all 5 seeds: ATE within 1.25x of the same scheme with no fake loops and no kernel ('-': the kernel already fails this on the clean graph).
+
+| scheme | phi | 00 | 02 | 05 | 07 |
+|---|---|---|---|---|---|
+| vggt_long | 1e-06 | - | - | - | - |
+| vggt_long | 3.16e-06 | - | - | - | - |
+| vggt_long | 1e-05 | - | - | - | - |
+| vggt_long | 3.16e-05 | - | - | - | - |
+| vggt_long | 0.0001 | - | - | - | - |
+| vggt_long | 0.000316 | - | - | - | - |
+| vggt_long | 0.001 | - | - | - | - |
+| vggt_long | 0.00316 | - | - | - | - |
+| vggt_long | 0.01 | - | - | 16 | - |
+| vggt_long | 0.0316 | - | - | 16 | - |
+| vggt_long | 0.1 | 1 | 1 | 1 | 1 |
+| vggt_long | 0.316 | 1 | 1 | 0 | 0 |
+| vggt_long | 1 | 0 | 0 | 0 | 0 |
+| vggt_long | 3.16 | 0 | 0 | 0 | 0 |
+| vggt_long | 10 | 0 | 0 | 0 | 0 |
+| vggt_long | 31.6 | 0 | 0 | 0 | 0 |
+| vggt_long | 100 | 0 | 0 | 0 | 0 |
+| vggt_long | 316 | 0 | 0 | 0 | 0 |
+| vggt_long | 1000 | 0 | 0 | 0 | 0 |
+| equal | 1e-06 | - | - | - | - |
+| equal | 3.16e-06 | - | - | - | - |
+| equal | 1e-05 | - | - | - | - |
+| equal | 3.16e-05 | - | - | - | - |
+| equal | 0.0001 | - | - | - | - |
+| equal | 0.000316 | - | - | - | - |
+| equal | 0.001 | - | - | - | - |
+| equal | 0.00316 | - | - | - | - |
+| equal | 0.01 | - | - | 16 | - |
+| equal | 0.0316 | - | - | 16 | - |
+| equal | 0.1 | 1 | 1 | 16 | 1 |
+| equal | 0.316 | 1 | 1 | 0 | 0 |
+| equal | 1 | 0 | 0 | 0 | 0 |
+| equal | 3.16 | 0 | 0 | 0 | 0 |
+| equal | 10 | 0 | 0 | 0 | 0 |
+| equal | 31.6 | 0 | 0 | 0 | 0 |
+| equal | 100 | 0 | 0 | 0 | 0 |
+| equal | 316 | 0 | 0 | 0 | 0 |
+| equal | 1000 | 0 | 0 | 0 | 0 |

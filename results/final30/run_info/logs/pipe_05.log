@@ -1,0 +1,11 @@
+== edges
+    seam 0/182: scale 1.138, conf 2.18, inliers 0.94
+    seam 50/182: scale 0.947, conf 2.16, inliers 0.93
+    seam 100/182: scale 0.882, conf 2.39, inliers 0.96
+    seam 150/182: scale 1.031, conf 2.75, inliers 0.95
+    seam 182/182: scale 0.652, conf 2.29, inliers 0.98
+  [05] 183 seams, 12 loops (493s)
+== labels
+  [05] labels: 188/195 edges usable; 4 degenerate windows (car nearly stopped)
+== audit
+  [05] depth audit: 101442946 LiDAR pixels

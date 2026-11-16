@@ -19,3 +19,8 @@ results/*/[0-9][0-9]/depth_audit.npz
 results/*/[0-9][0-9]/qual/
 # upstream VGGT-Long point-cloud samples (only used to draw figures)
 results/*/upstream/*/pointcloud_sample.npz
+# LaTeX build files and lab-server-only folders
+report/*.aux
+report/*.log
+report/*.out
+results/final/runs/descriptors/

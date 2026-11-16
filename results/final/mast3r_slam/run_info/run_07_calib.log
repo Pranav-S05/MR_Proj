@@ -1,0 +1,750 @@
+/scratch2/vpr-team/kavish/mr_final/data/kitti/sequences/07/image_2
+{'use_calib': False, 'single_thread': True, 'dataset': {'subsample': 1, 'img_downsample': 1, 'center_principle_point': True}, 'matching': {'max_iter': 10, 'lambda_init': 1e-08, 'convergence_thresh': 1e-06, 'dist_thresh': 0.1, 'radius': 3, 'dilation_max': 5}, 'tracking': {'min_match_frac': 0.05, 'max_iters': 50, 'C_conf': 0.0, 'Q_conf': 1.5, 'rel_error': 0.001, 'delta_norm': 0.001, 'huber': 1.345, 'match_frac_thresh': 0.333, 'sigma_ray': 0.003, 'sigma_dist': 10.0, 'sigma_pixel': 1.0, 'sigma_depth': 10.0, 'sigma_point': 0.05, 'pixel_border': -10, 'depth_eps': 1e-06, 'filtering_mode': 'weighted_pointmap', 'filtering_score': 'median'}, 'local_opt': {'pin': 1, 'window_size': 1000000.0, 'C_conf': 0.0, 'Q_conf': 1.5, 'min_match_frac': 0.1, 'pixel_border': -10, 'depth_eps': 1e-06, 'max_iters': 10, 'sigma_ray': 0.003, 'sigma_dist': 10.0, 'sigma_pixel': 1.0, 'sigma_depth': 10.0, 'sigma_point': 0.05, 'delta_norm': 1e-08, 'use_cuda': True}, 'retrieval': {'k': 3, 'min_thresh': 0.005}, 'reloc': {'min_match_frac': 0.3, 'strict': True}, 'inherit': 'config/base.yaml'}
+... loading model from checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric.pth
+/scratch2/vpr-team/kavish/mast3r_slam/repo/thirdparty/mast3r/mast3r/model.py:24: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(model_path, map_location='cpu')
+instantiating : AsymmetricMASt3R(enc_depth=24, dec_depth=12, enc_embed_dim=1024, dec_embed_dim=768, enc_num_heads=16, dec_num_heads=12, pos_embed='RoPE100',img_size=(512, 512), head_type='catmlp+dpt', output_mode='pts3d+desc24', depth_mode=('exp', -inf, inf), conf_mode=('exp', 1, inf), patch_embed_cls='PatchEmbedDust3R', two_confs=True, desc_conf_mode=('exp', 0, inf), landscape_only=False)
+<All keys matched successfully>
+/scratch2/vpr-team/kavish/mast3r_slam/repo/mast3r_slam/frame.py:116: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at ../torch/csrc/utils/tensor_numpy.cpp:206.)
+  uimg = torch.from_numpy(img["unnormalized_img"]) / 255.0
+Loading retrieval model from checkpoints/MASt3R_ViTLarge_BaseDecoder_512_catmlpdpt_metric_retrieval_trainingfree.pth
+/scratch2/vpr-team/kavish/mast3r_slam/repo/thirdparty/mast3r/mast3r/retrieval/processor.py:70: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(modelname, 'cpu')  # TODO from pretrained to download it automatically
+Database retrieval 2 :  {0}
+Database retrieval 3 :  {0, 1}
+Database retrieval 4 :  {1, 2}
+Database retrieval 5 :  {1, 3}
+Database retrieval 6 :  {1, 4}
+Database retrieval 7 :  {4, 5}
+Database retrieval 8 :  {5, 6}
+FPS: 6.706424034866187
+Database retrieval 9 :  {5, 7}
+Database retrieval 10 :  {8, 7}
+Database retrieval 11 :  {8, 9}
+Database retrieval 12 :  {9, 10}
+Database retrieval 13 :  {10, 11}
+Database retrieval 14 :  {11, 12}
+Database retrieval 15 :  {12, 13}
+Database retrieval 16 :  {13, 14}
+Database retrieval 17 :  {14, 15}
+Database retrieval 18 :  {16, 15}
+Database retrieval 19 :  {16, 17}
+Database retrieval 20 :  {17, 18}
+FPS: 6.150705410141222
+Database retrieval 21 :  {18, 19}
+Database retrieval 22 :  {19, 20}
+Database retrieval 23 :  {20, 21}
+Database retrieval 24 :  {21, 22}
+Database retrieval 25 :  {18, 23}
+Database retrieval 26 :  {24, 19}
+Database retrieval 27 :  {25, 20}
+Database retrieval 28 :  {18, 26}
+Database retrieval 29 :  {18, 19}
+Database retrieval 30 :  {28, 20}
+FPS: 6.103607114906652
+Database retrieval 31 :  {28, 29}
+Database retrieval 32 :  {23, 30}
+Database retrieval 33 :  {24, 18}
+Database retrieval 34 :  {32, 26}
+Database retrieval 35 :  {32, 33}
+Database retrieval 36 :  {33, 34}
+Database retrieval 37 :  {34, 35}
+Database retrieval 38 :  {34, 36}
+Database retrieval 39 :  {36, 37}
+Database retrieval 40 :  {37, 38}
+Database retrieval 41 :  {38, 39}
+FPS: 5.935433419742773
+Database retrieval 42 :  {40, 39}
+Database retrieval 43 :  {40, 41}
+Database retrieval 44 :  {41, 42}
+Database retrieval 45 :  {42, 43}
+Database retrieval 46 :  {43, 44}
+Database retrieval 47 :  {44, 45}
+Database retrieval 48 :  {45, 46}
+Database retrieval 49 :  {46, 47}
+Database retrieval 50 :  {48, 47}
+Database retrieval 51 :  {48, 49}
+Database retrieval 52 :  {49, 50}
+FPS: 5.77728826361324
+Database retrieval 53 :  {50, 51}
+Database retrieval 54 :  {51, 52}
+Database retrieval 55 :  {52, 53}
+Database retrieval 56 :  {53, 54}
+Database retrieval 57 :  {54, 55}
+Database retrieval 58 :  {56, 55}
+Database retrieval 59 :  {56, 57}
+Database retrieval 60 :  {57, 58}
+Database retrieval 61 :  {58, 59}
+Database retrieval 62 :  {59, 60}
+FPS: 5.69393696003408
+Database retrieval 63 :  {60, 61}
+Database retrieval 64 :  {61, 62}
+Database retrieval 65 :  {62, 63}
+Database retrieval 66 :  {64, 63}
+Database retrieval 67 :  {64, 65}
+Database retrieval 68 :  {65, 66}
+Database retrieval 69 :  {66, 67}
+Database retrieval 70 :  {67, 68}
+Database retrieval 71 :  {68, 69}
+Database retrieval 72 :  {69, 70}
+Database retrieval 73 :  {70, 71}
+Database retrieval 74 :  {72, 69}
+FPS: 5.492028932765195
+Database retrieval 75 :  {72, 73}
+Database retrieval 76 :  {73, 74}
+Database retrieval 77 :  {74, 75}
+Database retrieval 78 :  {75, 76}
+Database retrieval 79 :  {76, 77}
+Database retrieval 80 :  {77, 78}
+Database retrieval 81 :  {78, 79}
+Database retrieval 82 :  {80, 79}
+Database retrieval 83 :  {80, 81}
+Database retrieval 84 :  {80, 82}
+Database retrieval 85 :  {82, 83}
+Database retrieval 86 :  {82, 84}
+Database retrieval 87 :  {84, 85}
+Database retrieval 88 :  {85, 86}
+Database retrieval 89 :  {86, 87}
+Database retrieval 90 :  {88, 87}
+Database retrieval 91 :  {88, 89}
+FPS: 5.08711232903578
+Database retrieval 92 :  {89, 90}
+Database retrieval 93 :  {90, 91}
+Database retrieval 94 :  {92, 68}
+Database retrieval 95 :  {92, 93}
+Database retrieval 96 :  {93, 94}
+Database retrieval 97 :  {94, 95}
+FPS: 5.19764398995509
+Database retrieval 98 :  {96, 95}
+Database retrieval 99 :  {97, 93}
+Database retrieval 100 :  {97, 98}
+Database retrieval 101 :  {98, 99}
+Database retrieval 102 :  {99, 100}
+Database retrieval 103 :  {100, 101}
+Database retrieval 104 :  {101, 102}
+Database retrieval 105 :  {102, 103}
+Database retrieval 106 :  {104, 103}
+Database retrieval 107 :  {104, 105}
+Database retrieval 108 :  {105, 106}
+Database retrieval 109 :  {106, 107}
+Database retrieval 110 :  {107, 108}
+FPS: 5.015071885039767
+Database retrieval 111 :  {108, 109}
+Database retrieval 112 :  {109, 110}
+Database retrieval 113 :  {110, 111}
+Database retrieval 114 :  {112, 111}
+FPS: 5.171020560215383
+Database retrieval 115 :  {112, 113}
+Database retrieval 116 :  {113, 114}
+Database retrieval 117 :  {114, 115}
+Database retrieval 118 :  {115, 116}
+Database retrieval 119 :  {116, 117}
+Database retrieval 120 :  {117, 118}
+Database retrieval 121 :  {118, 119}
+Database retrieval 122 :  {120, 119}
+FPS: 5.165471605628612
+Database retrieval 123 :  {120, 121}
+Database retrieval 124 :  {121, 122}
+Database retrieval 125 :  {122, 123}
+Database retrieval 126 :  {123, 124}
+Database retrieval 127 :  {124, 125}
+Database retrieval 128 :  {125, 126}
+Database retrieval 129 :  {126, 127}
+Database retrieval 130 :  {128, 125}
+Database retrieval 131 :  {128, 129}
+Database retrieval 132 :  {129, 130}
+Database retrieval 133 :  {130, 131}
+FPS: 5.147555278059032
+Database retrieval 134 :  {131, 132}
+Database retrieval 135 :  {132, 133}
+Database retrieval 136 :  {133, 134}
+Database retrieval 137 :  {134, 135}
+Database retrieval 138 :  {136, 135}
+Database retrieval 139 :  {136, 137}
+Database retrieval 140 :  {137, 138}
+Database retrieval 141 :  {138, 139}
+Database retrieval 142 :  {139, 140}
+Cholesky failed 414
+RELOCALIZING against kf  143  and  [142, 141, 140]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [142, 141, 140]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [142, 141, 140]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [142, 141, 140]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [142, 141, 140]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [142, 141, 140]
+Failed to relocalize
+FPS: 5.099745178864184
+RELOCALIZING against kf  143  and  [142, 141, 135]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [142, 141, 136]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [136, 142, 137]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [136, 137, 138]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [137, 138, 135]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [138, 137, 136]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [137, 136, 138]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [137, 136, 135]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [137, 136, 135]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [137, 136, 138]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [137, 138, 136]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [137, 138, 136]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [138, 137, 140]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [138, 137, 140]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [140, 138, 137]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [140, 139, 138]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [139, 140, 141]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [141, 140, 142]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [141, 142, 140]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [142, 141, 128]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [128, 142, 129]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [128, 142, 126]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [128, 142, 117]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [128, 117, 138]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [128, 117, 142]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [128, 117, 124]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [117, 124, 128]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [117, 124, 125]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [117, 124, 128]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [117, 124, 116]
+Failed to relocalize
+FPS: 4.935933775443577
+RELOCALIZING against kf  143  and  [117, 124, 118]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [117, 118, 124]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [117, 116, 124]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [128, 117, 129]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [117, 128, 129]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [117]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [128, 125, 130]
+Failed to relocalize
+FPS: 5.042751423448576
+RELOCALIZING against kf  143  and  [83]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [137, 126]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [135, 139, 138]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [139, 135, 138]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [135, 139, 138]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [135]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [139]
+Failed to relocalize
+FPS: 5.165734727660402
+FPS: 5.331465947416451
+RELOCALIZING against kf  143  and  [129]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [128]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [128]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [31]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [31, 32]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [31, 32, 22]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [32, 31, 20]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [31, 22, 32]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [31, 22, 21]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [22, 31, 21]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [21, 20, 22]
+Failed to relocalize
+FPS: 5.4005387935603455
+RELOCALIZING against kf  143  and  [31, 20, 21]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [22, 32, 23]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [32, 22, 31]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [32]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [33]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [11, 12]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [12]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [26, 21]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [26, 72, 20]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [27, 72, 50]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [81]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [26]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [50, 49, 26]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [27, 50, 26]
+Failed to relocalize
+FPS: 5.445393291639669
+RELOCALIZING against kf  143  and  [50, 85, 51]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [21, 22, 50]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [26, 50]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [26, 50]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [50, 22]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [22]
+Failed to relocalize
+FPS: 5.542035188867306
+FPS: 5.669861285445271
+FPS: 5.792969037184735
+FPS: 5.91758838739345
+FPS: 6.035412311603141
+FPS: 6.145308797972194
+FPS: 6.25440631005179
+FPS: 6.362001623032859
+FPS: 6.46002257036038
+FPS: 6.550020595689472
+RELOCALIZING against kf  143  and  [66]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 67]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 65]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 67, 71]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [4, 66, 3]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [4, 1, 69]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 66, 68]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 68, 7]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 71, 66]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 4, 81]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 69, 70]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 50, 85]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 50, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 50, 70]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 51, 50]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [50, 71, 51]
+Failed to relocalize
+FPS: 6.506502856167944
+RELOCALIZING against kf  143  and  [50, 51, 71]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [50, 71, 51]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [50, 51, 72]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [51, 52, 57]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [51, 52, 69]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [52, 51, 53]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [53, 52, 66]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [53, 66, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 53, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 66, 61]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [63, 66, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [1, 63, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 63, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 64, 63]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 64, 63]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [64, 65, 66]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 65, 67]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 67, 65]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 67, 64]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 67, 68]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 67, 68]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 67, 68]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [67, 66, 68]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [67, 68, 66]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [68, 67, 66]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [68, 66, 69]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [68, 69, 51]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 52, 68]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 71, 67]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 71, 70]
+Failed to relocalize
+FPS: 6.3275846396777204
+RELOCALIZING against kf  143  and  [69, 71, 70]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [68, 66, 69]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [68, 69, 66]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 68, 71]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 71, 70]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 71, 70]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 70, 71]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [70, 71, 69]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 69, 73]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 50, 73]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 69, 50]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 50, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 1, 74]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 1, 50]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 2, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 63, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 1, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [66, 1, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [67, 66, 50]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [67, 50, 68]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [50, 68, 69]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [50, 68, 69]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 68, 50]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 68, 50]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 68, 71]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 70, 71]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 70, 71]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [70, 71, 69]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [53, 71, 70]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 67, 66]
+Failed to relocalize
+FPS: 6.167092661315148
+RELOCALIZING against kf  143  and  [68, 67, 70]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [67, 66, 68]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [67, 50, 66]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [67, 50, 68]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [50, 67, 68]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [50, 68, 51]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [50, 71, 68]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [50, 71, 69]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [50, 69, 71]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 50, 51]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [69, 70, 71]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 70, 69]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [70, 71, 69]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [70, 71, 69]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 70, 69]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 70, 83]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 70, 69]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 70, 83]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 83, 70]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 83, 82]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 50, 70]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 50, 70]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 70, 51]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 70, 68]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 68, 70]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 68, 70]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 68, 70]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 51, 68]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 51, 72]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 72, 51]
+Failed to relocalize
+FPS: 6.023372587026306
+RELOCALIZING against kf  143  and  [71, 57, 51]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 72, 57]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 72, 69]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [71, 52, 72]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 4, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 2, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 2, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 2, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 2, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 2, 3]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 2, 3]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 2, 1]
+Failed to relocalize
+FPS: 5.916537542111585
+RELOCALIZING against kf  143  and  [0, 2, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 2, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 3]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 2, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 2, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 2, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 2, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 2, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 2, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 2, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [0, 1, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [1, 2, 0]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [1, 4, 2]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [1, 2, 3]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [2, 3, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [1, 2, 3]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [3, 1, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [2, 3, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [4, 3, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [4, 2, 3]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [3, 4, 1]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [4, 2, 3]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [5, 4, 3]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [6, 5, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [5, 6, 7]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [5, 7, 6]
+Failed to relocalize
+FPS: 5.798955078307449
+RELOCALIZING against kf  143  and  [5, 6, 7]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [7, 5, 6]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [5, 6, 7]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [5, 6, 7]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [6, 5, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [6, 7, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [7, 6, 5]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [7, 5, 6]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [5, 7, 6]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [5, 6, 7]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [6, 5, 7]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [6, 5, 7]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [6, 7, 5]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [6, 5, 7]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [5, 6, 7]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [6, 5, 7]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [6, 5, 4]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [5, 6, 3]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [5, 6, 7]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [6, 5, 7]
+Failed to relocalize
+RELOCALIZING against kf  143  and  [5, 6, 4]
+Failed to relocalize
+done
+	Command being timed: "python main.py --dataset /scratch2/vpr-team/kavish/mr_final/data/kitti/sequences/07/image_2 --config config/kitti.yaml --no-viz --save-as kitti/07_calib --calib config/kitti_07.yaml"
+	User time (seconds): 395.60
+	System time (seconds): 34.02
+	Percent of CPU this job got: 208%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 3:26.43
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 6561084
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 8
+	Minor (reclaiming a frame) page faults: 6289706
+	Voluntary context switches: 631796
+	Involuntary context switches: 7308211
+	Swaps: 0
+	File system inputs: 2328
+	File system outputs: 283504
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

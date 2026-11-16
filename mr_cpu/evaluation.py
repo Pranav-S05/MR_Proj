@@ -120,7 +120,45 @@ def main():
     ap.add_argument("--seq", required=True)
     ap.add_argument("--kitti", default="data/kitti")
     ap.add_argument("--evo", action="store_true", help="also compute ATE with evo")
+    ap.add_argument("--tum-fps", type=float,
+                    help="estimate is a TUM file (t x y z qx qy qz qw) of keyframes with t = frame / fps, e.g. 30 for "
+                         "MASt3R-SLAM image folders: scored on those frames only, plus how much of the drive was tracked")
+    ap.add_argument("--max-gap", type=int, default=30, help="with --tum-fps: longest keyframe gap (frames) still "
+                                                              "counted as tracked (30 = 3 s on KITTI)")
     a = ap.parse_args()
+    if a.tum_fps:
+        rows = np.loadtxt(a.estimate, ndmin=2)
+        frames = np.rint(rows[:, 0] * a.tum_fps).astype(int)
+        est = np.tile(np.eye(4), (len(rows), 1, 1))
+        quat = np.where(np.isfinite(rows[:, 4:8]).all(1, keepdims=True), rows[:, 4:8], [0., 0., 0., 1.])
+        est[:, :3, :3] = Rotation.from_quat(quat).as_matrix()  # non-finite rows are dropped below
+        est[:, :3, 3] = rows[:, 1:4]
+        gt_all = gt_cam2_poses(a.kitti, a.seq)
+        gt = gt_all[frames]
+        # tracked = frames between consecutive keyframes at most `max_gap` frames apart; a longer gap means
+        # tracking was lost (a SLAM system that relocalises later still leaves the gap unmapped)
+        dist = _distances(gt_all)
+        gaps = np.diff(frames)
+        ok = gaps <= a.max_gap
+        lost = frames[:-1][~ok]
+        if len(gt_all) - 1 - frames.max() > a.max_gap:  # no keyframes until the end: lost after the last one
+            lost = np.r_[lost, frames.max()]
+        out = {"keyframes": len(frames), "sequence_frames": len(gt_all),
+               "first_lost_after_frame": int(lost[0]) if len(lost) else None,
+               "tracked_fraction": float(gaps[ok].sum() / (len(gt_all) - 1)),
+               "tracked_path_m": float((dist[frames[1:]] - dist[frames[:-1]])[ok].sum()), "path_m": float(dist[-1])}
+        finite = np.isfinite(rows).all(1)
+        out["non_finite_keyframes"] = int((~finite).sum())
+        if finite.sum() < 3:  # e.g. an optimiser that diverged: no trajectory to score
+            out["ate_rmse_m"] = None
+            print(json.dumps(out, indent=1))
+            return
+        est, gt = est[finite], gt[finite]
+        out["ate_rmse_m"] = ate(est[:, :3, 3], gt[:, :3, 3])
+        if a.evo:
+            out["evo_ate_rmse_m"] = evo_ate(est, gt)
+        print(json.dumps(out, indent=1))
+        return
     try:
         est = read_poses(a.estimate)
     except ValueError:  # e.g. VGGT-Long before Dec 2025 writes C2W with the Sim(3) scale left in the rotation block

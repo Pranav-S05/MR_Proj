@@ -1,0 +1,109 @@
+  10/404 tasks, 46 s
+  20/404 tasks, 85 s
+  30/404 tasks, 142 s
+  40/404 tasks, 181 s
+  50/404 tasks, 232 s
+  60/404 tasks, 286 s
+  70/404 tasks, 333 s
+  80/404 tasks, 389 s
+  90/404 tasks, 452 s
+  100/404 tasks, 510 s
+  110/404 tasks, 552 s
+  120/404 tasks, 593 s
+  130/404 tasks, 633 s
+  140/404 tasks, 671 s
+  150/404 tasks, 724 s
+  160/404 tasks, 775 s
+  170/404 tasks, 829 s
+  180/404 tasks, 876 s
+  190/404 tasks, 941 s
+  200/404 tasks, 995 s
+  210/404 tasks, 1023 s
+  220/404 tasks, 1049 s
+  230/404 tasks, 1081 s
+  240/404 tasks, 1107 s
+  250/404 tasks, 1138 s
+  260/404 tasks, 1165 s
+  270/404 tasks, 1198 s
+  280/404 tasks, 1231 s
+  290/404 tasks, 1262 s
+  300/404 tasks, 1295 s
+  310/404 tasks, 1312 s
+  320/404 tasks, 1321 s
+  330/404 tasks, 1332 s
+  340/404 tasks, 1342 s
+  350/404 tasks, 1355 s
+  360/404 tasks, 1371 s
+  370/404 tasks, 1383 s
+  380/404 tasks, 1396 s
+  390/404 tasks, 1416 s
+  400/404 tasks, 1432 s
+  404/404 tasks, 1435 s
+| seq | scheme | none | huber | dcs | dcs (strict) |
+|---|---|---|---|---|---|
+| 00 | calibrated | 0 | 0 | 1 | 1 |
+| 00 | equal | 0 | 0 | 0 | 0 |
+| 00 | geometry | 0 | 0 | 8 | 8 |
+| 00 | oracle | 0 | 0 | 2 | 2 |
+| 00 | power_law | 0 | 0 | 8 | 8 |
+| 00 | raw_conf | 0 | 0 | 8 | 8 |
+| 00 | uniform | 0 | 0 | 8 | 8 |
+| 00 | vggt_long | 0 | 0 | 0 | 0 |
+| 02 | calibrated | 0 | 0 | 4 | 4 |
+| 02 | equal | 0 | 0 | 0 | 0 |
+| 02 | geometry | 0 | 0 | 16 | - |
+| 02 | oracle | 0 | 0 | 1 | 1 |
+| 02 | power_law | 0 | 0 | 16 | - |
+| 02 | raw_conf | 0 | 0 | 16 | - |
+| 02 | uniform | 0 | 0 | 16 | - |
+| 02 | vggt_long | 0 | 0 | 0 | 0 |
+| 05 | calibrated | 0 | 0 | 1 | 1 |
+| 05 | equal | 0 | 0 | 0 | 0 |
+| 05 | geometry | 0 | 0 | 1 | 1 |
+| 05 | oracle | 0 | 0 | 16 | 16 |
+| 05 | power_law | 0 | 0 | 1 | 1 |
+| 05 | raw_conf | 0 | 0 | 2 | 2 |
+| 05 | uniform | 0 | 0 | 1 | 1 |
+| 05 | vggt_long | 0 | 0 | 0 | 0 |
+| 07 | calibrated | 0 | 0 | 0 | 0 |
+| 07 | equal | 0 | 0 | 0 | 0 |
+| 07 | geometry | 0 | 0 | 4 | 4 |
+| 07 | oracle | 0 | 0 | 0 | 0 |
+| 07 | power_law | 0 | 0 | 0 | 0 |
+| 07 | raw_conf | 0 | 0 | 2 | 2 |
+| 07 | uniform | 0 | 0 | 0 | 0 |
+| 07 | vggt_long | 0 | 0 | 0 | 0 |
+| seq | scheme | none | huber | dcs | dcs (strict) |
+|---|---|---|---|---|---|
+| 00 | calibrated | 0 | 0 | 1 | 1 |
+| 00 | equal | 0 | 0 | 0 | 0 |
+| 00 | geometry | 0 | 0 | 8 | 8 |
+| 00 | oracle | 0 | 0 | 2 | 2 |
+| 00 | power_law | 0 | 0 | 8 | 8 |
+| 00 | raw_conf | 0 | 0 | 8 | 8 |
+| 00 | uniform | 0 | 0 | 8 | 8 |
+| 00 | vggt_long | 0 | 0 | 0 | 0 |
+| 02 | calibrated | 0 | 0 | 4 | 4 |
+| 02 | equal | 0 | 0 | 0 | 0 |
+| 02 | geometry | 0 | 0 | 16 | - |
+| 02 | oracle | 0 | 0 | 1 | 1 |
+| 02 | power_law | 0 | 0 | 16 | - |
+| 02 | raw_conf | 0 | 0 | 16 | - |
+| 02 | uniform | 0 | 0 | 16 | - |
+| 02 | vggt_long | 0 | 0 | 0 | 0 |
+| 05 | calibrated | 0 | 0 | 1 | 1 |
+| 05 | equal | 0 | 0 | 0 | 0 |
+| 05 | geometry | 0 | 0 | 1 | 1 |
+| 05 | oracle | 0 | 0 | 16 | 16 |
+| 05 | power_law | 0 | 0 | 1 | 1 |
+| 05 | raw_conf | 0 | 0 | 2 | 2 |
+| 05 | uniform | 0 | 0 | 1 | 1 |
+| 05 | vggt_long | 0 | 0 | 0 | 0 |
+| 07 | calibrated | 0 | 0 | 0 | 0 |
+| 07 | equal | 0 | 0 | 0 | 0 |
+| 07 | geometry | 0 | 0 | 4 | 4 |
+| 07 | oracle | 0 | 0 | 0 | 0 |
+| 07 | power_law | 0 | 0 | 0 | 0 |
+| 07 | raw_conf | 0 | 0 | 2 | 2 |
+| 07 | uniform | 0 | 0 | 0 | 0 |
+| 07 | vggt_long | 0 | 0 | 0 | 0 |

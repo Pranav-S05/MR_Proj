@@ -1,0 +1,67 @@
+part,seq,ate_chain,ate_loops
+measured,00,104.9860,10.3789
+true rotation,00,87.4412,6.8868
+true translation,00,102.5535,10.4273
+true scale,00,44.8112,7.7010
+true rotation+scale,00,7.3556,2.6820
+true all,00,0.5493,2.4008
+measured,01,64.8230,64.8230
+true rotation,01,63.3671,63.3671
+true translation,01,64.0909,64.0909
+true scale,01,25.3024,25.3024
+true rotation+scale,01,9.0332,9.0332
+true all,01,3.3758,3.3758
+measured,02,141.1017,56.5020
+true rotation,02,56.8100,59.3476
+true translation,02,139.3618,56.4575
+true scale,02,130.6583,45.1334
+true rotation+scale,02,14.3478,16.7036
+true all,02,0.8003,12.9418
+measured,03,5.6113,5.6113
+true rotation,03,4.5741,4.5741
+true translation,03,5.0333,5.0333
+true scale,03,3.8843,3.8843
+true rotation+scale,03,2.4770,2.4770
+true all,03,0.6050,0.6050
+measured,04,3.8787,3.8787
+true rotation,04,3.8736,3.8736
+true translation,04,3.8823,3.8823
+true scale,04,1.0484,1.0484
+true rotation+scale,04,1.0296,1.0296
+true all,04,0.8623,0.8623
+measured,05,37.9618,9.2033
+true rotation,05,17.2929,6.7762
+true translation,05,38.2250,9.1545
+true scale,05,35.4182,4.4512
+true rotation+scale,05,7.9836,3.2848
+true all,05,6.3071,2.3729
+measured,06,34.7758,6.3411
+true rotation,06,10.9873,6.0121
+true translation,06,34.7773,7.0706
+true scale,06,33.5302,4.0331
+true rotation+scale,06,5.7691,3.7267
+true all,06,0.8680,1.8134
+measured,07,15.0058,2.7417
+true rotation,07,11.0009,2.4336
+true translation,07,14.7300,2.4757
+true scale,07,8.3711,1.9625
+true rotation+scale,07,1.5579,1.1551
+true all,07,0.4263,1.0300
+measured,08,58.7131,58.7121
+true rotation,08,41.3274,41.3237
+true translation,08,57.2442,57.2455
+true scale,08,43.3343,43.3340
+true rotation+scale,08,6.0476,6.0450
+true all,08,0.7394,0.7404
+measured,09,61.8493,29.9455
+true rotation,09,51.7307,26.0071
+true translation,09,63.8745,29.6787
+true scale,09,40.5297,18.7815
+true rotation+scale,09,6.7241,7.4676
+true all,09,0.8780,5.8226
+measured,10,22.5946,22.5946
+true rotation,10,22.7082,22.7082
+true translation,10,23.2094,23.2094
+true scale,10,12.3598,12.3598
+true rotation+scale,10,2.9090,2.9090
+true all,10,0.5175,0.5175

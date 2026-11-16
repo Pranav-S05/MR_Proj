@@ -1,0 +1,67 @@
+part,seq,ate_chain,ate_loops
+measured,00,143.2004,9.0213
+true rotation,00,142.5013,8.2180
+true translation,00,142.3327,9.0986
+true scale,00,26.1425,6.5662
+true rotation+scale,00,10.6679,2.2309
+true all,00,0.9638,1.6693
+measured,01,96.3994,96.3994
+true rotation,01,89.9891,89.9891
+true translation,01,98.9599,98.9599
+true scale,01,43.5676,43.5676
+true rotation+scale,01,10.0109,10.0109
+true all,01,1.1244,1.1244
+measured,02,189.5464,110.1774
+true rotation,02,166.5683,111.5039
+true translation,02,189.5564,110.1405
+true scale,02,135.3729,29.3807
+true rotation+scale,02,14.7445,8.5835
+true all,02,0.3173,4.6619
+measured,03,19.7128,19.7128
+true rotation,03,19.3658,19.3658
+true translation,03,18.2493,18.2493
+true scale,03,3.1676,3.1676
+true rotation+scale,03,2.3314,2.3314
+true all,03,0.2568,0.2568
+measured,04,11.2144,11.2144
+true rotation,04,11.1816,11.1816
+true translation,04,11.3774,11.3774
+true scale,04,1.1673,1.1673
+true rotation+scale,04,0.7398,0.7398
+true all,04,0.3702,0.3702
+measured,05,51.7206,10.0001
+true rotation,05,34.5547,8.8107
+true translation,05,52.0419,9.9956
+true scale,05,38.2251,3.7347
+true rotation+scale,05,8.0614,2.3882
+true all,05,4.9152,1.5832
+measured,06,35.0803,9.9442
+true rotation,06,28.9345,9.3521
+true translation,06,34.8932,9.3812
+true scale,06,19.9022,3.7819
+true rotation+scale,06,5.9035,2.6491
+true all,06,0.2589,0.8900
+measured,07,22.1313,3.9818
+true rotation,07,21.0702,3.9265
+true translation,07,22.7965,3.5689
+true scale,07,7.2787,2.5091
+true rotation+scale,07,6.3981,2.4660
+true all,07,4.6516,1.5073
+measured,08,140.5446,140.5444
+true rotation,08,132.5857,132.5856
+true translation,08,139.7299,139.7297
+true scale,08,40.2614,40.2603
+true rotation+scale,08,6.8316,6.8297
+true all,08,0.4420,0.4385
+measured,09,101.7904,50.3496
+true rotation,09,103.8900,45.5850
+true translation,09,103.5781,50.8558
+true scale,09,31.5018,19.6492
+true rotation+scale,09,6.8155,4.6798
+true all,09,0.3466,4.1670
+measured,10,40.9606,40.9606
+true rotation,10,41.2657,41.2657
+true translation,10,41.8037,41.8037
+true scale,10,8.5955,8.5955
+true rotation+scale,10,2.7894,2.7894
+true all,10,0.2084,0.2084

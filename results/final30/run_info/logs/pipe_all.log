@@ -1,0 +1,46 @@
+== fit
+  fitted on 243 seams / 11 loops from ['05', '07']; pixel power law p = 0.742
+== tune
+  vggt_long: huber k=1, dcs phi=3
+  equal: huber k=5, dcs phi=1
+  uniform: huber k=0.5, dcs phi=100
+  raw_conf: huber k=0.5, dcs phi=100
+  geometry: huber k=0.5, dcs phi=100
+  calibrated: huber k=20, dcs phi=1000
+  oracle: huber k=10, dcs phi=30
+  power_law: huber k=0.5, dcs phi=100
+== solve
+  [05] vggt_long  ATE [m]: chain 51.72 | loops 10.18 | huber 10.18 | dcs 10.18
+  [05] equal      ATE [m]: chain 51.72 | loops 10.00 | huber 10.00 | dcs 10.00
+  [05] uniform    ATE [m]: chain 51.72 | loops 11.97 | huber 11.97 | dcs 11.97
+  [05] raw_conf   ATE [m]: chain 51.72 | loops 10.63 | huber 10.63 | dcs 10.63
+  [05] geometry   ATE [m]: chain 51.72 | loops 11.34 | huber 11.32 | dcs 11.34
+  [05] calibrated ATE [m]: chain 51.72 | loops 10.20 | huber 10.20 | dcs 10.20
+  [05] oracle     ATE [m]: chain 51.72 | loops 10.03 | huber 10.03 | dcs 10.03
+  [05] power_law  ATE [m]: chain 51.72 | loops 10.93 | huber 10.80 | dcs 10.93
+  [07] vggt_long  ATE [m]: chain 22.13 | loops 3.98 | huber 3.98 | dcs 3.98
+  [07] equal      ATE [m]: chain 22.13 | loops 3.98 | huber 3.98 | dcs 3.98
+  [07] uniform    ATE [m]: chain 22.13 | loops 3.75 | huber 3.75 | dcs 3.75
+  [07] raw_conf   ATE [m]: chain 22.13 | loops 4.56 | huber 4.56 | dcs 4.56
+  [07] geometry   ATE [m]: chain 22.13 | loops 4.36 | huber 4.36 | dcs 4.36
+  [07] calibrated ATE [m]: chain 22.13 | loops 4.26 | huber 4.26 | dcs 4.26
+  [07] oracle     ATE [m]: chain 22.13 | loops 4.55 | huber 4.55 | dcs 4.55
+  [07] power_law  ATE [m]: chain 22.13 | loops 4.45 | huber 4.45 | dcs 4.45
+  [00] vggt_long  ATE [m]: chain 143.20 | loops 9.04 | huber 9.04 | dcs 9.04
+  [00] equal      ATE [m]: chain 143.20 | loops 9.02 | huber 9.02 | dcs 9.02
+  [00] uniform    ATE [m]: chain 143.20 | loops 9.78 | huber 9.78 | dcs 9.78
+  [00] raw_conf   ATE [m]: chain 143.20 | loops 10.31 | huber 10.31 | dcs 10.31
+  [00] geometry   ATE [m]: chain 143.20 | loops 9.67 | huber 9.68 | dcs 9.67
+  [00] calibrated ATE [m]: chain 143.20 | loops 9.11 | huber 9.11 | dcs 9.11
+  [00] oracle     ATE [m]: chain 143.20 | loops 12.66 | huber 12.66 | dcs 12.66
+  [00] power_law  ATE [m]: chain 143.20 | loops 9.89 | huber 9.85 | dcs 9.89
+  [02] vggt_long  ATE [m]: chain 189.55 | loops 108.36 | huber 108.36 | dcs 108.36
+  [02] equal      ATE [m]: chain 189.55 | loops 110.18 | huber 110.18 | dcs 110.18
+  [02] uniform    ATE [m]: chain 189.55 | loops 116.01 | huber 116.01 | dcs 188.59
+  [02] raw_conf   ATE [m]: chain 189.55 | loops 122.32 | huber 122.32 | dcs 187.91
+  [02] geometry   ATE [m]: chain 189.55 | loops 113.56 | huber 113.56 | dcs 182.62
+  [02] calibrated ATE [m]: chain 189.55 | loops 118.61 | huber 118.61 | dcs 118.61
+  [02] oracle     ATE [m]: chain 189.55 | loops 116.36 | huber 116.36 | dcs 116.36
+  [02] power_law  ATE [m]: chain 189.55 | loops 122.31 | huber 122.31 | dcs 174.39
+== report
+  wrote results/final30/summary.md and 8 figures
