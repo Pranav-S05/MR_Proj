@@ -1,6 +1,6 @@
 """python scripts/fig_drift.py --variant first_w30_o15   -> results/fig_drift_<variant>.png / .pdf
 Scale of the reconstruction along each drive without loop closure: VGGT-Long and VGGT-Long + calibrated seam scale
-(the `auto` pick). Step lengths summed over a sliding window of 100 frames, estimate / ground truth, normalised to the
+(C4). Step lengths summed over a sliding window of 100 frames, estimate / ground truth, normalised to the
 start of the drive."""
 import argparse, csv
 import matplotlib; matplotlib.use("Agg")
@@ -24,18 +24,17 @@ def scale_curve(est, gt):
 ap = argparse.ArgumentParser(); ap.add_argument("--variant", required=True); a = ap.parse_args()
 seqs, data, feats, y, ok = load_variant(a.variant)
 sc = Scorer(data, feats, y, ok)
-picks = {r["seq"]: r["auto_pick"] for r in csv.DictReader(open(lib.RES / f"{a.variant}.csv")) if r["method"] == "auto"}
 fig, axes = plt.subplots(3, 4, figsize=(13, 9.5))
 for ax, s in zip(axes.flat, seqs):
     d = data[s]
     _, _, e0 = lib.solve(d, None, loops=False, return_nodes=True)
-    z = lib.rescale_seams(d, sc.corr(s, picks[s], [o for o in seqs if o != s]))
+    z = lib.rescale_seams(d, sc.corr(s, "C4_fuse_depth+speed", [o for o in seqs if o != s]))
     _, _, e1 = lib.solve(d, z, loops=False, return_nodes=True)
     x = np.arange(WIN // 2, WIN // 2 + len(d["gt"]) - WIN)
     ax.axhline(1.0, color=GRID, lw=0.6)
     c0, c1 = scale_curve(e0, d["gt"]), scale_curve(e1, d["gt"])
     ax.plot(x, c0, color=BASE, lw=1.0, label="VGGT-Long")
-    ax.plot(x, c1, color=OURS, lw=1.0, label="+ calibrated seam scale")
+    ax.plot(x, c1, color=OURS, lw=1.0, label="+ calibrated seam scale (C4)")
     print(s, "%.3f %.3f" % tuple(np.median(c[np.isfinite(c)][-100:]) for c in (c0, c1)))
     ax.set_yscale("log"); ax.set_title(s, fontsize=10)
     ax.tick_params(which="both", labelsize=7, colors=MUTED)

@@ -1,7 +1,7 @@
 """Figure: ATE with loops per drive, VGGT-Long against VGGT-Long + calibrated seam scale, one panel per setting.
 
   python scripts/fig_ate.py results/first_w30_o15.csv results/first_w60_o30_from_first_w30_o15.csv ...
-Bars: VGGT-Long (grey) and the nested-selected calibration "auto" (blue); tick: true-scale bound. Log x axis.
+Bars: VGGT-Long (grey) and the calibrated seam scale C4 (blue); tick: true-scale bound. Log x axis.
 Writes results/final/figures/fig_ate.png and results/fig_ate.pdf.
 """
 import csv
@@ -35,10 +35,10 @@ def main():
         seqs = sorted(rows["none"])
         y = np.arange(len(seqs))
         base = np.array([rows["none"][s] for s in seqs])
-        ours = np.array([rows["auto"][s] for s in seqs])
+        ours = np.array([rows["C4_fuse_depth+speed"][s] for s in seqs])
         orc = np.array([rows["oracle"][s] for s in seqs])
         ax.barh(y - 0.19, base, 0.34, color=BASE, label="VGGT-Long")
-        ax.barh(y + 0.19, ours, 0.34, color=OURS, label="+ calibrated seam scale")
+        ax.barh(y + 0.19, ours, 0.34, color=OURS, label="+ calibrated seam scale (C4)")
         ax.scatter(orc, y + 0.19, marker="|", s=90, color=INK, linewidths=1.5, label="true-scale bound", zorder=3)
         ax.set_xscale("log")
         ax.set_yticks(y, seqs)

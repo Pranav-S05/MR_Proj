@@ -119,8 +119,10 @@ metric. KITTI's ground truth is inconsistent in height where a street is revisit
 the ground-truth gap at revisits reaches 4.4\,m on 02, 6.1\,m on 08 and 3.3\,m on 09. All methods are scored against the
 same ground truth.
 
-\textbf{Protocol.} Every fitted quantity (calibration curves, weights, scale corrections) is fitted on the other ten
-drives and applied to the held-out drive (leave one drive out). The evaluation at 60/30 and 75/30 was fixed before
+\textbf{Protocol.} The analyses that need LiDAR or many solves per drive (pixel calibration, seam error prediction,
+false loops; Sec.~\ref{sec:weights}) use drives 00, 02, 05 and 07: everything is fitted on 05 and 07 and tested on 00
+and 02. Everything else is fitted on the other ten drives and applied to the held-out drive (leave one drive out),
+including the edge weights of Table~\ref{tab:weights} and every scale correction. The evaluation at 60/30 and 75/30 was fixed before
 those runs. We compare paired per-drive results with the Wilcoxon
 signed-rank test and give a bootstrap 95\% interval of the change of the mean.
 
@@ -178,7 +180,7 @@ with Huber, one false loop breaks every scheme. With DCS at the threshold tuned 
 single false loop on every drive; in a sweep of the threshold from $10^{-6}$ to $10^3$, the best value lets them survive
 one or two false loops on 00, 02 and 05 but none on 07, because the residuals of true and false loops are not measured
 against any uncertainty. With fitted variances DCS survives more false loops on some drives (up to 8 on 00), but on 02
-most weighted schemes then make DCS discard the true loops of the clean graph as well (ATE 175 to 189\,m instead of 114
+most weighted schemes then make DCS discard the true loops of the clean graph as well (ATE 174 to 189\,m instead of 114
 to 122\,m). Calibrated confidence is the only weighting with which DCS keeps 02's true loops (118.6\,m) and still
 rejects up to four false ones there; on 00 and 05 it survives one, on 07 none. No scheme survives on all four drives
 (appendix, Fig.~\ref{fig:stress}).
@@ -218,7 +220,10 @@ cut it by 68\% (45.66 to 14.76\,m), and true rotation and scale together by 91\%
 
 \begin{table}[t]
 \centering
-\caption{Mean ATE (m), 11 drives, when one component of every seam is replaced by its true value.}
+\caption{Mean ATE (m), 11 drives, when one component of every seam is replaced by its true value. Here the true
+value replaces the error component in the Lie algebra; the true-scale rows of Tables~\ref{tab:weights} and
+\ref{tab:main} rescale each seam about its overlap cameras as the method does (Eq.~\ref{eq:correct}), hence 14.76
+against 14.47\,m at 30/15.}
 \label{tab:oracle}
 \footnotesize
 \begin{tabular}{lcccccc}
@@ -259,14 +264,18 @@ weights spread evenly and correctly, while variance weights push it onto the noi
 drive with that drive's measured noise profile and bias (2{,}000 draws): without the bias, perfect variance weights
 would gain at most 5.8\% (drive 03); with the measured bias they are worse than equal weights by more than 2\% on seven
 of eleven drives (up to 21\%, drive 04). This is why the weightings in Table~\ref{tab:weights} cannot separate: they
-act on the variance while the error is in the mean. The last row of Table~\ref{tab:weights} agrees: once the scale is
-right, calibrated weights are the best of the six (14.12\,m).
+act on the variance while the error is in the mean. The other rows of Table~\ref{tab:weights} agree. With the true
+scale, calibrated weights are the best of the six (14.12\,m). With our corrected scale they give 26.48 against
+28.17\,m for equal weights, but they are better on only five drives, worse on 02 and unchanged on the five drives
+without loops, so we do not claim a gain from them. The oracle with the true scale (52.09\,m) is an artefact: every
+seam's true scale error is then zero, its oracle variance falls to the numerical floor, and the solve becomes
+ill-conditioned.
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=0.92\textwidth]{fig_ate.pdf}
 \caption{ATE with loop closure per drive in our back end at three window settings (log scale): VGGT-Long, VGGT-Long with
-the calibrated seam scale (nested choice), and the true-scale bound.}
+the calibrated seam scale (C4), and the true-scale bound.}
 \label{fig:ate}
 \end{figure*}
 
@@ -362,8 +371,9 @@ True scale (bound) & $-68\%$ & $-44\%$ & $-40\%$ \\
 \end{tabular}
 \end{table}
 
-\textbf{Without loop closure.} The correction removes most of the steady shrinking: at 30/15 the scale at the end of the
-drive ends closer to the true scale on 8 of 11 drives (02: from 0.018 to 24; 08: from 0.038 to 1.7). The chain ATE falls
+\textbf{Without loop closure.} At 30/15 VGGT-Long's map ends 26 to 55 times too small on the three longest drives
+(00, 02, 08). With the correction, 00 and 08 end within a factor of 1.9 of the true scale, but 02 overshoots and ends
+24 times too large, and on 01, 03 and 06 the end scale moves away from the true one. The chain ATE falls
 by 17\% with C4 (77.48 to 64.51\,m), less than with loops, because the remaining error has one sign along a drive and
 adds up where no loop removes it (appendix, Fig.~\ref{fig:drift}).
 
@@ -465,7 +475,7 @@ regression,'' in \emph{Proc. ICML}, 2018.
 \centering
 \includegraphics[width=0.80\textwidth]{fig_traj_first_w30_o15.pdf}
 \caption{All eleven drives at 30/15 in our back end, with loops: ground truth, VGGT-Long, and VGGT-Long with the
-calibrated seam scale (the nested choice), after Sim(3) alignment. Panel titles give the ATE before and after.}
+calibrated seam scale (C4), after Sim(3) alignment. Panel titles give the ATE before and after.}
 \label{fig:traj}
 \end{figure}
 
@@ -498,8 +508,8 @@ calibrated seam scale (the nested choice), after Sim(3) alignment. Panel titles 
 \includegraphics[width=0.80\textwidth]{fig_drift_first_w30_o15.pdf}
 \caption{Scale of the reconstruction along each drive without loop closure, at 30/15: travelled distance of the estimate
 over that of the ground truth in a sliding window of 100 frames, normalised to the start of the drive (1 = no drift).
-VGGT-Long's map shrinks steadily on the long drives; the calibrated scale removes most of the shrinking but can overshoot
-on single drives (02).}
+VGGT-Long's map shrinks steadily on the long drives; the calibrated seam scale (C4) removes most of the shrinking but
+can overshoot (02).}
 \label{fig:drift}
 \end{figure}
 

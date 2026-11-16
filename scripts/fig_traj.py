@@ -1,5 +1,5 @@
 """python scripts/fig_traj.py --variant first_w30_o15   -> results/fig_traj_<variant>.png / .pdf
-Top view of every drive: ground truth, VGGT-Long, VGGT-Long + calibrated seam scale (the `auto` pick), with loops."""
+Top view of every drive: ground truth, VGGT-Long, VGGT-Long + calibrated seam scale (C4), with loops."""
 import argparse, csv
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -14,17 +14,16 @@ def aligned(est, gt):
 ap = argparse.ArgumentParser(); ap.add_argument("--variant", required=True); a = ap.parse_args()
 seqs, data, feats, y, ok = load_variant(a.variant)
 sc = Scorer(data, feats, y, ok)
-picks = {r["seq"]: r["auto_pick"] for r in csv.DictReader(open(lib.RES / f"{a.variant}.csv")) if r["method"] == "auto"}
 fig, axes = plt.subplots(3, 4, figsize=(13, 9.5))
 for ax, s in zip(axes.flat, seqs):
     d = data[s]; gt = d["gt"][:, :3, 3]
     a0, _, e0 = lib.solve(d, None, loops=True, return_nodes=True)
-    z = lib.rescale_seams(d, sc.corr(s, picks[s], [o for o in seqs if o != s]))
+    z = lib.rescale_seams(d, sc.corr(s, "C4_fuse_depth+speed", [o for o in seqs if o != s]))
     a1, _, e1 = lib.solve(d, z, loops=True, return_nodes=True)
     p0, p1 = aligned(e0, d["gt"]), aligned(e1, d["gt"])
     ax.plot(gt[:, 0], gt[:, 2], color=GT, lw=1.6, label="ground truth")
     ax.plot(p0[:, 0], p0[:, 2], color=BASE, lw=1.0, label="VGGT-Long")
-    ax.plot(p1[:, 0], p1[:, 2], color=OURS, lw=1.0, label="+ calibrated seam scale")
+    ax.plot(p1[:, 0], p1[:, 2], color=OURS, lw=1.0, label="+ calibrated seam scale (C4)")
     ax.set_aspect("equal", adjustable="datalim"); ax.set_title(f"{s}: {a0:.1f} m -> {a1:.1f} m", fontsize=10)
     ax.tick_params(labelsize=7, colors=MUTED)
     for sp in ("top", "right"): ax.spines[sp].set_visible(False)

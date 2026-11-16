@@ -321,7 +321,7 @@ Everything else of final_PLAN.md ran. Deviations (RAM-mode runs, disk rules, sta
 | drive | VGGT-Long | calibrated |
 |---|---|---|
 | 00 | 0.040 | 1.862 |
-| 01 | 0.993 | 2.265 |
+| 01 | 0.993 | 1.123 |
 | 02 | 0.018 | 23.779 |
 | 03 | 0.529 | 0.430 |
 | 04 | 0.815 | 0.904 |
